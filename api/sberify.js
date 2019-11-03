@@ -1,17 +1,27 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const Sberify = require('genius-api');
+const mongoose = require('mongoose');
 
-const accessToken = 'WfzqmX6kK-z2ri3UwFyxrqNFFywEZvOACOwtPopGkuCaibh0UUmJq8ALhDrd2IJX'
-const sberify = new Sberify(accessToken)
 
-const axiosInstance = axios.create({
-    baseURL: 'https://api.genius.com',
-    timeout: 3000,
-    headers: {
-        Authorization: `Bearer ${accessToken}`
-    }
-});
+const Schemas = {
+    artist: mongoose.Schema({
+        _id: mongoose.Schema.Types.ObjectId,
+        name: String,
+        instagram_name: String,
+        facebook_name: String,
+        description: String,
+        image: String
+    }),
+    favoriteArtist: mongoose.Schema({
+        _id: mongoose.Schema.Types.ObjectId,
+        name: String
+    })
+}
+
+const Models = {
+    artists: mongoose.model('artists', Schemas.artist),
+    favoriteArtists: mongoose.model('favorite_artists', Schemas.favoriteArtist)
+}
 
 function parseSongHTML(htmlText) {
     const $ = cheerio.load(htmlText)
@@ -23,67 +33,55 @@ function parseSongHTML(htmlText) {
     }
 }
 
-Sberify.prototype.getSongLyrics = async function getSongLyrics(geniusUrl) {
-    try {
-        const response = await axios.get(geniusUrl)
-        const text = await response.data
-        const lyrics = parseSongHTML(text)
+class Sberify {
+    constructor(schemas, models) {
+        this.schemas = schemas
+        this.models = models
 
-        return lyrics
-    } catch (err) {
-        return err
+        this.addArtistToFavorites = this.addArtistToFavorites.bind(this)
     }
-}
 
-Sberify.prototype.getArtistID = async function getArtistID(name) {
-    const parsedName = name.replace('-', ' ').toLowerCase()
+    async getSongLyrics(url) {
+        try {
+            const response = await axios.get(url)
+            const text = await response.data
+            const lyrics = parseSongHTML(text)
+    
+            return lyrics
+        } catch (err) {
+            return err
+        }
+    }
 
-    try {
-        const response = await axiosInstance.get(`/search?q=${parsedName}`)
-        const hits = await response.data.response.hits
+    normalizeName(name) {
+        return name.split('').map((letter) => letter === '-' ? ' ' : letter).join('')
+    }
 
-        for (const hit of hits) {
-            if (hit.type === 'song' && hit.result.primary_artist.name.toLowerCase() === parsedName) {
-                return hit.result.primary_artist.id.toString()
-            }
+    getArtist(name) {
+        const normalizedName = this.normalizeName(name)
+        
+        return this.models.artists.findOne({ name: normalizedName }, (err, artist) => artist)
+    }
+
+    async addArtistToFavorites(name) {
+        const normalizedName = this.normalizeName(name)
+
+        if (await this.models.favoriteArtists.exists({ name: `The Kooks` })) {
+            console.log('exists')
+            return `Favorite artist is already exists`
         }
 
-    } catch (err) {
-        return err
+        const favoriteArtist = new this.models.favoriteArtists({
+            _id: new mongoose.Types.ObjectId(),
+            name: normalizedName
+        })
+
+        return favoriteArtist.save()
+            .then((result) => result)
+            .catch((err) => err)
     }
 }
 
-Sberify.prototype.getSongs = async function getSongs(artistID) {
-    try {
-        const response = await axiosInstance.get(`/artists/${artistID}/songs?sort=popularity`)
-        const songs = await response.data.response.songs.filter((song) => song.primary_artist.id === parseInt(artistID))
-
-        return songs
-
-    } catch (err) {
-        return err
-    }
-}
-
-Sberify.prototype.getAlbums = async function getAlbums(artistID) {
-    const albums = []
-    try {
-        const response = await axiosInstance.get(`/artists/${artistID}/songs?per_page=25`)
-        const songsIDs = await response.data.response.songs.filter((song) => song.primary_artist.id === parseInt(artistID)).map((song) => song.id)
-
-        for (const songID of songsIDs) {
-            const response = await axiosInstance.get(`/songs/${songID}?text_format=plain`)
-            const album = await response.data.response.song.album
-
-            console.log(album)
-
-            albums.push(album)
-        }
-
-        return albums
-    } catch (err) {
-        return err
-    }
-}
+const sberify = new Sberify(Schemas, Models)
 
 module.exports = sberify

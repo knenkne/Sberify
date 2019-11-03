@@ -5,15 +5,10 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const MongoClient = require('mongodb').MongoClient;
-const bodyParser = require('body-parser');
 const config = require('./config/db');
 
 const indexRouter = require('./routes/index');
 const lyricsRouter = require('./routes/lyrics');
-const artistIDRouter = require('./routes/artistID');
-const songsRouter = require('./routes/songs');
-const albumsRouter = require('./routes/albums');
 const favoriteArtistsRouter = require('./routes/favorite-arists');
 const artistRouter = require('./routes/artist')
 
@@ -35,10 +30,6 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 app.use('/', indexRouter);
 app.use('/lyrics', lyricsRouter);
-app.use('/artistID', artistIDRouter);
-app.use('/songs', songsRouter);
-app.use('/albums', albumsRouter);
-
 app.use('/favorite-artists', favoriteArtistsRouter);
 app.use('/artist', artistRouter);
 
