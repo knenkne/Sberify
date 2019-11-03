@@ -15,17 +15,10 @@ const artistIDRouter = require('./routes/artistID');
 const songsRouter = require('./routes/songs');
 const albumsRouter = require('./routes/albums');
 const favoriteArtistsRouter = require('./routes/favorite-arists');
+const artistRouter = require('./routes/artist')
 
 const app = express();
-const Schema = mongoose.Schema;
-
-// mongo DB connect
-// mongoose.connect(config.url, { useUnifiedTopology: true, useNewUrlParser: true})
-// const db = mongoose.connection
-// console.log(db)
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-// db.on('connected', console.error.bind(console, 'MongoDB connection success'))
-mongoose.connect(config.url, { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(config.url, { useUnifiedTopology: true, useNewUrlParser: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,7 +38,9 @@ app.use('/lyrics', lyricsRouter);
 app.use('/artistID', artistIDRouter);
 app.use('/songs', songsRouter);
 app.use('/albums', albumsRouter);
-app.use('/favorite-artists', favoriteArtistsRouter)
+
+app.use('/favorite-artists', favoriteArtistsRouter);
+app.use('/artist', artistRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
