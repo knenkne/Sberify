@@ -40,7 +40,6 @@ Sberify.prototype.getArtistID = async function getArtistID(name) {
 
     try {
         const response = await axiosInstance.get(`/search?q=${parsedName}`)
-
         const hits = await response.data.response.hits
 
         for (const hit of hits) {
@@ -57,11 +56,31 @@ Sberify.prototype.getArtistID = async function getArtistID(name) {
 Sberify.prototype.getSongs = async function getSongs(artistID) {
     try {
         const response = await axiosInstance.get(`/artists/${artistID}/songs?sort=popularity`)
-
-        const songs = await response.data.response.songs.filter((song) => song.primary_artist.id === parseInt(artistID)).map((song) => song.title)
+        const songs = await response.data.response.songs.filter((song) => song.primary_artist.id === parseInt(artistID))
 
         return songs
 
+    } catch (err) {
+        return err
+    }
+}
+
+Sberify.prototype.getAlbums = async function getAlbums(artistID) {
+    const albums = []
+    try {
+        const response = await axiosInstance.get(`/artists/${artistID}/songs?per_page=25`)
+        const songsIDs = await response.data.response.songs.filter((song) => song.primary_artist.id === parseInt(artistID)).map((song) => song.id)
+
+        for (const songID of songsIDs) {
+            const response = await axiosInstance.get(`/songs/${songID}?text_format=plain`)
+            const album = await response.data.response.song.album
+
+            console.log(album)
+
+            albums.push(album)
+        }
+
+        return albums
     } catch (err) {
         return err
     }
