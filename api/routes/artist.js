@@ -13,16 +13,17 @@ const artistSchema = mongoose.Schema({
 })
 
 const artistsModel = mongoose.model('artists', artistSchema)
-console.log(artistsModel)
 
 router.get('/', (req, res, next) => {
     res.send('You have to pass specific URL "Artist"')
 })
 
 router.get('/:name', function (req, res, next) {
-    artistsModel.find({}, (err, data) => {
-        res.send(data)
-    });
+    const name = req.params.name.split('').map((letter) => letter === '-' ? ' ' : letter).join('')
+    artistsModel
+        .find({name}, (err, artist) => {
+            res.send(artist)
+        })
 })
 
 
