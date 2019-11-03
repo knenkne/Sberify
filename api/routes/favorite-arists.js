@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const sberify = require('../sberify');
 
 const router = express.Router();
 
 
-router.get('/', (req, res, next) => {
-    // console.log(sberify.models)
-    // sberify.Schemas.favorite_arists.find({}, (err, data) => {
-    //     res.send(data)
-    // })
+router.get('/', async (req, res, next) => {
+    res.send(await sberify.getFavoriteArtists())
 })
 
-router.post('/:artist', async function (req, res, next) {
+router.post('/add/:artist', async function (req, res, next) {
     res.send(await sberify.addArtistToFavorites(req.params.artist))
+})
+
+router.post('/remove/:artist', async function (req, res, next) {
+    res.send(await sberify.removeArtistFromFavorites(req.params.artist))
 })
 
 module.exports = router;

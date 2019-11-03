@@ -10,7 +10,9 @@ const Schemas = {
         instagram_name: String,
         facebook_name: String,
         description: String,
-        image: String
+        image: String,
+        video_url: String,
+        albums: Array
     }),
     favoriteArtist: mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
@@ -25,11 +27,11 @@ const Models = {
 
 function parseSongHTML(htmlText) {
     const $ = cheerio.load(htmlText)
+    const name = $('.header_with_cover_art-primary_info-title').text().trim()
     const lyrics = $('.lyrics').text().trim()
-    const releaseDate = $('release-date .song_info-info').text()
     return {
-        lyrics,
-        releaseDate,
+        name,
+        lyrics
     }
 }
 
@@ -38,6 +40,7 @@ class Sberify {
         this.schemas = schemas
         this.models = models
 
+        this.getFavoriteArtists = this.getFavoriteArtists.bind(this)
         this.addArtistToFavorites = this.addArtistToFavorites.bind(this)
     }
 
@@ -46,7 +49,7 @@ class Sberify {
             const response = await axios.get(url)
             const text = await response.data
             const lyrics = parseSongHTML(text)
-    
+
             return lyrics
         } catch (err) {
             return err
@@ -59,15 +62,20 @@ class Sberify {
 
     getArtist(name) {
         const normalizedName = this.normalizeName(name)
-        
+
         return this.models.artists.findOne({ name: normalizedName }, (err, artist) => artist)
+    }
+
+    getFavoriteArtists() {
+        return this.models.favoriteArtists.find({}, (err, artists) => artists)
     }
 
     async addArtistToFavorites(name) {
         const normalizedName = this.normalizeName(name)
 
-        if (await this.models.favoriteArtists.exists({ name: `The Kooks` })) {
-            console.log('exists')
+        if (await this.models.favoriteArtists.exists({
+                name: normalizedName
+            })) {
             return `Favorite artist is already exists`
         }
 
@@ -77,6 +85,14 @@ class Sberify {
         })
 
         return favoriteArtist.save()
+            .then((result) => result)
+            .catch((err) => err)
+    }
+
+    async removeArtistFromFavorites(name) {
+        const normalizedName = this.normalizeName(name)
+
+        return this.models.favoriteArtists.deleteOne({ name: normalizedName })
             .then((result) => result)
             .catch((err) => err)
     }
