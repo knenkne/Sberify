@@ -1,7 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
-const normalizeUrl = require('./utils')
 
 const accessToken = 'CpEs40XlbNB7iEH8GVVReQBF1wYcfqLq7gWVmjoKt_0DzkE2dx9bs_yjaX_NNhx6'
 const axiosInstance = axios.create({
@@ -120,7 +119,7 @@ class Sberify {
                 .text()
                 .trim()
 
-            const geniusQuery = await axiosInstance.get(`https://api.genius.com/search?q=${normalizeUrl(name)}`)
+            const geniusQuery = await axiosInstance.get(`https://api.genius.com/search?q=${new URLSearchParams(name).toString()}`)
             const songs = await geniusQuery.data
             const songID = songs.response.hits.find((hit) => hit.result.primary_artist.name === artist).result.id
 
@@ -139,6 +138,6 @@ class Sberify {
 }
 
 const sberify = new Sberify(Schemas, Models)
-sberify.getSong('https://genius.com/Enter-shikari-anything-can-happen-in-the-next-half-hour-lyrics')
+sberify.getSong('https://genius.com/Enter-shikari-sorry-youre-not-a-winner-lyrics')
 
 module.exports = sberify
