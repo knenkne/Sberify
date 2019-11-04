@@ -1,8 +1,9 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
+const normalizeUrl = require('./utils')
 
-const accessToken = 'WfzqmX6kK-z2ri3UwFyxrqNFFywEZvOACOwtPopGkuCaibh0UUmJq8ALhDrd2IJX'
+const accessToken = 'CpEs40XlbNB7iEH8GVVReQBF1wYcfqLq7gWVmjoKt_0DzkE2dx9bs_yjaX_NNhx6'
 const axiosInstance = axios.create({
     baseURL: 'https://api.genius.com',
     timeout: 3000,
@@ -111,14 +112,17 @@ class Sberify {
             const songPageText = await songPage.data
             const songPageHTML = cheerio.load(songPageText)
             
-            const name = songPageHTML('.header_with_cover_art-primary_info-title').text().trim()
-            const artist = songPageHTML('.header_with_cover_art-primary_info-primary_artist').text().trim()
+            const name = songPageHTML('.header_with_cover_art-primary_info-title')
+                .text()
+                .trim()
+ 
+            const artist = songPageHTML('.header_with_cover_art-primary_info-primary_artist')
+                .text()
+                .trim()
 
-            const geniusQuery = await axiosInstance.get(`https://api.genius.com/search?q=${name}`)
-
+            const geniusQuery = await axiosInstance.get(`https://api.genius.com/search?q=${normalizeUrl(name)}`)
             const songs = await geniusQuery.data
             const songID = songs.response.hits.find((hit) => hit.result.primary_artist.name === artist).result.id
-
 
             const musicPlayer = await axios.get(`https://genius.com/songs/${songID}/apple_music_player`)
             const musicPlayerText = await musicPlayer.data
@@ -135,6 +139,6 @@ class Sberify {
 }
 
 const sberify = new Sberify(Schemas, Models)
-sberify.getSong('https://genius.com/Enter-shikari-enter-shikari-lyrics')
+sberify.getSong('https://genius.com/Enter-shikari-anything-can-happen-in-the-next-half-hour-lyrics')
 
 module.exports = sberify
