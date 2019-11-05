@@ -105,7 +105,7 @@ class Sberify {
             .catch((err) => err)
     }
 
-    async getSong(url) {
+    async getSongFromGenius(url) {
         try {
             const songPage = await axios.get(url)
             const songPageText = await songPage.data
@@ -119,18 +119,36 @@ class Sberify {
                 .text()
                 .trim()
 
-            const geniusQuery = await axiosInstance.get(`https://api.genius.com/search?q=${new URLSearchParams(name).toString()}`)
+            const geniusQuery = await axiosInstance.get(`https://api.genius.com/search?q=${new URLSearchParams(name).toString()}+${new URLSearchParams(artist).toString()}`)
             const songs = await geniusQuery.data
             const songID = songs.response.hits.find((hit) => hit.result.primary_artist.name === artist).result.id
+
 
             const musicPlayer = await axios.get(`https://genius.com/songs/${songID}/apple_music_player`)
             const musicPlayerText = await musicPlayer.data
             const musicPlayerHTML = cheerio.load(musicPlayerText)
-            const songPlayerUrl = JSON.parse(musicPlayerHTML('apple-music-player').attr('preview_track')).preview_url
 
-            console.table({name,  player_url: songPlayerUrl})
+            // ADD NULL IF PLAYER DOESN'T EXIST
+            const songPlayerUrl = JSON.parse(musicPlayerHTML('apple-music-player').attr('preview_track')).preview_url || null
+
+            // console.table({name,  player_url: songPlayerUrl})
 
             return ({name,  player_url: songPlayerUrl})
+        } catch (err) {
+            return err
+        }
+    }
+
+    async getAlbumFromGenius(url) {
+        try {
+            const albumPage = await axios.get(url)
+            const albumPageText = await albumPage.data
+            const songPageHTML = cheerio.load(albumPageText)
+
+            const songsUrls = songPageHTML('.u-display_block').map((index, item) => songPageHTML(item).attr('href')).get()
+            const songs = await Promise.all(songsUrls.map(async (songUrl) => await this.getSongFromGenius(songUrl)))
+            console.log(songs)
+
         } catch (err) {
             return err
         }
@@ -138,6 +156,7 @@ class Sberify {
 }
 
 const sberify = new Sberify(Schemas, Models)
-sberify.getSong('https://genius.com/Enter-shikari-sorry-youre-not-a-winner-lyrics')
+
+sberify.getAlbumFromGenius('https://genius.com/albums/Architects/Holy-hell')
 
 module.exports = sberify
