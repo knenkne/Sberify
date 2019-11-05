@@ -127,11 +127,7 @@ class Sberify {
             const musicPlayer = await axios.get(`https://genius.com/songs/${songID}/apple_music_player`)
             const musicPlayerText = await musicPlayer.data
             const musicPlayerHTML = cheerio.load(musicPlayerText)
-
-            // ADD NULL IF PLAYER DOESN'T EXIST
-            const songPlayerUrl = JSON.parse(musicPlayerHTML('apple-music-player').attr('preview_track')).preview_url || null
-
-            // console.table({name,  player_url: songPlayerUrl})
+            const songPlayerUrl = musicPlayerHTML('apple-music-player').attr('preview_track') ? JSON.parse(musicPlayerHTML('apple-music-player').attr('preview_track')).preview_url : null
 
             return ({name,  player_url: songPlayerUrl})
         } catch (err) {
@@ -157,6 +153,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.getAlbumFromGenius('https://genius.com/albums/Architects/Holy-hell')
+sberify.getAlbumFromGenius('https://genius.com/albums/Architects/Lost-forever-lost-together')
 
 module.exports = sberify
