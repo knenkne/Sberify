@@ -19,6 +19,7 @@ const Schemas = {
         facebook_name: String,
         description: String,
         image: String,
+        image_header: String,
         video_url: String,
         albums: Array
     }),
@@ -129,7 +130,8 @@ class Sberify {
             const musicPlayerHTML = cheerio.load(musicPlayerText)
             const songPlayerUrl = musicPlayerHTML('apple-music-player').attr('preview_track') ? JSON.parse(musicPlayerHTML('apple-music-player').attr('preview_track')).preview_url : null
 
-            return ({name,  player_url: songPlayerUrl})
+            return ({name,  songPlayerUrl})
+
         } catch (err) {
             return err
         }
@@ -141,18 +143,111 @@ class Sberify {
             const albumPageText = await albumPage.data
             const songPageHTML = cheerio.load(albumPageText)
 
-            const songsUrls = songPageHTML('.u-display_block').map((index, item) => songPageHTML(item).attr('href')).get()
+            const name = songPageHTML('.header_with_cover_art-primary_info-title')
+                .text()
+                .trim()
+            
+            const date = songPageHTML('.header_with_cover_art-primary_info .metadata_unit')
+                .text()
+                .replace('Released ', '')
+                .trim()
+
+            const image = songPageHTML('.cover_art-image').attr('src')
+
+            const songsUrls = songPageHTML('.u-display_block')
+                .map((index, song) => songPageHTML(song)
+                .attr('href'))
+                .get()
+
             const songs = await Promise.all(songsUrls.map(async (songUrl) => await this.getSongFromGenius(songUrl)))
-            console.log(songs)
+
+            return {
+                name,
+                date,
+                image,
+                songs
+            }
 
         } catch (err) {
             return err
         }
     }
+
+    async getArtistIdFromGenius(name) {
+        const response = await axiosInstance.get(`https://api.genius.com/search?q=${new URLSearchParams(name).toString()}`)
+        const data = await response.data
+        const artistID = data.response.hits.find((hit) => hit.result.primary_artist.name === name).result.primary_artist.id
+        
+        console.log(artistID)
+        if (!artistID) {
+            console.log(`There is no artist ${name}`)
+            return
+        }
+        return artistID
+    }
+
+    async getArtistInfoFromGenius(id) {
+        const response = await axiosInstance.get(`https://api.genius.com/artists/${id}?text_format=plain`)
+        const data = await response.data
+        const description = data.response.artist.description.plain
+        const image = data.response.artist.image_url
+        const headerImage = data.response.artist.header_image_url
+        const facebook = data.response.artist.facebook_name 
+        const twitter = data.response.artist.twitter_name
+        const instagram = data.response.artist.instagram_name
+
+        return ({description, facebook, twitter, instagram, image, headerImage})
+    }
+
+    async getArtistFromGenius(url) {
+        try {
+            const artistPage = await axios.get(url)
+            const artistPageText = await artistPage.data
+            const artistPageHTML = cheerio.load(artistPageText)
+
+            const name = artistPageHTML('.profile_identity-name_iq_and_role_icon')
+                .text()
+                .trim()
+
+            const albumsUrls = artistPageHTML('.vertical_album_card')
+                .map((index, album) => artistPageHTML(album)
+                .attr('href'))
+                .get()
+
+
+            const id = await this.getArtistIdFromGenius(name)
+            const info = await this.getArtistInfoFromGenius(id)
+            const albums = await Promise.all(albumsUrls.map(async (albumUrl) => await this.getAlbumFromGenius(albumUrl)))
+
+            console.log({name, ...info, albums})
+            return ({name, ...info, albums})
+
+        } catch (err) {
+            return err
+        }
+    }
+
+    async saveArtistFromGeniusToDB(url) {
+        const data = await this.getArtistFromGenius(url) 
+        const artist = await new this.models.artists({
+            _id: new mongoose.Types.ObjectId(),
+            name: data.name,
+            instagram_name: data.instagram,
+            facebook_name: data.facebook,
+            description: data.description,
+            image: data.image,
+            image_header: data.headerImage,
+            albums: data.albums
+        })
+
+        return await artist.save()
+            .then((result) => result)
+            .catch((err) => err)
+    }
 }
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.getAlbumFromGenius('https://genius.com/albums/Architects/Lost-forever-lost-together')
+// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/saosin')
 
 module.exports = sberify
