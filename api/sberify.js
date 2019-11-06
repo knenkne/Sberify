@@ -2,10 +2,10 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const mongoose = require('mongoose');
 
-const accessToken = 'CpEs40XlbNB7iEH8GVVReQBF1wYcfqLq7gWVmjoKt_0DzkE2dx9bs_yjaX_NNhx6'
+const accessToken = 'H98Uk09tlFxhdKvbLR1JLWBmVtGxJqp_eXbI2bn-BWcboLT0JWSNHuzFnbOb5YpO'
 const axiosInstance = axios.create({
     baseURL: 'https://api.genius.com',
-    timeout: 3000,
+    timeout: 15000,
     headers: {
         Authorization: `Bearer ${accessToken}`
     }
@@ -15,6 +15,7 @@ const Schemas = {
     artist: mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
         name: String,
+        twitter_name: String,
         instagram_name: String,
         facebook_name: String,
         description: String,
@@ -178,10 +179,8 @@ class Sberify {
         const data = await response.data
         const artistID = data.response.hits.find((hit) => hit.result.primary_artist.name === name).result.primary_artist.id
         
-        console.log(artistID)
         if (!artistID) {
-            console.log(`There is no artist ${name}`)
-            return
+            return `There is no artist ${name}`
         }
         return artistID
     }
@@ -192,9 +191,9 @@ class Sberify {
         const description = data.response.artist.description.plain
         const image = data.response.artist.image_url
         const headerImage = data.response.artist.header_image_url
-        const facebook = data.response.artist.facebook_name 
-        const twitter = data.response.artist.twitter_name
-        const instagram = data.response.artist.instagram_name
+        const facebook = data.response.artist.facebook_name || null
+        const twitter = data.response.artist.twitter_name || null
+        const instagram = data.response.artist.instagram_name || null
 
         return ({description, facebook, twitter, instagram, image, headerImage})
     }
@@ -205,7 +204,8 @@ class Sberify {
             const artistPageText = await artistPage.data
             const artistPageHTML = cheerio.load(artistPageText)
 
-            const name = artistPageHTML('.profile_identity-name_iq_and_role_icon')
+            const name = artistPageHTML('.mini_card-subtitle')
+                .first()
                 .text()
                 .trim()
 
@@ -219,7 +219,6 @@ class Sberify {
             const info = await this.getArtistInfoFromGenius(id)
             const albums = await Promise.all(albumsUrls.map(async (albumUrl) => await this.getAlbumFromGenius(albumUrl)))
 
-            console.log({name, ...info, albums})
             return ({name, ...info, albums})
 
         } catch (err) {
@@ -229,9 +228,15 @@ class Sberify {
 
     async saveArtistFromGeniusToDB(url) {
         const data = await this.getArtistFromGenius(url) 
+
+        if (await this.models.artists.exists({ name: data.name })) {
+            return `Artist is already exists`
+        }
+
         const artist = await new this.models.artists({
             _id: new mongoose.Types.ObjectId(),
             name: data.name,
+            twitter_name: data.twitter,
             instagram_name: data.instagram,
             facebook_name: data.facebook,
             description: data.description,
@@ -248,6 +253,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/saosin')
+sberify.saveArtistFromGeniusToDB('https://genius.com/artists/The-devil-wears-prada')
 
 module.exports = sberify
