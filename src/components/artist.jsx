@@ -44,7 +44,7 @@ export default class Artist extends React.Component {
                                 <p> In August 2016, founding member and guitarist Tom Searle passed away from cancer. Drummer Dan Searle posted on Facebook that the future of the band remained uncertain after the conclusion of the All Our Gods… tour.</p>
                                 <p>To pretend that Tom wasn’t at the heart of everything that the band created would be to show a complete lack of respect to the amazing talent that he was. The band will never be the same and there is simply no denying it</p>
                             </div>
-                            <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/WqRYBWyvbRo?autoplay=1" frameborder="0" />
+                            <iframe id="ytplayer" type="text/html" width="640" height="360" title="Clip" src="https://www.youtube.com/embed/WqRYBWyvbRo?autoplay=1" frameborder="0" />
                         </div>
                         <div className="artist__block">
                             <article className="artist__songs">
