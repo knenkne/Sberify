@@ -1,6 +1,8 @@
 import React from 'react';
 import Lottie from 'lottie-react-web';
-import twitter from '../lottie/twitter.json';
+import twitter from '../lottie/twitter';
+import facebook from '../lottie/facebook';
+import instagram from '../lottie/instagram';
 import '../App.css';
 
 export default class Artist extends React.Component {
@@ -21,10 +23,20 @@ export default class Artist extends React.Component {
                             <h2 className="artist__name">Architects</h2>
                             <ul className="artist__socials">
                                 <li className="artist__twitter">
-                                    <Lottie options={{ animationData: twitter, loop: true }} />
+                                    <a href="#">
+                                        <Lottie options={{ animationData: twitter, loop: false }} />
+                                    </a>
                                 </li>
-                                <li className="artist__facebook"></li>
-                                <li className="artist__instagram"></li>
+                                <li className="artist__facebook">
+                                    <a href="#">
+                                        <Lottie options={{ animationData: facebook, loop: false }} />
+                                    </a>
+                                </li>
+                                <li className="artist__instagram">
+                                    <a href="#">
+                                        <Lottie options={{ animationData: instagram, loop: false }} />
+                                    </a>
+                                </li>
                             </ul>
                             <div className="artist__description">
                                 <p>Architects was formed in Brighton, England in 2005. They are known for their blend of math rock, metalcore, djent, and symphonic metal with sociopolitically charged lyrics. They have released eight studio albums as of 2018’s Holy Hell.</p>

@@ -1,11 +1,11 @@
 html {
-  font-family: 'Roboto', sans-serif;
   font-size: 2vw;
+  font-family: "Roboto", sans-serif;
 }
 
 .App-link {
-  color: #19bb4f;
   font-size: 4rem;
+  color: #19bb4f;
 }
 
 .App-text {
@@ -28,94 +28,106 @@ html {
   position: relative;
 
   display: block;
-  height: 10rem;
   width: 100%;
+  height: 10rem;
 
   background-image: url("https://images.genius.com/11d94a5c2954e02819f8338ef30bdf6c.1000x667x1.jpg");
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
 }
 
 .artist__header::before {
+  content: "";
   position: absolute;
-
-  content: '';
+  top: 0;
+  left: 0;
 
   width: 100%;
   height: 100%;
 
-  background: linear-gradient(to bottom,rgba(0,0,0,.1) 70%,rgba(0,0,0,.7) 93%,#000 99%);
-
-  left: 0;
-  top: 0;
+  background: linear-gradient(to bottom,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.7) 93%,#000000 99%);
 }
 
 .artist__info {
-  width: 60vw;
-  
   display: flex;
   flex-wrap: wrap;
-  outline: 1px solid red;
-
+  width: 60vw;
   margin: 0 auto;
 }
 
 .artist__block {
   position: relative;
 
-  width: 50%;
-  height: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 50%;
+  height: 100%;
 }
 
 .artist__image {
   position: absolute;
+  top: -7rem;
 
+  box-sizing: border-box;
   width: 8rem;
   height: 8rem;
 
-  box-sizing: border-box;
   border: 0.1rem solid #19bb4f;
   border-radius: 50%;
-
-  top: -7rem;
 }
 
 .artist__name {
-  font-size: 0.75rem;
+  position: relative;
+  z-index: 1;
 
+  margin: 1.75rem 0 0;
+
+  font-size: 0.75rem;
   color: #ffffff;
-  margin: 1.5rem 0 0;
   text-transform: uppercase;
 
   border-bottom: 0.05rem solid #19bb4f;
 }
 
 .artist__socials {
-  list-style: none;
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 4rem;
+  margin: 0.6rem 0;
   padding: 0;
+
+  list-style: none;
+}
+
+.artist__socials li {
+  width: 1rem;
+  height: 1rem;
 }
 
 .artist__description {
-  box-sizing: border-box;
+  position: relative;
 
+  box-sizing: border-box;
   width: 25vw;
+  margin: 1rem 0;
   padding: 1rem;
 
-  border-radius: 0.15rem;
   background-color: #ffffff;
-
-  margin: 0.5rem 0;
+  border-radius: 0.25rem;
+  box-shadow: 0.05rem 0.05rem 10rem 0.1rem rgba(25, 187, 79, 0.65);
 }
 
 .artist__description p {
-  font-size: 0.5rem;
-  
   margin: 0;
+
+  font-size: 0.5rem;
 }
 
 .artist__description p:not(:last-of-type) {
