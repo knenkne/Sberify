@@ -1,21 +1,6 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 7vw;
-  width: 7vw;
-}
-
-.App-header {
-  background-color: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2vw;
 }
 
 .App-link {
@@ -25,4 +10,114 @@
 
 .App-text {
   color: #000000;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background-color: #000000;
+}
+
+.artist {
+  width: 100%;
+}
+
+.artist__header {
+  position: relative;
+
+  display: block;
+  height: 10rem;
+  width: 100%;
+
+  background-image: url("https://images.genius.com/11d94a5c2954e02819f8338ef30bdf6c.1000x667x1.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.artist__header::before {
+  position: absolute;
+
+  content: '';
+
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(to bottom,rgba(0,0,0,.1) 70%,rgba(0,0,0,.7) 93%,#000 99%);
+
+  left: 0;
+  top: 0;
+}
+
+.artist__info {
+  width: 60vw;
+  
+  display: flex;
+  flex-wrap: wrap;
+  outline: 1px solid red;
+
+  margin: 0 auto;
+}
+
+.artist__block {
+  position: relative;
+
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.artist__image {
+  position: absolute;
+
+  width: 8rem;
+  height: 8rem;
+
+  box-sizing: border-box;
+  border: 0.1rem solid #19bb4f;
+  border-radius: 50%;
+
+  top: -7rem;
+}
+
+.artist__name {
+  font-size: 0.75rem;
+
+  color: #ffffff;
+  margin: 1.5rem 0 0;
+  text-transform: uppercase;
+
+  border-bottom: 0.05rem solid #19bb4f;
+}
+
+.artist__socials {
+  list-style: none;
+  padding: 0;
+}
+
+.artist__description {
+  box-sizing: border-box;
+
+  width: 25vw;
+  padding: 1rem;
+
+  border-radius: 0.15rem;
+  background-color: #ffffff;
+
+  margin: 0.5rem 0;
+}
+
+.artist__description p {
+  font-size: 0.5rem;
+  
+  margin: 0;
+}
+
+.artist__description p:not(:last-of-type) {
+  margin-bottom: 0.5rem;
 }

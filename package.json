@@ -13,6 +13,7 @@
     "debug": "~2.6.9",
     "express": "^4.16.4",
     "genius-api": "^0.4.1",
+    "lottie-react-web": "^2.1.4",
     "mongodb": "^3.3.3",
     "mongoose": "^5.7.7",
     "morgan": "^1.9.1",

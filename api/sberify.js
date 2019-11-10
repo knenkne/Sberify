@@ -246,13 +246,13 @@ class Sberify {
         })
 
         return await artist.save()
-            .then((result) => result)
+            .then((result) => console.log(result))
             .catch((err) => err)
     }
 }
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/The-devil-wears-prada')
+sberify.saveArtistFromGeniusToDB('https://genius.com/artists/alesana')
 
 module.exports = sberify
