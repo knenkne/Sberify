@@ -14,17 +14,18 @@ export default class Play extends React.Component {
 
     this.lottie = React.createRef();
   }
-  
+
   componentDidMount() {
     this.lottie.current.anim.playSegments(this.state.segments, true)
   }
 
   onIconClick = () => {
-      this.setState({
-        segments: this.state.segments.reverse()
-      }, () => {
-        this.lottie.current.anim.playSegments(this.state.segments, true)
-      })
+    this.props.onClick()
+    this.setState({
+      segments: this.state.segments.reverse()
+    }, () => {
+      this.lottie.current.anim.playSegments(this.state.segments, true)
+    })
   };
 
   onIconLeave = () => {
@@ -33,9 +34,9 @@ export default class Play extends React.Component {
 
   render() {
     return (
-        <button className="song__play" onClick={this.onIconClick}>    
-            <Lottie ref={this.lottie} options={{ animationData: this.props.data, loop: false, autoplay: false }} />
-        </button>
+      <button className="song__play" onClick={this.onIconClick}>
+        <Lottie ref={this.lottie} options={{ animationData: this.props.data, loop: false, autoplay: false }} />
+      </button>
     );
   }
 }

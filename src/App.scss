@@ -46,15 +46,15 @@ h4 {
     width: 100%;
     height: 100%;
 
-    background: linear-gradient(to bottom,rgba(0,0,0,0.1) 70%,rgba(0,0,0,0.7) 93%,#000000 99%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.7) 93%, #000000 99%);
   }
 }
 
 .artist__info {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 7%;
   margin: 0 auto;
+  padding: 0 7%;
 }
 
 .artist__block {
@@ -110,6 +110,7 @@ h4 {
   li {
     position: relative;
     z-index: 1;
+
     width: 1rem;
     height: 1rem;
   }
@@ -188,10 +189,12 @@ h4 {
 
         width: 4rem;
         height: 4rem;
-        box-shadow: 0px 0px 200px 20px rgba(25, 187, 79, 0.5);
 
-        transition-duration: 0.15s;;
+        box-shadow: 0 0 200px 20px rgba(25, 187, 79, 0.5);
+
+        transition-duration: 0.15s;
         transition-property: transform;
+        ;
       }
 
       h3 {
@@ -242,6 +245,26 @@ h4 {
     width: 9rem;
     height: 1.15rem;
 
+    &.song--playing {
+      h3 {
+        transform: translateY(-0.2rem);
+
+        transition-duration: 0.15s;
+        transition-property: transform;
+      }
+
+      h4 {
+        transform: translateY(0.2rem);
+
+        transition-duration: 0.15s;
+        transition-property: transform;
+      }
+
+      > .song__info .song__progress {
+        opacity: 1;
+      }
+    }
+
     &:not(:last-of-type) {
       margin-bottom: 0.15rem;
     }
@@ -254,17 +277,66 @@ h4 {
     }
 
     .song__info {
+      position: relative;
+
+      width: 6.7rem;
+
       h3,
       h4 {
         color: #ffffff;
+
+        transition-duration: 0.15s;
+        transition-property: transform;
       }
 
       h3 {
         font-size: 0.35rem;
+        line-height: 0.35rem;
       }
 
       h4 {
         font-size: 0.25rem;
+        line-height: 0.35rem;
+      }
+
+      .song__progress {
+        position: absolute;
+        top: calc(50% - 1px / 2);
+        left: 0;
+
+        width: 100%;
+        height: 1px;
+
+        background-color: #19bb4f;
+        opacity: 0;
+
+        transition-duration: 0.3s;
+        transition-property: opacity;
+
+        .song__control {
+          position: absolute;
+          top: calc(50% - 0.275rem / 2);
+          left: 0;
+
+          box-sizing: border-box;
+          width: 0.275rem;
+          height: 0.275rem;
+
+          background-color: #19bb4f;
+          border: 0.0474rem solid #f5f5f5;
+          border-radius: 50%;
+          box-shadow: 0 0 3px 1.5px rgba(25, 187, 79, 0.55);
+        }
+
+        .song__time {
+          position: absolute;
+          top: -0.35rem;
+          right: 0;
+
+          font-size: 0.35rem;
+          line-height: 0.35rem;
+          color: #ffffff;
+        }
       }
     }
 
@@ -286,8 +358,8 @@ h4 {
 iframe {
   position: relative;
   z-index: 1;
+
   width: 12rem;
   height: 6.75rem;
-
   margin: 0.75rem 0;
 }
