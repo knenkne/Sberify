@@ -7,9 +7,7 @@ export default class Play extends React.Component {
     super(props);
 
     this.state = {
-      isStopped: true,
-      segments: [0, 8],
-      playDirection: 1
+      segments: this.props.isPlaying ? [8, 0] : [0, 8]
     };
 
     this.lottie = React.createRef();
@@ -17,19 +15,15 @@ export default class Play extends React.Component {
 
   componentDidMount() {
     this.lottie.current.anim.playSegments(this.state.segments, true)
+    console.log(this.lottie.current.anim.getDuration(false))
   }
 
   onIconClick = () => {
-    this.props.onClick()
     this.setState({
       segments: this.state.segments.reverse()
     }, () => {
       this.lottie.current.anim.playSegments(this.state.segments, true)
     })
-  };
-
-  onIconLeave = () => {
-    this.setState({ isStopped: true });
   };
 
   render() {
