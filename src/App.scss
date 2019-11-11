@@ -249,14 +249,14 @@ h4 {
       h3 {
         transform: translateY(-0.2rem);
 
-        transition-duration: 0.26s;
+        transition-duration: 0.15s;
         transition-property: transform;
       }
 
       h4 {
         transform: translateY(0.2rem);
 
-        transition-duration: 0.26s;
+        transition-duration: 0.15s;
         transition-property: transform;
       }
 
@@ -285,7 +285,7 @@ h4 {
       h4 {
         color: #ffffff;
 
-        transition-duration: 0.26s;
+        transition-duration: 0.15s;
         transition-property: transform;
       }
 
@@ -307,7 +307,7 @@ h4 {
         width: 100%;
 
         opacity: 0;
-        transition-duration: 0.26s;
+        transition-duration: 0.15s;
         transition-property: opacity;
 
         .song__progress {
