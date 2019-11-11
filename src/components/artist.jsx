@@ -1,10 +1,14 @@
 import React from "react";
+
 import Social from "./social";
 import Song from "./song";
+import Album from "./album";
+
 import twitter from "../lottie/twitter";
 import facebook from "../lottie/facebook";
 import instagram from "../lottie/instagram";
 import play from "../lottie/play";
+
 import "../App.scss";
 
 export default class Artist extends React.Component {
@@ -79,54 +83,12 @@ export default class Artist extends React.Component {
               <article className="artist__albums">
                 <h4>Latest Albums</h4>
                 <ul>
-                  <li className="album">
-                    <img
-                      src="https://t2.genius.com/unsafe/300x0/https%3A%2F%2Fimages.genius.com%2Ff551b358be75a07ae87fbbff22e1a93f.640x640x1.jpg"
-                      alt="Album"
-                    />
-                    <h3>Spotify Singles</h3>
-                    <span>2019</span>
-                  </li>
-                  <li className="album">
-                    <img
-                      src="https://images.genius.com/9bfc1be88070994ad4fbe90140f50cdb.300x300x1.jpg"
-                      alt="Album"
-                    />
-                    <h3>Holy Hell</h3>
-                    <span>2018</span>
-                  </li>
-                  <li className="album">
-                    <img
-                      src="https://t2.genius.com/unsafe/150x0/https%3A%2F%2Fimages.genius.com%2F0e1f84ddb67d4e5fd1fe45e9511206ac.300x300x1.jpg"
-                      alt="Album"
-                    />
-                    <h3>Daybreaker</h3>
-                    <span>2012</span>
-                  </li>
-                  <li className="album">
-                    <img
-                      src="https://images.genius.com/50300f39b82906f25d376f7f3ef32551.300x300x1.jpg"
-                      alt="Album"
-                    />
-                    <h3>All Our Gods Have Abandoned Us</h3>
-                    <span>2016</span>
-                  </li>
-                  <li className="album">
-                    <img
-                      src="https://t2.genius.com/unsafe/150x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.300x300x1.jpg"
-                      alt="Album"
-                    />
-                    <h3>Lost Forever // Lost Together</h3>
-                    <span>2014</span>
-                  </li>
-                  <li className="album">
-                    <img
-                      src="https://t2.genius.com/unsafe/300x0/https%3A%2F%2Fimages.genius.com%2F88247065a75bd0e82f3eba3c8aa79d76.1000x1000x1.jpg"
-                      alt="Album"
-                    />
-                    <h3>The Here and Now</h3>
-                    <span>2011</span>
-                  </li>
+                  <Album name="Spotify Singles" date="2019" image="https://t2.genius.com/unsafe/300x0/https%3A%2F%2Fimages.genius.com%2Ff551b358be75a07ae87fbbff22e1a93f.640x640x1.jpg" />
+                  <Album name="Holy Hell" date="2018" image="https://images.genius.com/9bfc1be88070994ad4fbe90140f50cdb.300x300x1.jpg" />
+                  <Album name="Daybreaker" date="2012" image="https://t2.genius.com/unsafe/150x0/https%3A%2F%2Fimages.genius.com%2F0e1f84ddb67d4e5fd1fe45e9511206ac.300x300x1.jpg" />
+                  <Album name="All Our Gods Have Abandoned Us" date="2016" image="https://images.genius.com/50300f39b82906f25d376f7f3ef32551.300x300x1.jpg" />
+                  <Album name="Lost Forever // Lost Together" date="2014" image="https://t2.genius.com/unsafe/150x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.300x300x1.jpg" />
+                  <Album name="The Here and Now" date="2011" image="https://t2.genius.com/unsafe/300x0/https%3A%2F%2Fimages.genius.com%2F88247065a75bd0e82f3eba3c8aa79d76.1000x1000x1.jpg" />
                 </ul>
               </article>
             </div>
