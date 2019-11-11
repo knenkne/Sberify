@@ -1,6 +1,7 @@
 import React from "react";
 import Lottie from "lottie-react-web";
 import Social from "./social";
+import Play from "./play";
 import twitter from "../lottie/twitter";
 import facebook from "../lottie/facebook";
 import instagram from "../lottie/instagram";
@@ -63,7 +64,7 @@ export default class Artist extends React.Component {
                 width="640"
                 height="360"
                 title="Clip"
-                src="https://www.youtube.com/embed/WqRYBWyvbRo?autoplay=0"
+                src="https://www.youtube.com/embed/WqRYBWyvbRo?autoplay=1&mute=1"
                 frameBorder="0"
               />
             </div>
@@ -72,9 +73,7 @@ export default class Artist extends React.Component {
                 <h4>Popular Songs</h4>
                 <ul>
                   <li className="song">
-                    <button className="song__play">
-                      <Lottie options={{ animationData: play, loop: false }} />
-                    </button>
+                    <Play data={play} />
                     <img
                       src="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F24107992fb59cf17720ec63b6677ea95.1000x1000x1.jpg"
                       alt="Song"
@@ -85,9 +84,7 @@ export default class Artist extends React.Component {
                     </div>
                   </li>
                   <li className="song">
-                    <button className="song__play">
-                      <Lottie options={{ animationData: play, loop: false }} />
-                    </button>
+                    <Play data={play} />
                     <img
                       src="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F50300f39b82906f25d376f7f3ef32551.1000x1000x1.jpg"
                       alt="Song"
@@ -98,9 +95,7 @@ export default class Artist extends React.Component {
                     </div>
                   </li>
                   <li className="song">
-                    <button className="song__play">
-                      <Lottie options={{ animationData: play, loop: false }} />
-                    </button>
+                    <Play data={play} />
                     <img
                       src="https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.1000x1000x1.jpg"
                       alt="Song"
