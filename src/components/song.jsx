@@ -18,12 +18,16 @@ export default class Song extends React.Component {
         this.song = new Audio(this.state.url)
         this.song.volume = 0.05;
 
-        this.lottie = React.createRef();
+        // this.lottie = React.createRef();
     }
 
     componentDidMount() {
-        this.lottie.current.anim.goToAndStop(7, true)
-        this.lottie.current.anim.setSpeed(0.1)
+        // this.lottie.current.anim.goToAndStop(7, true)
+        // this.lottie.current.anim.setSpeed(0.1)
+    }
+
+    shouldComponentUpdate() {
+        return true
     }
 
     onPlayClick = () => {
@@ -32,8 +36,29 @@ export default class Song extends React.Component {
         }, () => {
             switch (true) {
                 case this.state.isPlaying:
+                        const interval = setInterval(() => {
+                            this.setState({
+                                timeline: +(this.state.timeline + 0.01).toFixed(3)
+                            })
+            
+                            // this.lottie.current.anim.goToAndStop(0, true)
+            
+                            if (this.state.timeline >= this.state.duration) {
+                                this.setState({
+                                    isPlaying: false,
+                                    timeline: 0,
+                                    interval: clearInterval(this.state.interval) || null
+                                })
+            
+                                // this.lottie.current.anim.playSegments([0, 8], true)
+                                this.song.pause()
+                                this.song.currentTime = 0
+                            }
+                        }, 10)
+            
+                        this.setState({ interval })
                     this.song.play()
-                    this.lottie.current.anim.playSegments([8, 0], true)
+                    // this.lottie.current.anim.playSegments([8, 0], true)
                     break
 
                 default:
@@ -42,7 +67,7 @@ export default class Song extends React.Component {
                     })
 
                     this.song.pause()
-                    this.lottie.current.anim.playSegments([0, 8], true)
+                    // this.lottie.current.anim.playSegments([0, 8], true)
             }
 
         })
@@ -55,7 +80,7 @@ export default class Song extends React.Component {
                     timeline: +(this.state.timeline + 0.01).toFixed(3)
                 })
 
-                this.lottie.current.anim.goToAndStop(0, true)
+                // this.lottie.current.anim.goToAndStop(0, true)
 
                 if (this.state.timeline >= this.state.duration) {
                     this.setState({
@@ -64,7 +89,7 @@ export default class Song extends React.Component {
                         interval: clearInterval(this.state.interval) || null
                     })
 
-                    this.lottie.current.anim.playSegments([0, 8], true)
+                    // this.lottie.current.anim.playSegments([0, 8], true)
                     this.song.pause()
                     this.song.currentTime = 0
                 }
@@ -77,9 +102,10 @@ export default class Song extends React.Component {
     render() {
         return (
             <li className={`song${this.state.isPlaying ? ' song--playing' : ''}`}>
-                <button className="song__play" onClick={this.onPlayClick}>
+                {/* <button className="song__play" onClick={this.onPlayClick}>
                     <Lottie eventListeners={[{ eventName: 'complete', callback: this.onPlayAnimationCompelte }]} ref={this.lottie} options={{ animationData: this.props.icon, loop: false, autoplay: false }} />
-                </button>
+                </button> */}
+                <Play data={this.props.icon} onClickHandler={this.onPlayClick}/>
                 <img
                     src={this.props.image}
                     alt={this.props.name}
