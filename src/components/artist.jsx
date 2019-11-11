@@ -1,7 +1,6 @@
 import React from "react";
-import Lottie from "lottie-react-web";
 import Social from "./social";
-import Play from "./play";
+import Song from "./song";
 import twitter from "../lottie/twitter";
 import facebook from "../lottie/facebook";
 import instagram from "../lottie/instagram";
@@ -72,39 +71,9 @@ export default class Artist extends React.Component {
               <article className="artist__songs">
                 <h4>Popular Songs</h4>
                 <ul>
-                  <li className="song">
-                    <Play data={play} />
-                    <img
-                      src="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F24107992fb59cf17720ec63b6677ea95.1000x1000x1.jpg"
-                      alt="Song"
-                    />
-                    <div className="song__info">
-                      <h3>Doomsday</h3>
-                      <h4>Architects</h4>
-                    </div>
-                  </li>
-                  <li className="song">
-                    <Play data={play} />
-                    <img
-                      src="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F50300f39b82906f25d376f7f3ef32551.1000x1000x1.jpg"
-                      alt="Song"
-                    />
-                    <div className="song__info">
-                      <h3>Gone with the Wind</h3>
-                      <h4>Architects</h4>
-                    </div>
-                  </li>
-                  <li className="song">
-                    <Play data={play} />
-                    <img
-                      src="https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.1000x1000x1.jpg"
-                      alt="Song"
-                    />
-                    <div className="song__info">
-                      <h3>Gravedigger</h3>
-                      <h4>Architects</h4>
-                    </div>
-                  </li>
+                  <Song icon={play} name="Doomsday" artist="Archirects" image="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F24107992fb59cf17720ec63b6677ea95.1000x1000x1.jpg" />
+                  <Song icon={play} name="Gone with the Wind" artist="Archirects" image="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F50300f39b82906f25d376f7f3ef32551.1000x1000x1.jpg" />
+                  <Song icon={play} name="Gravedigger" artist="Archirects" image="https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.1000x1000x1.jpg" />
                 </ul>
               </article>
               <article className="artist__albums">
