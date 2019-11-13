@@ -51,7 +51,7 @@ export default class Artist extends React.Component {
   }
 
   getData = async () => {
-    const response = await axios.get("api/artist/Architects");
+    const response = await axios.get("/api/artist/Neck Deep");
     const data = await response.data;
 
     this.setState({
