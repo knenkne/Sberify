@@ -5,7 +5,7 @@ import "../App.scss";
 export default class Social extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       isStopped: true,
     };
@@ -22,7 +22,7 @@ export default class Social extends React.Component {
   render() {
     return (
       <li
-        className="artist__twitter"
+        className="artist__social"
         onMouseEnter={this.onIconEnter}
         onMouseLeave={this.onIconLeave}
       >

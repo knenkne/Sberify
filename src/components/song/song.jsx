@@ -7,16 +7,14 @@ export default class Song extends React.Component {
     super(props);
 
     this.state = {
-      duration: 2,
+      duration: 30,
       isPlaying: false,
       isPlayed: false,
       timeline: 0,
-      interval: null,
-      url:
-        "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/f8/12/83/f812839e-12bf-2656-2885-1377892d40d4/mzaf_6180457969525247890.plus.aac.p.m4a"
+      interval: null
     };
 
-    this.song = new Audio(this.state.url);
+    this.song = new Audio(this.props.url);
     this.song.volume = 0.05;
   }
 

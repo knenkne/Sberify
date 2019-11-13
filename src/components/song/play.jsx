@@ -6,20 +6,20 @@ export default class Play extends React.Component {
     super(props);
 
     this.state = {
-      segments: [0, 8]
+      segments: [0, 8.75]
     };
 
     this.lottie = React.createRef();
   }
 
   componentDidMount() {
-    this.lottie.current.anim.goToAndStop(7, true);
+    this.lottie.current.anim.goToAndStop(7.99, true);
   }
 
   componentDidUpdate() {
     this.setState({
       segments: this.state.segments.reverse()
-    })
+    });
   }
 
   shouldComponentUpdate() {

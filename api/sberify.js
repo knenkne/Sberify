@@ -67,6 +67,7 @@ class Sberify {
     }
 
     normalizeName(name) {
+        console.log(name)
         return name.split('').map((letter) => letter === '-' ? ' ' : letter).join('')
     }
 
@@ -80,12 +81,13 @@ class Sberify {
         return this.models.favoriteArtists.find({}, (err, artists) => artists)
     }
 
+
     async addArtistToFavorites(name) {
         const normalizedName = this.normalizeName(name)
 
         if (await this.models.favoriteArtists.exists({
-                name: normalizedName
-            })) {
+            name: normalizedName
+        })) {
             return `Favorite artist is already exists`
         }
 
@@ -112,11 +114,11 @@ class Sberify {
             const songPage = await axios.get(url)
             const songPageText = await songPage.data
             const songPageHTML = cheerio.load(songPageText)
-            
+
             const name = songPageHTML('.header_with_cover_art-primary_info-title')
                 .text()
                 .trim()
- 
+
             const artist = songPageHTML('.header_with_cover_art-primary_info-primary_artist')
                 .text()
                 .trim()
@@ -131,7 +133,7 @@ class Sberify {
             const musicPlayerHTML = cheerio.load(musicPlayerText)
             const songPlayerUrl = musicPlayerHTML('apple-music-player').attr('preview_track') ? JSON.parse(musicPlayerHTML('apple-music-player').attr('preview_track')).preview_url : null
 
-            return ({name,  songPlayerUrl})
+            return ({ name, songPlayerUrl })
 
         } catch (err) {
             return err
@@ -147,7 +149,7 @@ class Sberify {
             const name = songPageHTML('.header_with_cover_art-primary_info-title')
                 .text()
                 .trim()
-            
+
             const date = songPageHTML('.header_with_cover_art-primary_info .metadata_unit')
                 .text()
                 .replace('Released ', '')
@@ -157,7 +159,7 @@ class Sberify {
 
             const songsUrls = songPageHTML('.u-display_block')
                 .map((index, song) => songPageHTML(song)
-                .attr('href'))
+                    .attr('href'))
                 .get()
 
             const songs = await Promise.all(songsUrls.map(async (songUrl) => await this.getSongFromGenius(songUrl)))
@@ -178,7 +180,7 @@ class Sberify {
         const response = await axiosInstance.get(`https://api.genius.com/search?q=${new URLSearchParams(name).toString()}`)
         const data = await response.data
         const artistID = data.response.hits.find((hit) => hit.result.primary_artist.name === name).result.primary_artist.id
-        
+
         if (!artistID) {
             return `There is no artist ${name}`
         }
@@ -195,7 +197,7 @@ class Sberify {
         const twitter = data.response.artist.twitter_name || null
         const instagram = data.response.artist.instagram_name || null
 
-        return ({description, facebook, twitter, instagram, image, headerImage})
+        return ({ description, facebook, twitter, instagram, image, headerImage })
     }
 
     async getArtistFromGenius(url) {
@@ -211,7 +213,7 @@ class Sberify {
 
             const albumsUrls = artistPageHTML('.vertical_album_card')
                 .map((index, album) => artistPageHTML(album)
-                .attr('href'))
+                    .attr('href'))
                 .get()
 
 
@@ -219,7 +221,7 @@ class Sberify {
             const info = await this.getArtistInfoFromGenius(id)
             const albums = await Promise.all(albumsUrls.map(async (albumUrl) => await this.getAlbumFromGenius(albumUrl)))
 
-            return ({name, ...info, albums})
+            return ({ name, ...info, albums })
 
         } catch (err) {
             return err
@@ -227,7 +229,7 @@ class Sberify {
     }
 
     async saveArtistFromGeniusToDB(url) {
-        const data = await this.getArtistFromGenius(url) 
+        const data = await this.getArtistFromGenius(url)
 
         if (await this.models.artists.exists({ name: data.name })) {
             return `Artist is already exists`
@@ -253,6 +255,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/underoath')
+// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Architects')
 
 module.exports = sberify

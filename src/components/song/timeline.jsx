@@ -18,7 +18,7 @@ export default class Timeline extends React.Component {
         <div
           className="song__control"
           style={{
-            left: `${(this.props.timeline / this.props.duration) * 100}%`
+            left: `${(this.props.timeline / this.props.duration) * 98}%`
           }}
         ></div>
         <span className="song__time">

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Social from "./social";
 import Song from "./song/song";
@@ -11,55 +12,104 @@ import play from "../lottie/play";
 
 import "../App.scss";
 
+const socialsMap = {
+  twitter: {
+    isLooped: true,
+    data: twitter
+  },
+  facebook: {
+    isLooped: true,
+    data: facebook
+  },
+  instagram: {
+    isLooped: false,
+    data: instagram
+  }
+};
+
 export default class Artist extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isStopped: true,
-      isPaused: false
+      isPaused: false,
+      artist: {
+        name: "",
+        description: "",
+        socials: {
+          twitter: "",
+          facebook: "",
+          instagram: ""
+        },
+        albums: []
+      }
     };
 
+    this.getData();
     this.lottie = React.createRef();
   }
+
+  getData = async () => {
+    const response = await axios.get("/artist/Neck Deep");
+    const data = await response.data;
+
+    this.setState({
+      artist: {
+        socials: {
+          twitter: await data.twitter_name,
+          facebook: await data.facebook_name,
+          instagram: await data.instagram_name
+        },
+        name: await data.name,
+        description: await data.description,
+        image: await data.image,
+        headerImage: await data.image_header,
+        albums: await data.albums
+      }
+    });
+  };
 
   render() {
     return (
       <div className="container">
         <section className="artist">
-          <div className="artist__header"></div>
+          <div
+            className="artist__header"
+            style={{ backgroundImage: `url(${this.state.artist.headerImage}` }}
+          ></div>
           <div className="artist__info">
             <div className="artist__block">
               <img
-                src="https://images.genius.com/9b28279cfa5bbfee31181d32d6c5901a.750x750x1.jpg"
+                src={this.state.artist.image}
                 alt="Artist"
                 className="artist__image"
               />
-              <h2 className="artist__name">Architects</h2>
+              <h2 className="artist__name">{this.state.artist.name}</h2>
               <ul className="artist__socials">
-                <Social data={twitter} isLooped={true} />
-                <Social data={facebook} isLooped={true} />
-                <Social data={instagram} isLooped={false} />
+                {Object.entries(this.state.artist.socials).map(
+                  ([name, userName]) => {
+                    if (!userName) {
+                      return "";
+                    }
+
+                    return (
+                      <Social
+                        key={name}
+                        data={socialsMap[name].data}
+                        isLooped={socialsMap[name].isLooped}
+                        link={`https://${name}.com/${userName}`}
+                      />
+                    );
+                  }
+                )}
               </ul>
               <div className="artist__description">
-                <p>
-                  Architects was formed in Brighton, England in 2005. They are
-                  known for their blend of math rock, metalcore, djent, and
-                  symphonic metal with sociopolitically charged lyrics. They
-                  have released eight studio albums as of 2018’s Holy Hell.
-                </p>
-                <p>
-                  In August 2016, founding member and guitarist Tom Searle
-                  passed away from cancer. Drummer Dan Searle posted on Facebook
-                  that the future of the band remained uncertain after the
-                  conclusion of the All Our Gods… tour.
-                </p>
-                <p>
-                  To pretend that Tom wasn’t at the heart of everything that the
-                  band created would be to show a complete lack of respect to
-                  the amazing talent that he was. The band will never be the
-                  same and there is simply no denying it
-                </p>
+                {this.state.artist.description
+                  .split("\n\n")
+                  .map((item, index) => {
+                    return <p key={index}>{item}</p>;
+                  })}
               </div>
               <iframe
                 id="ytplayer"
@@ -75,20 +125,13 @@ export default class Artist extends React.Component {
               <article className="artist__songs">
                 <h4>Popular Songs</h4>
                 <ul>
-                  <Song icon={play} name="Doomsday" artist="Architects" image="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F24107992fb59cf17720ec63b6677ea95.1000x1000x1.jpg" />
-                  <Song icon={play} name="Gone with the Wind" artist="Architects" image="https://t2.genius.com/unsafe/220x220/https%3A%2F%2Fimages.genius.com%2F50300f39b82906f25d376f7f3ef32551.1000x1000x1.jpg" />
-                  <Song icon={play} name="Gravedigger" artist="Architects" image="https://t2.genius.com/unsafe/220x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.1000x1000x1.jpg" />
+                  {this.state.artist.albums.slice(0, 3).map((album) => <Song icon={play} name={album.songs[0].name} artist={this.state.artist.name} image={album.image} url={album.songs[0].songPlayerUrl} />)}
                 </ul>
               </article>
               <article className="artist__albums">
                 <h4>Latest Albums</h4>
                 <ul>
-                  <Album name="Spotify Singles" date="2019" image="https://t2.genius.com/unsafe/300x0/https%3A%2F%2Fimages.genius.com%2Ff551b358be75a07ae87fbbff22e1a93f.640x640x1.jpg" />
-                  <Album name="Holy Hell" date="2018" image="https://images.genius.com/9bfc1be88070994ad4fbe90140f50cdb.300x300x1.jpg" />
-                  <Album name="Daybreaker" date="2012" image="https://t2.genius.com/unsafe/150x0/https%3A%2F%2Fimages.genius.com%2F0e1f84ddb67d4e5fd1fe45e9511206ac.300x300x1.jpg" />
-                  <Album name="All Our Gods Have Abandoned Us" date="2016" image="https://images.genius.com/50300f39b82906f25d376f7f3ef32551.300x300x1.jpg" />
-                  <Album name="Lost Forever // Lost Together" date="2014" image="https://t2.genius.com/unsafe/150x0/https%3A%2F%2Fimages.genius.com%2Fba1d44c4be5036977fcba61bb918572d.300x300x1.jpg" />
-                  <Album name="The Here and Now" date="2011" image="https://t2.genius.com/unsafe/300x0/https%3A%2F%2Fimages.genius.com%2F88247065a75bd0e82f3eba3c8aa79d76.1000x1000x1.jpg" />
+                  {this.state.artist.albums.map((album) => <Album name={album.name} date={album.date} image={album.image} />)}
                 </ul>
               </article>
             </div>
