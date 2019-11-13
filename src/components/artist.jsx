@@ -1,9 +1,13 @@
 import React from "react";
 import axios from "axios";
 
+import { connect } from "react-redux";
+import { actions } from "../store";
+
 import Social from "./social";
 import Song from "./song/song";
 import Album from "./album";
+import Video from "./video";
 
 import twitter from "../lottie/twitter";
 import facebook from "../lottie/facebook";
@@ -27,13 +31,11 @@ const socialsMap = {
   }
 };
 
-export default class Artist extends React.Component {
+class Artist extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isStopped: true,
-      isPaused: false,
       artist: {
         name: "",
         description: "",
@@ -42,16 +44,20 @@ export default class Artist extends React.Component {
           facebook: "",
           instagram: ""
         },
-        albums: []
+        albums: [],
+        video: ""
       }
     };
 
     this.getData();
-    this.lottie = React.createRef();
   }
 
+  onMouseUp = () => {
+    this.props.changeDrug(true)
+  };
+
   getData = async () => {
-    const response = await axios.get("/api/artist/Neck Deep");
+    const response = await axios.get("/api/artist/Architects");
     const data = await response.data;
 
     this.setState({
@@ -65,14 +71,15 @@ export default class Artist extends React.Component {
         description: await data.description,
         image: await data.image,
         headerImage: await data.image_header,
-        albums: await data.albums
+        albums: await data.albums,
+        video: await data.video
       }
     });
   };
 
   render() {
     return (
-      <div className="container">
+      <div className="container" onMouseUp={this.onMouseUp}>
         <section className="artist">
           <div
             className="artist__header"
@@ -111,27 +118,37 @@ export default class Artist extends React.Component {
                     return <p key={index}>{item}</p>;
                   })}
               </div>
-              <iframe
-                id="ytplayer"
-                type="text/html"
-                width="640"
-                height="360"
-                title="Clip"
-                src="https://www.youtube.com/embed/WqRYBWyvbRo?autoplay=1&mute=1"
-                frameBorder="0"
-              />
+              {this.state.artist.video && (
+                <Video link={this.state.artist.video} />
+              )}
             </div>
             <div className="artist__block">
               <article className="artist__songs">
                 <h4>Popular Songs</h4>
                 <ul>
-                  {this.state.artist.albums.slice(0, 3).map((album) => <Song icon={play} name={album.songs[0].name} artist={this.state.artist.name} image={album.image} url={album.songs[0].songPlayerUrl} />)}
+                  {this.state.artist.albums.slice(0, 3).map(album => (
+                    <Song
+                      icon={play}
+                      key={album.songs[0].name}
+                      name={album.songs[0].name}
+                      artist={this.state.artist.name}
+                      image={album.image}
+                      url={album.songs[0].songPlayerUrl}
+                    />
+                  ))}
                 </ul>
               </article>
               <article className="artist__albums">
                 <h4>Latest Albums</h4>
                 <ul>
-                  {this.state.artist.albums.map((album) => <Album name={album.name} date={album.date} image={album.image} />)}
+                  {this.state.artist.albums.map(album => (
+                    <Album
+                      key={album.name}
+                      name={album.name}
+                      date={album.date}
+                      image={album.image}
+                    />
+                  ))}
                 </ul>
               </article>
             </div>
@@ -141,3 +158,13 @@ export default class Artist extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isDragged: state.isDragged
+});
+
+const mapDispatchToProps = {
+  changeDrug: actions.changeDrug
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Artist);

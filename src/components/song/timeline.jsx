@@ -4,8 +4,71 @@ export default class Timeline extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      isDragged: false,
+      coords: {
+        x: 0,
+        y: 0
+      }
+    };
+
+    this.timelineCoords = {
+      x: 944.4375,
+      y: 174.5
+    };
   }
+
+  // onMouseDown = (evt) => {
+  //   evt.preventDefault();
+
+  //   console.log("click");
+  // this.setState({
+  //   isDragged: false
+  // });
+
+  // this.props.onClickHandler();
+  // };
+
+  onMouseDown = evt => {
+    evt.preventDefault();
+    console.log("draggn");
+    const control = evt.target;
+
+    this.setState({
+      coords: {
+        x: control.offsetLeft,
+        y: control.offsetTop
+      },
+      isDragged: true
+    });
+
+    this.props.onClickHandler();
+  };
+
+  onMouseUp = (evt) => {
+    evt.preventDefault();
+    console.log("rofl");
+    const control = evt.target;
+
+    this.setState({
+      isDragged: false,
+      coords: {
+        x: this.state.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x,
+        y: this.state.isDragged ? control.offsetTop : this.state.coords.y
+      }
+    });
+  };
+
+  onMouseMove = (evt) => {
+    evt.preventDefault();
+    const control = evt.target;
+    this.setState({
+      coords: {
+        x: this.state.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x,
+        y: this.state.isDragged ? control.offsetTop : this.state.coords.y
+      }
+    });
+  };
 
   render() {
     return (
@@ -17,8 +80,12 @@ export default class Timeline extends React.Component {
         ></progress>
         <div
           className="song__control"
+          onMouseDown={this.onMouseDown}
+          onMouseMove={this.onMouseMove}
+          onMouseUp={this.onMouseUp}
+          onMouseLeave={this.onMouseUp}
           style={{
-            left: `${(this.props.timeline / this.props.duration) * 98}%`
+            left: (this.state.isDragged && `${this.state.coords.x}px`) || `${(this.props.timeline / this.props.duration) * 98}%`
           }}
         ></div>
         <span className="song__time">
