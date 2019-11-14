@@ -14,8 +14,6 @@ class Song extends React.Component {
     this.state = {
       isDragged: false
     };
-
-    this.timeline = React.createRef();
   }
 
   onMouseDown = () => {
@@ -99,7 +97,6 @@ class Song extends React.Component {
           <h3>{this.props.name}</h3>
           {this.props.url && (
             <Timeline
-              ref={this.timeline}
               controlHandler={this.onMouseDown}
               isDragged={this.state.isDragged}
               name={this.props.name}

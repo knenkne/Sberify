@@ -1,3 +1,4 @@
 import songs from './songs'
+import artist from './artist'
 
-export { songs }
+export { songs, artist }

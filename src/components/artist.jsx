@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 import { connect } from "react-redux";
 import { actions } from "../store";
@@ -34,21 +33,7 @@ class Artist extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      artist: {
-        name: "",
-        description: "",
-        socials: {
-          twitter: "",
-          facebook: "",
-          instagram: ""
-        },
-        albums: [],
-        video: ""
-      }
-    };
-
-    this.getData();
+    this.props.initArtist('Architects')
   }
 
   onMouseMove = (evt) => {
@@ -61,45 +46,24 @@ class Artist extends React.Component {
     }
   }
 
-  getData = async () => {
-    const response = await axios.get("/api/artist/Architects");
-    const data = await response.data;
-
-    this.setState({
-      artist: {
-        socials: {
-          twitter: await data.twitter_name,
-          facebook: await data.facebook_name,
-          instagram: await data.instagram_name
-        },
-        name: await data.name,
-        description: await data.description,
-        image: await data.image,
-        headerImage: await data.image_header,
-        albums: await data.albums,
-        video: await data.video
-      }
-    });
-  };
-
   render() {
     return (
       <div className="container" onMouseUp={this.onMouseUp} onMouseMove={this.onMouseMove}>
         <section className="artist">
           <div
             className="artist__header"
-            style={{ backgroundImage: `url(${this.state.artist.headerImage}` }}
+            style={{ backgroundImage: `url(${this.props.headerImage}` }}
           ></div>
           <div className="artist__info">
             <div className="artist__block">
               <img
-                src={this.state.artist.image}
+                src={this.props.image}
                 alt="Artist"
                 className="artist__image"
               />
-              <h2 className="artist__name">{this.state.artist.name}</h2>
+              <h2 className="artist__name">{this.props.name}</h2>
               <ul className="artist__socials">
-                {Object.entries(this.state.artist.socials).map(
+                {Object.entries(this.props.socials).map(
                   ([name, userName]) => {
                     if (!userName) {
                       return "";
@@ -117,22 +81,22 @@ class Artist extends React.Component {
                 )}
               </ul>
               <div className="artist__description">
-                {this.state.artist.description
+                {this.props.description
                   .split("\n\n")
                   .map((item, index) => {
                     return <p key={index}>{item}</p>;
                   })}
               </div>
-              {this.state.artist.video && (
-                <Video link={this.state.artist.video} />
+              {this.props.video && (
+                <Video link={this.props.video} />
               )}
             </div>
             <div className="artist__block">
-              {this.state.artist.albums.length > 0 && <Songs songs={this.state.artist.albums.slice(0, 3).map(album => ({ ...album.songs[0], image: album.image }))} artist={this.state.artist.name} />}
+              {this.props.albums.length > 0 && <Songs songs={this.props.albums.slice(0, 3).map(album => ({ ...album.songs[0], image: album.image }))} artist={this.props.name} />}
               <article className="artist__albums">
                 <h4>Latest Albums</h4>
                 <ul>
-                  {this.state.artist.albums.map(album => (
+                  {this.props.albums.map(album => (
                     <Album
                       key={album.name}
                       name={album.name}
@@ -150,4 +114,10 @@ class Artist extends React.Component {
   }
 }
 
-export default Artist;
+const mapStateToProps = (state) => ({ ...state.artist })
+
+const mapDispatchToProps = {
+  initArtist: actions.initArtist,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Artist);

@@ -1,5 +1,5 @@
-export const INIT_FETCH = 'INIT_FETCH'
-export const DRAG_CHANGE = 'DRAG_CHANGE'
+// Artist
+export const INIT_ARTIST = 'INIT_ARTIST'
 
 // Songs
 export const INIT_SONGS = 'INIT_SONGS'
