@@ -5,6 +5,7 @@ import { actions } from "../../store";
 
 import Play from "./play";
 import Timeline from "./timeline";
+import Control from "./control";
 
 class Song extends React.Component {
   constructor(props) {
@@ -15,10 +16,6 @@ class Song extends React.Component {
     };
 
     this.timeline = React.createRef();
-  }
-
-  componentDidMount() {
-    // console.log(this.timeline.current.clientHeight)
   }
 
   onMouseDown = () => {
@@ -34,7 +31,7 @@ class Song extends React.Component {
       this.props.playSong({
         name: this.props.name,
         interval: setInterval(() => {
-          this.props.updateTime(this.props.name);
+          this.props.updateSong(this.props.name);
 
           if (this.props.time >= this.props.duration) {
             this.props.stopSong({
@@ -52,9 +49,6 @@ class Song extends React.Component {
 
   onMouseMove = evt => {
     evt.preventDefault();
-
-    // 262 - bar width
-    // 944 - bar left coords
 
     if (this.state.isDragged) {
       switch (true) {
@@ -85,33 +79,6 @@ class Song extends React.Component {
     }
   };
 
-  onPlayClick = () => {
-    switch (true) {
-      case this.props.isPlaying: {
-        this.props.pauseSong({
-          name: this.props.name
-        });
-
-        break;
-      }
-
-      default: {
-        this.props.playSong({
-          name: this.props.name,
-          interval: setInterval(() => {
-            this.props.updateTime(this.props.name);
-
-            if (this.props.time >= this.props.duration) {
-              this.props.stopSong({
-                name: this.props.name
-              });
-            }
-          }, 10)
-        });
-      }
-    }
-  };
-
   render() {
     return (
       <li
@@ -124,12 +91,7 @@ class Song extends React.Component {
       >
         {this.props.url && (
           <Play
-            data={this.props.icon}
-            time={this.props.time}
-            duration={this.props.duration}
-            onClickHandler={this.onPlayClick}
-            isPlaying={this.props.isPlaying}
-            isRewinding={this.props.isRewinding}
+            name={this.props.name}
           />
         )}
         <img src={this.props.image} alt={this.props.name} />
@@ -140,12 +102,10 @@ class Song extends React.Component {
               ref={this.timeline}
               controlHandler={this.onMouseDown}
               isDragged={this.state.isDragged}
-              onClickHandler={this.onControlClick}
-              onMouseMove={this.onMouseMove}
-              time={this.props.time}
-              duration={this.props.duration}
               name={this.props.name}
-            />
+            >
+              <Control isDragged={this.state.isDragged} dragHandler={this.onMouseDown} duration={this.props.duration} time={this.props.time} name={this.props.name} />
+            </Timeline>
           )}
           <h4>{this.props.artist}</h4>
         </div>
@@ -156,12 +116,10 @@ class Song extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   return {
     name: ownProps.name,
     isPlaying: state.songs[ownProps.name].isPlaying,
     isRewinding: state.songs[ownProps.name].isRewinding,
-    isDragged: state.artist.cursor.isDragged,
     time: state.songs[ownProps.name].time,
     duration: state.songs[ownProps.name].duration,
     player: state.songs[ownProps.name].player,
@@ -174,8 +132,7 @@ const mapDispatchToProps = {
   pauseSong: actions.pauseSong,
   stopSong: actions.stopSong,
   rewindSong: actions.rewindSong,
-  updateTime: actions.updateTime,
-  changeDrag: actions.changeDrag
+  updateSong: actions.updateSong
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Song);

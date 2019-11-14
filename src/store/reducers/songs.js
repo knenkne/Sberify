@@ -4,6 +4,7 @@ const defaultState = {}
 const defaultSongState = {
     isPlaying: false,
     isRewinding: false,
+    isSwitched: false,
     duration: 30,
     time: 0,
     interval: null,
@@ -51,6 +52,20 @@ export default (state = defaultState, action) => {
         case types.PLAY: {
             const stateCopy = {
                 ...state
+            }
+
+            // Other songs pause
+            for (const song in stateCopy) {
+                stateCopy[song].isSwitched = false
+
+                if (stateCopy[song].isPlaying) {
+                    stateCopy[song].isSwitched = true
+                }
+
+                stateCopy[song].isPlaying = false
+
+                stateCopy[song].interval = clearInterval(stateCopy[song].interval) || null
+                stateCopy[song].player.pause()
             }
 
             stateCopy[action.name].interval = action.interval

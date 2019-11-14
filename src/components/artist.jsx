@@ -128,10 +128,7 @@ class Artist extends React.Component {
               )}
             </div>
             <div className="artist__block">
-              <article className="artist__songs">
-                <h4>Popular Songs</h4>
-                {(this.state.artist.albums.length > 0) && <Songs artist={this.state.artist.name} songs={this.state.artist.albums.slice(0, 3).map(album => ({ ...album.songs[0], image: album.image }))} />}
-              </article>
+              {this.state.artist.albums.length > 0 && <Songs songs={this.state.artist.albums.slice(0, 3).map(album => ({ ...album.songs[0], image: album.image }))} artist={this.state.artist.name} />}
               <article className="artist__albums">
                 <h4>Latest Albums</h4>
                 <ul>
@@ -153,12 +150,4 @@ class Artist extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isDragged: state.artist.cursor.isDragged
-});
-
-const mapDispatchToProps = {
-  changeDrag: actions.changeDrag
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Artist);
+export default Artist;

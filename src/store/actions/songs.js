@@ -38,7 +38,7 @@ export const stopSong = (payload) => (dispatch) => {
     })
 }
 
-export const updateTime = (payload) => (dispatch) => {
+export const updateSong = (payload) => (dispatch) => {
     dispatch({
         type: types.TIME_UPDATE,
         name: payload

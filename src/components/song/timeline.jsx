@@ -5,9 +5,21 @@ import { actions } from "../../store";
 
 import Control from "./control";
 
+const getTimeLeft = (duration, time) => {
+  const minutes = Math.floor((duration - time) / 60)
+  const seconds = String(Math.floor((duration - time) % 60)).padStart(2, '0')
+
+  return `${minutes}:${seconds}`
+}
+
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      minutes: Math.floor((this.props.duration - this.props.time) / 60),
+      seconds: Math.floor((this.props.duration - this.props.time) % 60)
+    }
 
     this.timeline = React.createRef()
   }
@@ -20,43 +32,6 @@ class Timeline extends React.Component {
     })
   }
 
-  onMouseDown = evt => {
-    evt.preventDefault();
-
-    const control = evt.target;
-
-    this.setState({
-      coords: {
-        x: control.offsetLeft,
-        y: control.offsetTop
-      }
-    });
-
-    this.props.onClickHandler();
-  };
-
-  onMouseUp = (evt) => {
-    evt.preventDefault();
-    const control = evt.target;
-
-    this.setState({
-      coords: {
-        x: this.state.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x,
-        y: this.state.isDragged ? control.offsetTop : this.state.coords.y
-      }
-    });
-  };
-
-  onMouseMove = (evt) => {
-    evt.preventDefault();
-    const control = evt.target;
-    this.setState({
-      coords: {
-        x: this.props.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x
-      }
-    });
-  };
-
   render() {
     return (
       <div ref={this.timeline} className="song__progress-wrapper">
@@ -65,12 +40,9 @@ class Timeline extends React.Component {
           max={this.props.duration}
           value={this.props.time}
         ></progress>
-        <Control isDragged={this.props.isDragged} dragHandler={this.props.controlHandler} duration={this.props.duration} time={this.props.time} name={this.props.name} />
+        {this.props.children}
         <span className="song__time">
-          {Math.floor((this.props.duration - this.props.time) / 60)}:
-          {`${Math.floor(
-            (this.props.duration - this.props.time) % 60
-          )}`.padStart(2, "0")}
+          {getTimeLeft(this.props.duration, this.props.time)}
         </span>
       </div>
     );
@@ -80,12 +52,8 @@ class Timeline extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     name: ownProps.name,
-    // isPlaying: state.songs[ownProps.name].isPlaying,
-    // isRewinding: state.songs[ownProps.name].isRewinding,
-    // isDragged: state.artist.cursor.isDragged,
-    // time: state.songs[ownProps.name].time,
-    // duration: state.songs[ownProps.name].duration,
-    // player: state.songs[ownProps.name].player
+    time: state.songs[ownProps.name].time,
+    duration: state.songs[ownProps.name].duration,
     x: state.songs[ownProps.name].timelane.x,
     width: state.songs[ownProps.name].timelane.width,
   };

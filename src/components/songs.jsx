@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { actions } from "../store";
 
 import Song from './song/song'
-import play from '../lottie/play'
 
 class Songs extends React.Component {
   constructor(props) {
@@ -17,18 +16,20 @@ class Songs extends React.Component {
 
   render() {
     return (
+      <article className="artist__songs">
+        <h4>Popular Songs</h4>
         <ul>
-        {this.props.songs.map((song, index) => (
-          <Song
-            icon={play}
-            key={song.name}
-            name={song.name}
-            artist={this.props.artist}
-            image={song.image}
-            url={song.songPlayerUrl}
-          />
-        ))}
-      </ul>
+          {this.props.songs.map((song, index) => (
+            <Song
+              key={song.name}
+              name={song.name}
+              artist={this.props.artist}
+              image={song.image}
+              url={song.songPlayerUrl}
+            />
+          ))}
+        </ul>
+      </article>
     );
   }
 }

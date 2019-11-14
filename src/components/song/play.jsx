@@ -1,13 +1,14 @@
 import React from "react";
 import Lottie from "lottie-react-web";
 
-export default class Play extends React.Component {
+import { connect } from "react-redux";
+import { actions } from "../../store";
+
+import play from '../../lottie/play'
+
+class Play extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      segments: this.props.isPlaying ? [8.75, 0] : [0, 8.75]
-    };
 
     this.lottie = React.createRef();
   }
@@ -17,7 +18,7 @@ export default class Play extends React.Component {
   }
 
   shouldComponentUpdate() {
-    if (this.props.time < this.props.duration || this.props.isRewinding) {
+    if (this.props.time < this.props.duration) {
       return false;
     }
 
@@ -25,7 +26,31 @@ export default class Play extends React.Component {
   }
 
   onIconClick = () => {
-    this.props.onClickHandler();
+    switch (true) {
+      case this.props.isPlaying: {
+        this.props.pauseSong({
+          name: this.props.name
+        });
+
+        break;
+      }
+
+      default: {
+        this.props.playSong({
+          name: this.props.name,
+          interval: setInterval(() => {
+            this.props.updateSong(this.props.name);
+
+            if (this.props.time >= this.props.duration) {
+              this.props.stopSong({
+                name: this.props.name
+              });
+            }
+          }, 10)
+        });
+      }
+    }
+
     this.lottie.current.anim.playSegments(this.props.isPlaying ? [0, 8.75] : [8.75, 0], true);
   };
 
@@ -35,7 +60,7 @@ export default class Play extends React.Component {
         <Lottie
           ref={this.lottie}
           options={{
-            animationData: this.props.data,
+            animationData: play,
             loop: false,
             autoplay: false
           }}
@@ -44,3 +69,22 @@ export default class Play extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    name: ownProps.name,
+    isPlaying: state.songs[ownProps.name].isPlaying,
+    isSwitched: state.songs[ownProps.name].isSwitched,
+    time: state.songs[ownProps.name].time,
+    duration: state.songs[ownProps.name].duration,
+  };
+};
+
+const mapDispatchToProps = {
+  playSong: actions.playSong,
+  pauseSong: actions.pauseSong,
+  updateSong: actions.updateSong
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Play);
