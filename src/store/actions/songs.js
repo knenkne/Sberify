@@ -1,7 +1,6 @@
 import * as types from '../action-types'
 
 export const initSongs = (payload) => (dispatch) => {
-    console.log(payload)
     dispatch({
         type: types.INIT_SONGS,
         songs: payload
@@ -23,7 +22,7 @@ export const pauseSong = (payload) => (dispatch) => {
     })
 }
 
-export const stopSong = (payload) => dispatch => {
+export const stopSong = (payload) => (dispatch) => {
     dispatch({
         type: types.STOP,
         name: payload.name
@@ -34,5 +33,12 @@ export const updateTime = (payload) => (dispatch) => {
     dispatch({
         type: types.TIME_UPDATE,
         name: payload
+    })
+}
+
+export const rewindSong = (payload) => (dispatch) => {
+    dispatch({
+        type: types.REWIND,
+        name: payload.name
     })
 }

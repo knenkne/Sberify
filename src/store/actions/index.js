@@ -1,5 +1,4 @@
-import { changeDrug } from './artist'
-import { initSongs, pauseSong, playSong, stopSong, updateTime } from './songs'
-// import { playSong, pauseSong, updateTime } from './song'
+import { changeDrag } from './artist'
+import { initSongs, pauseSong, rewindSong, playSong, stopSong, updateTime } from './songs'
  
-export { initSongs, changeDrug, playSong, pauseSong, stopSong, updateTime }
+export { initSongs, changeDrag, rewindSong, playSong, pauseSong, stopSong, updateTime }

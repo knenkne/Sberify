@@ -26,7 +26,6 @@ export default class Play extends React.Component {
 
   onIconClick = () => {
     this.props.onClickHandler();
-    console.log(this.props.isPlaying)
     this.lottie.current.anim.playSegments(this.props.isPlaying ? [0, 8.75] : [8.75, 0], true);
   };
 

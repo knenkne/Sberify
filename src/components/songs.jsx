@@ -14,7 +14,7 @@ class Songs extends React.Component {
   }
 
   render() {
-    this.props.init(this.props.songs)
+    this.props.initSongs(this.props.songs)
 
     return (
         <ul>
@@ -40,7 +40,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
-  init: actions.initSongs,
+  initSongs: actions.initSongs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Songs);

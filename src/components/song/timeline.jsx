@@ -18,20 +18,9 @@ export default class Timeline extends React.Component {
     };
   }
 
-  // onMouseDown = (evt) => {
-  //   evt.preventDefault();
-
-  //   console.log("click");
-  // this.setState({
-  //   isDragged: false
-  // });
-
-  // this.props.onClickHandler();
-  // };
-
   onMouseDown = evt => {
     evt.preventDefault();
-    console.log("draggn");
+
     const control = evt.target;
 
     this.setState({

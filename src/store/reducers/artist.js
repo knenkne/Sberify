@@ -17,11 +17,12 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
     switch (action.type) {
-        case types.INIT_DRAG: {
-            return {
-                ...state,
-                isDragged: action.isDragged
-            }
+        case types.DRAG_CHANGE: {
+            const stateCopy = { ...state };
+            stateCopy.isDragged = action.isDragged;
+
+            return stateCopy
+
         }
         default: {
             return state

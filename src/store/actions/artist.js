@@ -1,8 +1,8 @@
 import * as types from '../action-types'
 
-export const changeDrug = (payload) => (dispatch) => {
+export const changeDrag = (payload) => (dispatch) => {
     dispatch({
-        type: types.INIT_DRAG,
+        type: types.DRAG_CHANGE,
         isDragged: payload
     })
 }

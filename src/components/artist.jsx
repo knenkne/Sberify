@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { actions } from "../store";
 
 import Social from "./social";
-import Song from "./song/song";
 import Songs from "./songs";
 import Album from "./album";
 import Video from "./video";
@@ -13,7 +12,6 @@ import Video from "./video";
 import twitter from "../lottie/twitter";
 import facebook from "../lottie/facebook";
 import instagram from "../lottie/instagram";
-import play from "../lottie/play";
 
 import "../App.scss";
 
@@ -54,7 +52,7 @@ class Artist extends React.Component {
   }
 
   onMouseUp = () => {
-    this.props.changeDrug(true)
+    this.props.changeDrag(false)
   };
 
   getData = async () => {
@@ -149,12 +147,12 @@ class Artist extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isDragged: state.isDragged
 });
 
 const mapDispatchToProps = {
-  changeDrug: actions.changeDrug
+  changeDrag: actions.changeDrag
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);
