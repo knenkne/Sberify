@@ -1,11 +1,17 @@
 import * as types from '../action-types'
 
+export const initSongs = (payload) => (dispatch) => {
+    console.log(payload)
+    dispatch({
+        type: types.INIT_SONGS,
+        songs: payload
+    })
+}
 
 export const playSong = (payload) => (dispatch) => {
     dispatch({
         type: types.PLAY,
         name: payload.name,
-        isPlaying: payload.isPlaying,
         interval: payload.interval
     })
 }
@@ -13,14 +19,20 @@ export const playSong = (payload) => (dispatch) => {
 export const pauseSong = (payload) => (dispatch) => {
     dispatch({
         type: types.PAUSE,
-        isPlaying: payload.isPlaying,
-        interval: payload.interval
+        name: payload.name
+    })
+}
+
+export const stopSong = (payload) => dispatch => {
+    dispatch({
+        type: types.STOP,
+        name: payload.name
     })
 }
 
 export const updateTime = (payload) => (dispatch) => {
     dispatch({
         type: types.TIME_UPDATE,
-        time: +(payload + 0.01).toFixed(3)
+        name: payload
     })
 }

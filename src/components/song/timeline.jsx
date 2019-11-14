@@ -39,7 +39,7 @@ export default class Timeline extends React.Component {
         x: control.offsetLeft,
         y: control.offsetTop
       },
-      isDragged: true
+      isDragged: false
     });
 
     this.props.onClickHandler();
@@ -47,7 +47,6 @@ export default class Timeline extends React.Component {
 
   onMouseUp = (evt) => {
     evt.preventDefault();
-    console.log("rofl");
     const control = evt.target;
 
     this.setState({
@@ -76,7 +75,7 @@ export default class Timeline extends React.Component {
         <progress
           className="song__progress"
           max={this.props.duration}
-          value={this.props.timeline}
+          value={this.props.time}
         ></progress>
         <div
           className="song__control"
@@ -85,13 +84,13 @@ export default class Timeline extends React.Component {
           onMouseUp={this.onMouseUp}
           onMouseLeave={this.onMouseUp}
           style={{
-            left: (this.state.isDragged && `${this.state.coords.x}px`) || `${(this.props.timeline / this.props.duration) * 98}%`
+            left: (this.state.isDragged && `${this.state.coords.x}px`) || `${(this.props.time / this.props.duration) * 98}%`
           }}
         ></div>
         <span className="song__time">
-          {Math.floor((this.props.duration - this.props.timeline) / 60)}:
+          {Math.floor((this.props.duration - this.props.time) / 60)}:
           {`${Math.floor(
-            (this.props.duration - this.props.timeline) % 60
+            (this.props.duration - this.props.time) % 60
           )}`.padStart(2, "0")}
         </span>
       </div>

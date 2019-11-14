@@ -6,6 +6,7 @@ import { actions } from "../store";
 
 import Social from "./social";
 import Song from "./song/song";
+import Songs from "./songs";
 import Album from "./album";
 import Video from "./video";
 
@@ -125,18 +126,7 @@ class Artist extends React.Component {
             <div className="artist__block">
               <article className="artist__songs">
                 <h4>Popular Songs</h4>
-                <ul>
-                  {this.state.artist.albums.slice(0, 3).map(album => (
-                    <Song
-                      icon={play}
-                      key={album.songs[0].name}
-                      name={album.songs[0].name}
-                      artist={this.state.artist.name}
-                      image={album.image}
-                      url={album.songs[0].songPlayerUrl}
-                    />
-                  ))}
-                </ul>
+                <Songs artist={this.state.artist.name} songs={this.state.artist.albums.slice(0, 3).map(album => ({ ...album.songs[0], image: album.image }))} />
               </article>
               <article className="artist__albums">
                 <h4>Latest Albums</h4>

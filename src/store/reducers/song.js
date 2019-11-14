@@ -1,20 +1,20 @@
 import * as types from '../action-types'
 
 const defaultState = {
-    name: '',
-    url: '',
     isPlaying: false,
-    duration: 0,
+    interval: null,
     time: 0,
-    interval: null
+    duration: 30
 }
 
 export default (state = defaultState, action) => {
     switch (action.type) {
         case types.PLAY: {
+            const stateCopy = { ...state };
+            stateCopy[action.name].isPlaying = true
+
             return {
-                ...state,
-                isPlaying: action.isPlaying
+                ...state
             }
         }
         case types.PAUSE: {

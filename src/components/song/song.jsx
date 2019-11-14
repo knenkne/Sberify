@@ -9,14 +9,7 @@ import Timeline from "./timeline";
 class Song extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
-    this.state = {
-      duration: 30,
-      isPlaying: false,
-      timeline: 0,
-      interval: null
-    };
-
+    
     this.song = new Audio(this.props.url);
     this.song.volume = 0.05;
   }
@@ -32,19 +25,31 @@ class Song extends React.Component {
   onPlayClick = () => {
     switch (true) {
       case this.props.isPlaying:
-        console.log("true");
         this.props.pauseSong({
-          isPlaying: false,
-          interval: this.props.interval
+          name: this.props.name
         });
+
+        this.song.pause()
         break;
       default:
         this.props.playSong({
-          isPlaying: true,
+          name: this.props.name,
           interval: setInterval(() => {
-            // this.props.updateTime(this.props.time);
-          })
+            // this.props.updateTime(this.name);
+            this.props.updateTime(this.props.name)
+
+            if (this.props.time >= this.props.duration) {
+              this.props.stopSong({
+                name: this.props.name
+              })
+
+              this.song.pause()
+              this.song.currentTime = 0
+            }
+          }, 10)
         });
+
+        this.song.play()
     }
 
     // this.setState(
@@ -87,14 +92,17 @@ class Song extends React.Component {
   };
 
   render() {
+    // this.props.init()
+
     return (
-      <li className={`song${this.state.isPlaying ? " song--playing" : ""}`}>
+      <li className={`song${this.props.songs[this.props.name].isPlaying ? " song--playing" : ""}`}>
         {this.props.url && (
           <Play
             data={this.props.icon}
-            timeline={this.state.timeline}
-            duration={this.state.duration}
+            time={this.props.songs[this.props.name].time}
+            duration={this.props.songs[this.props.name].duration}
             onClickHandler={this.onPlayClick}
+            isPlaying={this.props.songs[this.props.name].isPlaying}
           />
         )}
         <img src={this.props.image} alt={this.props.name} />
@@ -103,8 +111,8 @@ class Song extends React.Component {
           {this.props.url && (
             <Timeline
               onClickHandler={this.onControlClick}
-              timeline={this.state.timeline}
-              duration={this.state.duration}
+              time={this.props.songs[this.props.name].time}
+              duration={this.props.songs[this.props.name].duration}
             />
           )}
           <h4>{this.props.artist}</h4>
@@ -114,24 +122,20 @@ class Song extends React.Component {
   }
 }
 
-Song.defaultProps = {
-  name: "",
-  url: "",
-  isPlaying: false,
-  duration: 0,
-  time: 0,
-  interval: null
-};
-
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    isPlaying: state.song.isPlaying
+    songs: state.songs,
+    name: ownProps.name,
+    isPlaying: state.songs[ownProps.name].isPlaying,
+    time: state.songs[ownProps.name].time,
+    duration: state.songs[ownProps.name].duration,
   };
 };
 
 const mapDispatchToProps = {
   playSong: actions.playSong,
   pauseSong: actions.pauseSong,
+  stopSong: actions.stopSong,
   updateTime: actions.updateTime
 };
 
