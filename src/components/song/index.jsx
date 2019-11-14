@@ -111,7 +111,6 @@ class Song extends React.Component {
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
   return {
     name: ownProps.name,

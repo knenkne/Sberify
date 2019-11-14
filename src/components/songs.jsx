@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { actions } from "../store";
 
-import Song from './song/song'
+import Song from './song'
 
 class Songs extends React.Component {
   constructor(props) {
