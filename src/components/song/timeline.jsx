@@ -1,9 +1,7 @@
-import React from "react";
+import React from 'react'
 
-import { connect } from "react-redux";
-import { actions } from "../../store";
-
-import Control from "./control";
+import { connect } from 'react-redux'
+import { actions } from '../../store'
 
 const getTimeLeft = (duration, time) => {
   const minutes = Math.floor((duration - time) / 60)
@@ -14,11 +12,11 @@ const getTimeLeft = (duration, time) => {
 
 class Timeline extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       minutes: Math.floor((this.props.duration - this.props.time) / 60),
-      seconds: Math.floor((this.props.duration - this.props.time) % 60)
+      seconds: Math.floor((this.props.duration - this.props.time) % 60),
     }
 
     this.timeline = React.createRef()
@@ -45,7 +43,7 @@ class Timeline extends React.Component {
           {getTimeLeft(this.props.duration, this.props.time)}
         </span>
       </div>
-    );
+    )
   }
 }
 
@@ -56,11 +54,11 @@ const mapStateToProps = (state, ownProps) => {
     duration: state.songs[ownProps.name].duration,
     x: state.songs[ownProps.name].timelane.x,
     width: state.songs[ownProps.name].timelane.width,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = {
   init: actions.initTimelane,
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timeline);
+export default connect(mapStateToProps, mapDispatchToProps)(Timeline)

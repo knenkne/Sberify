@@ -1,7 +1,7 @@
-import React from "react";
-import "../App.scss";
+import React from 'react'
+import '../App.scss'
 
-const Video = (props) => {
+const Video = props => {
   return (
     <iframe
       title="Clip"
@@ -12,7 +12,7 @@ const Video = (props) => {
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
     ></iframe>
-  );
-};
+  )
+}
 
-export default Video;
+export default Video

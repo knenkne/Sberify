@@ -1,23 +1,23 @@
-import React from "react";
-import Lottie from "lottie-react-web";
-import "../App.scss";
+import React from 'react'
+import Lottie from 'lottie-react-web'
+import '../App.scss'
 
 export default class Social extends React.Component {
   constructor(props) {
-    super(props);
-    
+    super(props)
+
     this.state = {
       isStopped: true,
-    };
+    }
   }
 
   onIconEnter = () => {
-    this.setState({ isStopped: false });
-  };
+    this.setState({ isStopped: false })
+  }
 
   onIconLeave = () => {
-    this.setState({ isStopped: true });
-  };
+    this.setState({ isStopped: true })
+  }
 
   render() {
     return (
@@ -32,12 +32,12 @@ export default class Social extends React.Component {
             options={{
               animationData: this.props.data,
               loop: this.props.isLooped,
-              autoplay: false
+              autoplay: false,
             }}
             isStopped={this.state.isStopped}
           />
         </a>
       </li>
-    );
+    )
   }
 }

@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
-import { connect } from "react-redux";
-import { actions } from "../store";
+import { connect } from 'react-redux'
+import { actions } from '../store'
 
 import Song from './song'
 
 class Songs extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {}
 
@@ -30,18 +30,18 @@ class Songs extends React.Component {
           ))}
         </ul>
       </article>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    songs: ownProps.songs
+    songs: ownProps.songs,
   }
 }
 
 const mapDispatchToProps = {
   initSongs: actions.initSongs,
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Songs);
+export default connect(mapStateToProps, mapDispatchToProps)(Songs)

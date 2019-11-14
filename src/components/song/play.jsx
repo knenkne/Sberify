@@ -1,58 +1,61 @@
-import React from "react";
-import Lottie from "lottie-react-web";
+import React from 'react'
+import Lottie from 'lottie-react-web'
 
-import { connect } from "react-redux";
-import { actions } from "../../store";
+import { connect } from 'react-redux'
+import { actions } from '../../store'
 
 import play from '../../lottie/play'
 
 class Play extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.lottie = React.createRef();
+    this.lottie = React.createRef()
   }
 
   componentDidMount() {
-    this.lottie.current.anim.goToAndStop(7.99, true);
+    this.lottie.current.anim.goToAndStop(7.99, true)
   }
 
   shouldComponentUpdate() {
     if (this.props.time < this.props.duration) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   onIconClick = () => {
     switch (true) {
       case this.props.isPlaying: {
         this.props.pauseSong({
-          name: this.props.name
-        });
+          name: this.props.name,
+        })
 
-        break;
+        break
       }
 
       default: {
         this.props.playSong({
           name: this.props.name,
           interval: setInterval(() => {
-            this.props.updateSong(this.props.name);
+            this.props.updateSong(this.props.name)
 
             if (this.props.time >= this.props.duration) {
               this.props.stopSong({
-                name: this.props.name
-              });
+                name: this.props.name,
+              })
             }
-          }, 10)
-        });
+          }, 10),
+        })
       }
     }
 
-    this.lottie.current.anim.playSegments(this.props.isPlaying ? [0, 8.75] : [8.75, 0], true);
-  };
+    this.lottie.current.anim.playSegments(
+      this.props.isPlaying ? [0, 8.75] : [8.75, 0],
+      true
+    )
+  }
 
   render() {
     return (
@@ -62,14 +65,13 @@ class Play extends React.Component {
           options={{
             animationData: play,
             loop: false,
-            autoplay: false
+            autoplay: false,
           }}
         />
       </button>
-    );
+    )
   }
 }
-
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -78,13 +80,13 @@ const mapStateToProps = (state, ownProps) => {
     isSwitched: state.songs[ownProps.name].isSwitched,
     time: state.songs[ownProps.name].time,
     duration: state.songs[ownProps.name].duration,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = {
   playSong: actions.playSong,
   pauseSong: actions.pauseSong,
-  updateSong: actions.updateSong
-};
+  updateSong: actions.updateSong,
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Play);
+export default connect(mapStateToProps, mapDispatchToProps)(Play)

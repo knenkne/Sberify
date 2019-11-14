@@ -67,14 +67,15 @@ class Sberify {
     }
 
     normalizeName(name) {
-        console.log(name)
         return name.split('').map((letter) => letter === '-' ? ' ' : letter).join('')
     }
 
     getArtist(name) {
         const normalizedName = this.normalizeName(name)
 
-        return this.models.artists.findOne({ name: normalizedName }, (err, artist) => artist)
+        console.log(name)
+
+        return this.models.artists.findOne({ name: RegExp(normalizedName, 'i') }, (err, artist) => artist)
     }
 
     getFavoriteArtists() {
@@ -255,6 +256,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Architects')
+// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Linkin-Park')
 
 module.exports = sberify

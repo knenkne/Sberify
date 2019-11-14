@@ -1,12 +1,18 @@
+// {
+//   "extends": [
+//     "react-app",
+//     "prettier"
+//   ],
+//   "rules": {
+//     "jsx-quotes": [
+//       1,
+//       "prefer-double"
+//     ]
+//   },
+//   "plugins": [
+//     "prettier"
+//   ]
+// }
 {
-  "extends": "standard",
-  "rules": {
-    "indent": ["warn", 4]
-  },
-  "overrides": [{
-    "files": ["**/*.spec.js"],
-    "rules": {
-      "no-undef": "off"
-    }
-  }]
+  "extends": ["react-app", "plugin:prettier/recommended"]
 }
