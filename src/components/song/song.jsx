@@ -9,53 +9,115 @@ import Timeline from "./timeline";
 class Song extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.song = new Audio(this.props.url);
-    this.song.volume = 0.05;
+
+    this.state = {
+      isDragged: false
+    };
+
+    this.timeline = React.createRef();
   }
 
-  onControlClick = () => {
-    this.props.changeDrag(true)
-    this.props.rewindSong({
-      name: this.props.name
-    })
+  onMouseDown = () => {
+    this.setState({
+      isDragged: true
+    });
+  };
 
-    this.song.pause()
+  onMouseUp = evt => {
+    evt.preventDefault();
+
+    if (this.state.isDragged) {
+      this.props.playSong({
+        name: this.props.name,
+        interval: setInterval(() => {
+          this.props.updateTime(this.props.name);
+
+          if (this.props.time >= this.props.duration) {
+            this.props.stopSong({
+              name: this.props.name
+            });
+          }
+        }, 10)
+      });
+    }
+
+    this.setState({
+      isDragged: false
+    });
+  };
+
+  onMouseMove = evt => {
+    evt.preventDefault();
+
+    // 262 - bar width
+    // 944 - bar left coords
+
+    if (this.state.isDragged) {
+      switch (true) {
+        case (30 * (evt.screenX - 944.4375)) / 262.5625 < 0: {
+          this.props.rewindSong({
+            name: this.props.name,
+            time: 0
+          });
+
+          break;
+        }
+
+        case (30 * (evt.screenX - 944.4375)) / 262.5625 > 30: {
+          this.props.rewindSong({
+            name: this.props.name,
+            time: 30
+          });
+          break;
+        }
+
+        default: {
+          this.props.rewindSong({
+            name: this.props.name,
+            time: (30 * (evt.screenX - 944.4375)) / 262.5625
+          });
+        }
+      }
+    }
   };
 
   onPlayClick = () => {
     switch (true) {
-      case this.props.isPlaying:
+      case this.props.isPlaying: {
         this.props.pauseSong({
           name: this.props.name
         });
 
-        this.song.pause()
         break;
-      default:
+      }
+
+      default: {
         this.props.playSong({
           name: this.props.name,
           interval: setInterval(() => {
-            this.props.updateTime(this.props.name)
+            this.props.updateTime(this.props.name);
 
             if (this.props.time >= this.props.duration) {
               this.props.stopSong({
                 name: this.props.name
-              })
-
-              this.song.pause()
-              this.song.currentTime = 0
+              });
             }
           }, 10)
         });
-
-        this.song.play()
+      }
     }
   };
 
   render() {
+    console.log("rerender");
     return (
-      <li className={`song${(this.props.isPlaying || this.props.isRewinding) ? " song--playing" : ""}`}>
+      <li
+        onMouseMove={this.onMouseMove}
+        onMouseUp={this.onMouseUp}
+        className={`song${
+          this.props.isPlaying || this.props.isRewinding ? " song--playing" : ""
+        }`}
+      >
         {this.props.url && (
           <Play
             data={this.props.icon}
@@ -63,6 +125,7 @@ class Song extends React.Component {
             duration={this.props.duration}
             onClickHandler={this.onPlayClick}
             isPlaying={this.props.isPlaying}
+            isRewinding={this.props.isRewinding}
           />
         )}
         <img src={this.props.image} alt={this.props.name} />
@@ -70,9 +133,13 @@ class Song extends React.Component {
           <h3>{this.props.name}</h3>
           {this.props.url && (
             <Timeline
+              controlHandler={this.onMouseDown}
+              isDragged={this.state.isDragged}
               onClickHandler={this.onControlClick}
+              onMouseMove={this.onMouseMove}
               time={this.props.time}
               duration={this.props.duration}
+              name={this.props.name}
             />
           )}
           <h4>{this.props.artist}</h4>
@@ -87,9 +154,10 @@ const mapStateToProps = (state, ownProps) => {
     name: ownProps.name,
     isPlaying: state.songs[ownProps.name].isPlaying,
     isRewinding: state.songs[ownProps.name].isRewinding,
-    isDragged: state.artist.isDragged,
+    isDragged: state.artist.cursor.isDragged,
     time: state.songs[ownProps.name].time,
     duration: state.songs[ownProps.name].duration,
+    player: state.songs[ownProps.name].player
   };
 };
 

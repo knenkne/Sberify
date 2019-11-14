@@ -1,5 +1,7 @@
 import React from "react";
 
+import Control from "./control";
+
 export default class Timeline extends React.Component {
   constructor(props) {
     super(props);
@@ -27,8 +29,7 @@ export default class Timeline extends React.Component {
       coords: {
         x: control.offsetLeft,
         y: control.offsetTop
-      },
-      isDragged: false
+      }
     });
 
     this.props.onClickHandler();
@@ -39,7 +40,6 @@ export default class Timeline extends React.Component {
     const control = evt.target;
 
     this.setState({
-      isDragged: false,
       coords: {
         x: this.state.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x,
         y: this.state.isDragged ? control.offsetTop : this.state.coords.y
@@ -52,8 +52,7 @@ export default class Timeline extends React.Component {
     const control = evt.target;
     this.setState({
       coords: {
-        x: this.state.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x,
-        y: this.state.isDragged ? control.offsetTop : this.state.coords.y
+        x: this.props.isDragged ? evt.screenX - this.timelineCoords.x - control.offsetWidth / 2 : this.state.coords.x
       }
     });
   };
@@ -66,16 +65,7 @@ export default class Timeline extends React.Component {
           max={this.props.duration}
           value={this.props.time}
         ></progress>
-        <div
-          className="song__control"
-          onMouseDown={this.onMouseDown}
-          onMouseMove={this.onMouseMove}
-          onMouseUp={this.onMouseUp}
-          onMouseLeave={this.onMouseUp}
-          style={{
-            left: (this.state.isDragged && `${this.state.coords.x}px`) || `${(this.props.time / this.props.duration) * 98}%`
-          }}
-        ></div>
+        <Control isDragged={this.props.isDragged} dragHandler={this.props.controlHandler} duration={this.props.duration} time={this.props.time} name={this.props.name} />
         <span className="song__time">
           {Math.floor((this.props.duration - this.props.time) / 60)}:
           {`${Math.floor(

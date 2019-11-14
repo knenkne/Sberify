@@ -39,6 +39,7 @@ export const updateTime = (payload) => (dispatch) => {
 export const rewindSong = (payload) => (dispatch) => {
     dispatch({
         type: types.REWIND,
-        name: payload.name
+        name: payload.name,
+        time: payload.time
     })
 }

@@ -4,7 +4,7 @@ const defaultState = {}
 const defaultSongState = {
     isPlaying: false,
     isRewinding: false,
-    duration: 10,
+    duration: 30,
     time: 0,
     interval: null
 }
@@ -17,9 +17,13 @@ export default (state = defaultState, action) => {
                 stateCopy[song.name] = {
                     image: song.image,
                     songPlayerUrl: song.songPlayerUrl,
+                    player: new Audio(song.songPlayerUrl),
                     ...defaultSongState
                 }
+
+                stateCopy[song.name].player.volume = 0.05
             });
+
 
             return stateCopy
         }
@@ -28,6 +32,8 @@ export default (state = defaultState, action) => {
             const stateCopy = { ...state };
             stateCopy[action.name].interval = action.interval
             stateCopy[action.name].isPlaying = true
+            stateCopy[action.name].isRewinding = false
+            stateCopy[action.name].player.play()
 
             return stateCopy
         }
@@ -36,6 +42,7 @@ export default (state = defaultState, action) => {
             const stateCopy = { ...state }
             stateCopy[action.name].interval = clearInterval(stateCopy[action.name].interval) || null
             stateCopy[action.name].isPlaying = false
+            stateCopy[action.name].player.pause()
 
             return stateCopy
         }
@@ -52,6 +59,9 @@ export default (state = defaultState, action) => {
             stateCopy[action.name].interval = clearInterval(stateCopy[action.name].interval) || null
             stateCopy[action.name].isPlaying = false
             stateCopy[action.name].time = 0
+            stateCopy[action.name].player.pause()
+            stateCopy[action.name].player.currentTime = 0
+
 
             return stateCopy
         }
@@ -61,6 +71,10 @@ export default (state = defaultState, action) => {
             stateCopy[action.name].interval = clearInterval(stateCopy[action.name].interval) || null
             stateCopy[action.name].isPlaying = false
             stateCopy[action.name].isRewinding = true
+            stateCopy[action.name].player.pause()
+            stateCopy[action.name].time = action.time
+            stateCopy[action.name].player.currentTime = action.time
+
 
             return stateCopy
         }

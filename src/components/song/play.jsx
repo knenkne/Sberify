@@ -17,7 +17,7 @@ export default class Play extends React.Component {
   }
 
   shouldComponentUpdate() {
-    if (this.props.time < this.props.duration) {
+    if (this.props.time < this.props.duration || this.props.isRewinding) {
       return false;
     }
 

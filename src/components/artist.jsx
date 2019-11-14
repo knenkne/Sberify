@@ -51,9 +51,15 @@ class Artist extends React.Component {
     this.getData();
   }
 
-  onMouseUp = () => {
-    this.props.changeDrag(false)
-  };
+  onMouseMove = (evt) => {
+    if (this.props.isDragged) {
+      evt.preventDefault()
+      this.props.changeDrag({
+        isDragged: true,
+        x: evt.screenX
+      })
+    }
+  }
 
   getData = async () => {
     const response = await axios.get("/api/artist/Architects");
@@ -78,7 +84,7 @@ class Artist extends React.Component {
 
   render() {
     return (
-      <div className="container" onMouseUp={this.onMouseUp}>
+      <div className="container" onMouseUp={this.onMouseUp} onMouseMove={this.onMouseMove}>
         <section className="artist">
           <div
             className="artist__header"
@@ -148,7 +154,7 @@ class Artist extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  isDragged: state.isDragged
+  isDragged: state.artist.cursor.isDragged
 });
 
 const mapDispatchToProps = {

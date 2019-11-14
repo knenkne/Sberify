@@ -12,18 +12,25 @@ const defaultState = {
         albums: [],
         video: ""
     },
-    isDragged: false
+    cursor: {
+        isDragged: false,
+        x: 0
+    }
 }
 
 export default (state = defaultState, action) => {
     switch (action.type) {
         case types.DRAG_CHANGE: {
             const stateCopy = { ...state };
-            stateCopy.isDragged = action.isDragged;
+            console.log(state)
+            stateCopy.cursor.isDragged = action.isDragged;
+            if (action.x) {
+                stateCopy.cursor.x = action.x
+            }
 
             return stateCopy
-
         }
+
         default: {
             return state
         }
