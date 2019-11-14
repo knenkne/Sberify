@@ -114,6 +114,7 @@ class Song extends React.Component {
       <li
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}
+        onMouseLeave={this.onMouseUp}
         className={`song${
           this.props.isPlaying || this.props.isRewinding ? " song--playing" : ""
         }`}
