@@ -7,6 +7,15 @@ export const initSongs = (payload) => (dispatch) => {
     })
 }
 
+export const initTimelane = (payload) => (dispatch) => {
+    dispatch({
+        type: types.INIT_TIMELANE,
+        name: payload.name,
+        x: payload.x,
+        width: payload.width
+    })
+}
+
 export const playSong = (payload) => (dispatch) => {
     dispatch({
         type: types.PLAY,

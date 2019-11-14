@@ -6,13 +6,20 @@ const defaultSongState = {
     isRewinding: false,
     duration: 30,
     time: 0,
-    interval: null
+    interval: null,
+    timelane: {
+        x: 0,
+        width: 0
+    }
 }
 
 export default (state = defaultState, action) => {
     switch (action.type) {
         case types.INIT_SONGS: {
-            const stateCopy = { ...state }
+            const stateCopy = {
+                ...state
+            }
+
             action.songs.forEach(song => {
                 stateCopy[song.name] = {
                     image: song.image,
@@ -28,8 +35,24 @@ export default (state = defaultState, action) => {
             return stateCopy
         }
 
+        case types.INIT_TIMELANE: {
+            const stateCopy = {
+                ...state
+            }
+
+            stateCopy[action.name].timelane = {
+                x: action.x,
+                width: action.width
+            }
+
+            return stateCopy
+        }
+
         case types.PLAY: {
-            const stateCopy = { ...state };
+            const stateCopy = {
+                ...state
+            }
+
             stateCopy[action.name].interval = action.interval
             stateCopy[action.name].isPlaying = true
             stateCopy[action.name].isRewinding = false
@@ -39,7 +62,10 @@ export default (state = defaultState, action) => {
         }
 
         case types.PAUSE: {
-            const stateCopy = { ...state }
+            const stateCopy = {
+                ...state
+            }
+
             stateCopy[action.name].interval = clearInterval(stateCopy[action.name].interval) || null
             stateCopy[action.name].isPlaying = false
             stateCopy[action.name].player.pause()
@@ -48,14 +74,20 @@ export default (state = defaultState, action) => {
         }
 
         case types.TIME_UPDATE: {
-            const stateCopy = { ...state }
+            const stateCopy = {
+                ...state
+            }
+
             stateCopy[action.name].time = +(stateCopy[action.name].time + 0.01).toFixed(2)
 
             return stateCopy
         }
 
         case types.STOP: {
-            const stateCopy = { ...state }
+            const stateCopy = {
+                ...state
+            }
+
             stateCopy[action.name].interval = clearInterval(stateCopy[action.name].interval) || null
             stateCopy[action.name].isPlaying = false
             stateCopy[action.name].time = 0
@@ -67,7 +99,10 @@ export default (state = defaultState, action) => {
         }
 
         case types.REWIND: {
-            const stateCopy = { ...state }
+            const stateCopy = {
+                ...state
+            }
+
             stateCopy[action.name].interval = clearInterval(stateCopy[action.name].interval) || null
             stateCopy[action.name].isPlaying = false
             stateCopy[action.name].isRewinding = true

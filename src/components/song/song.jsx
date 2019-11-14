@@ -17,6 +17,10 @@ class Song extends React.Component {
     this.timeline = React.createRef();
   }
 
+  componentDidMount() {
+    // console.log(this.timeline.current.clientHeight)
+  }
+
   onMouseDown = () => {
     this.setState({
       isDragged: true
@@ -54,7 +58,7 @@ class Song extends React.Component {
 
     if (this.state.isDragged) {
       switch (true) {
-        case (30 * (evt.screenX - 944.4375)) / 262.5625 < 0: {
+        case (30 * (evt.screenX - this.props.timelane.x)) / this.props.timelane.width < 0: {
           this.props.rewindSong({
             name: this.props.name,
             time: 0
@@ -63,7 +67,7 @@ class Song extends React.Component {
           break;
         }
 
-        case (30 * (evt.screenX - 944.4375)) / 262.5625 > 30: {
+        case (30 * (evt.screenX - this.props.timelane.x)) / this.props.timelane.width > 30: {
           this.props.rewindSong({
             name: this.props.name,
             time: 30
@@ -74,7 +78,7 @@ class Song extends React.Component {
         default: {
           this.props.rewindSong({
             name: this.props.name,
-            time: (30 * (evt.screenX - 944.4375)) / 262.5625
+            time: (30 * (evt.screenX - this.props.timelane.x)) / this.props.timelane.width
           });
         }
       }
@@ -109,7 +113,6 @@ class Song extends React.Component {
   };
 
   render() {
-    console.log("rerender");
     return (
       <li
         onMouseMove={this.onMouseMove}
@@ -117,7 +120,7 @@ class Song extends React.Component {
         onMouseLeave={this.onMouseUp}
         className={`song${
           this.props.isPlaying || this.props.isRewinding ? " song--playing" : ""
-        }`}
+          }`}
       >
         {this.props.url && (
           <Play
@@ -134,6 +137,7 @@ class Song extends React.Component {
           <h3>{this.props.name}</h3>
           {this.props.url && (
             <Timeline
+              ref={this.timeline}
               controlHandler={this.onMouseDown}
               isDragged={this.state.isDragged}
               onClickHandler={this.onControlClick}
@@ -150,7 +154,9 @@ class Song extends React.Component {
   }
 }
 
+
 const mapStateToProps = (state, ownProps) => {
+  console.log(state)
   return {
     name: ownProps.name,
     isPlaying: state.songs[ownProps.name].isPlaying,
@@ -158,7 +164,8 @@ const mapStateToProps = (state, ownProps) => {
     isDragged: state.artist.cursor.isDragged,
     time: state.songs[ownProps.name].time,
     duration: state.songs[ownProps.name].duration,
-    player: state.songs[ownProps.name].player
+    player: state.songs[ownProps.name].player,
+    timelane: state.songs[ownProps.name].timelane
   };
 };
 

@@ -8,7 +8,7 @@ import * as reducers from './reducers'
 
 export const createStore = () => {
     const composedEnhancer = compose(
-        applyMiddleware(thunkMiddleware),
+        applyMiddleware(thunkMiddleware, logger),
         devToolsEnhancer({
             name: 'Sberify'
         })

@@ -1,23 +1,23 @@
 import React from "react";
 
+import { connect } from "react-redux";
+import { actions } from "../../store";
+
 import Control from "./control";
 
-export default class Timeline extends React.Component {
+class Timeline extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isDragged: false,
-      coords: {
-        x: 0,
-        y: 0
-      }
-    };
+    this.timeline = React.createRef()
+  }
 
-    this.timelineCoords = {
-      x: 944.4375,
-      y: 174.5
-    };
+  componentDidMount() {
+    this.props.init({
+      name: this.props.name,
+      x: this.timeline.current.getBoundingClientRect().x,
+      width: this.timeline.current.offsetWidth,
+    })
   }
 
   onMouseDown = evt => {
@@ -59,7 +59,7 @@ export default class Timeline extends React.Component {
 
   render() {
     return (
-      <div className="song__progress-wrapper">
+      <div ref={this.timeline} className="song__progress-wrapper">
         <progress
           className="song__progress"
           max={this.props.duration}
@@ -76,3 +76,23 @@ export default class Timeline extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    name: ownProps.name,
+    // isPlaying: state.songs[ownProps.name].isPlaying,
+    // isRewinding: state.songs[ownProps.name].isRewinding,
+    // isDragged: state.artist.cursor.isDragged,
+    // time: state.songs[ownProps.name].time,
+    // duration: state.songs[ownProps.name].duration,
+    // player: state.songs[ownProps.name].player
+    x: state.songs[ownProps.name].timelane.x,
+    width: state.songs[ownProps.name].timelane.width,
+  };
+};
+
+const mapDispatchToProps = {
+  init: actions.initTimelane,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timeline);

@@ -1,4 +1,4 @@
 import { changeDrag } from './artist'
-import { initSongs, pauseSong, rewindSong, playSong, stopSong, updateTime } from './songs'
+import { initSongs, initTimelane, pauseSong, rewindSong, playSong, stopSong, updateTime } from './songs'
  
-export { initSongs, changeDrag, rewindSong, playSong, pauseSong, stopSong, updateTime }
+export { initSongs, initTimelane, changeDrag, rewindSong, playSong, pauseSong, stopSong, updateTime }

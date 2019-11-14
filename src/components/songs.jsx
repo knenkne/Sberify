@@ -11,11 +11,11 @@ class Songs extends React.Component {
     super(props);
 
     this.state = {}
+
+    this.props.initSongs(this.props.songs)
   }
 
   render() {
-    this.props.initSongs(this.props.songs)
-
     return (
         <ul>
         {this.props.songs.map((song, index) => (
