@@ -20,7 +20,7 @@ const Preloader = props => {
             <Lottie
               options={{
                 animationData: loading,
-                loop: false,
+                loop: true,
                 autoplay: true
               }}
             />

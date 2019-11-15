@@ -59,6 +59,13 @@ class Sberify {
     this.addArtistToFavorites = this.addArtistToFavorites.bind(this)
   }
 
+  normalizeName(name) {
+    return name
+      .split('')
+      .map(letter => (letter === ' ' ? '-' : letter))
+      .join('')
+  }
+
   async getSongLyrics(url) {
     try {
       const response = await axios.get(url)

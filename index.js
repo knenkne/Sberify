@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000
 
 mongoose.connect(config.url, {
   useUnifiedTopology: true,
-  useNewUrlParser: true,
+  useNewUrlParser: true
 })
 
 express()
@@ -22,5 +22,7 @@ express()
   .use('/api/artist', artistRouter)
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/*', (req, res) =>
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+  )
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
