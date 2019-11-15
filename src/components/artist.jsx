@@ -17,23 +17,23 @@ import '../App.scss'
 const socialsMap = {
   twitter: {
     isLooped: true,
-    data: twitter,
+    data: twitter
   },
   facebook: {
     isLooped: true,
-    data: facebook,
+    data: facebook
   },
   instagram: {
     isLooped: false,
-    data: instagram,
-  },
+    data: instagram
+  }
 }
 
 class Artist extends React.Component {
   constructor(props) {
     super(props)
 
-    this.props.initArtist('arChiTecTs')
+    this.props.initArtist(this.props.match.params.name)
   }
 
   onMouseMove = evt => {
@@ -41,7 +41,7 @@ class Artist extends React.Component {
       evt.preventDefault()
       this.props.changeDrag({
         isDragged: true,
-        x: evt.screenX,
+        x: evt.screenX
       })
     }
   }
@@ -57,7 +57,7 @@ class Artist extends React.Component {
           <div
             className="artist__header"
             style={{
-              backgroundImage: `url(${this.props.headerImage}`,
+              backgroundImage: `url(${this.props.headerImage}`
             }}
           ></div>
           <div className="artist__info">
@@ -96,7 +96,7 @@ class Artist extends React.Component {
                 <Songs
                   songs={this.props.albums.slice(0, 3).map(album => ({
                     ...album.songs[0],
-                    image: album.image,
+                    image: album.image
                   }))}
                   artist={this.props.name}
                 />
@@ -122,10 +122,12 @@ class Artist extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ ...state.artist })
+const mapStateToProps = (state, ownProps) => ({
+  ...state.artist
+})
 
 const mapDispatchToProps = {
-  initArtist: actions.initArtist,
+  initArtist: actions.initArtist
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist)
