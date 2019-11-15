@@ -62,7 +62,7 @@ class Sberify {
   normalizeName(name) {
     return name
       .split('')
-      .map(letter => (letter === ' ' ? '-' : letter))
+      .map(letter => (letter === '-' ? ' ' : letter))
       .join('')
   }
 
@@ -81,11 +81,9 @@ class Sberify {
   getArtist(name) {
     const normalizedName = this.normalizeName(name)
 
-    console.log(name)
-
     return this.models.artists.findOne(
-      { name: RegExp(normalizedName, 'i') },
-      (err, artist) => artist
+      { name: new RegExp(`^${normalizedName}$`, 'i') },
+      (err, artist) => artist || err
     )
   }
 

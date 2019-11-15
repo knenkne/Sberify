@@ -12,7 +12,8 @@
 
   background-color: #000000;
 
-  transition: 2s;
+  transition-property: opacity;
+  transition-duration: 2s;
 }
 
 .preloader__wrap {

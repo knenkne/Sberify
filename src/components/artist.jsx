@@ -2,11 +2,13 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
+import { normalizeLinkToName } from '../utils'
 
 import Social from './social'
 import Songs from './songs'
 import Album from './album'
 import Video from './video'
+import NotFound from './404'
 
 import twitter from '../lottie/twitter'
 import facebook from '../lottie/facebook'
@@ -47,6 +49,18 @@ class Artist extends React.Component {
   }
 
   render() {
+    if (!this.props.name) {
+      return (
+        <div className="container">
+          <section className="artist artist--none">
+            <NotFound
+              message={normalizeLinkToName(this.props.match.params.name)}
+            />
+          </section>
+        </div>
+      )
+    }
+
     return (
       <div
         className="container"

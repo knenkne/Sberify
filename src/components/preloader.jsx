@@ -10,13 +10,18 @@ const Preloader = props => {
   return (
     <CSSTransition
       in={!props.isLoaded}
-      timeout={1000}
+      timeout={2000}
       classNames="alert"
       unmountOnExit
     >
       <div className="preloader">
         <div className="preloader__wrap">
-          <CSSTransition in={!props.isLoaded} classNames="alert" unmountOnExit>
+          <CSSTransition
+            in={!props.isLoaded}
+            timeout={2000}
+            classNames="alert"
+            unmountOnExit
+          >
             <Lottie
               options={{
                 animationData: loading,
