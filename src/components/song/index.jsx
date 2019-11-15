@@ -12,13 +12,19 @@ class Song extends React.Component {
     super(props)
 
     this.state = {
-      isDragged: false,
+      isDragged: false
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.isSwitched) {
+      this.child.forceUpdate()
     }
   }
 
   onMouseDown = () => {
     this.setState({
-      isDragged: true,
+      isDragged: true
     })
   }
 
@@ -33,15 +39,15 @@ class Song extends React.Component {
 
           if (this.props.time >= this.props.duration) {
             this.props.stopSong({
-              name: this.props.name,
+              name: this.props.name
             })
           }
-        }, 10),
+        }, 10)
       })
     }
 
     this.setState({
-      isDragged: false,
+      isDragged: false
     })
   }
 
@@ -55,7 +61,7 @@ class Song extends React.Component {
           0: {
           this.props.rewindSong({
             name: this.props.name,
-            time: 0,
+            time: 0
           })
 
           break
@@ -66,7 +72,7 @@ class Song extends React.Component {
           30: {
           this.props.rewindSong({
             name: this.props.name,
-            time: 30,
+            time: 30
           })
           break
         }
@@ -76,7 +82,7 @@ class Song extends React.Component {
             name: this.props.name,
             time:
               (30 * (evt.screenX - this.props.timelane.x)) /
-              this.props.timelane.width,
+              this.props.timelane.width
           })
         }
       }
@@ -93,7 +99,9 @@ class Song extends React.Component {
           this.props.isPlaying || this.props.isRewinding ? ' song--playing' : ''
         }`}
       >
-        {this.props.url && <Play name={this.props.name} />}
+        {this.props.url && (
+          <Play onRef={ref => (this.child = ref)} name={this.props.name} />
+        )}
         <img src={this.props.image} alt={this.props.name} />
         <div className="song__info">
           <h3>{this.props.name}</h3>
@@ -124,10 +132,11 @@ const mapStateToProps = (state, ownProps) => {
     name: ownProps.name,
     isPlaying: state.songs[ownProps.name].isPlaying,
     isRewinding: state.songs[ownProps.name].isRewinding,
+    isSwitched: state.songs[ownProps.name].isSwitched,
     time: state.songs[ownProps.name].time,
     duration: state.songs[ownProps.name].duration,
     player: state.songs[ownProps.name].player,
-    timelane: state.songs[ownProps.name].timelane,
+    timelane: state.songs[ownProps.name].timelane
   }
 }
 
@@ -136,7 +145,7 @@ const mapDispatchToProps = {
   pauseSong: actions.pauseSong,
   stopSong: actions.stopSong,
   rewindSong: actions.rewindSong,
-  updateSong: actions.updateSong,
+  updateSong: actions.updateSong
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Song)

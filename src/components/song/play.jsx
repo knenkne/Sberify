@@ -12,8 +12,8 @@ class Play extends React.Component {
 
     this.lottie = React.createRef()
   }
-
   componentDidMount() {
+    this.props.onRef(this)
     this.lottie.current.anim.goToAndStop(7.99, true)
   }
 
@@ -29,7 +29,7 @@ class Play extends React.Component {
     switch (true) {
       case this.props.isPlaying: {
         this.props.pauseSong({
-          name: this.props.name,
+          name: this.props.name
         })
 
         break
@@ -43,10 +43,10 @@ class Play extends React.Component {
 
             if (this.props.time >= this.props.duration) {
               this.props.stopSong({
-                name: this.props.name,
+                name: this.props.name
               })
             }
-          }, 10),
+          }, 10)
         })
       }
     }
@@ -65,7 +65,7 @@ class Play extends React.Component {
           options={{
             animationData: play,
             loop: false,
-            autoplay: false,
+            autoplay: false
           }}
         />
       </button>
@@ -79,14 +79,15 @@ const mapStateToProps = (state, ownProps) => {
     isPlaying: state.songs[ownProps.name].isPlaying,
     isSwitched: state.songs[ownProps.name].isSwitched,
     time: state.songs[ownProps.name].time,
-    duration: state.songs[ownProps.name].duration,
+    duration: state.songs[ownProps.name].duration
   }
 }
 
 const mapDispatchToProps = {
   playSong: actions.playSong,
+  stopSong: actions.stopSong,
   pauseSong: actions.pauseSong,
-  updateSong: actions.updateSong,
+  updateSong: actions.updateSong
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Play)

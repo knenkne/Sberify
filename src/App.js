@@ -1,14 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import Artist from './components/artist';
+import Artist from './components/artist'
 
-import './App.scss';
+import './App.scss'
 
 function App() {
-  return (
-    <Artist />
-  );
+  return <Artist />
 }
 
-
-export default App;
+export default App
