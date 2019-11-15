@@ -1,3 +1,5 @@
+@import 'scss/preloader';
+
 html {
   font-size: 2.75vw;
   font-family: "Roboto", sans-serif;
@@ -164,7 +166,7 @@ h4 {
       margin-bottom: 0.75rem;
     }
 
-    > h4 {
+    >h4 {
       position: relative;
       z-index: 2;
 
@@ -188,11 +190,14 @@ h4 {
     list-style: none;
 
     .album {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
       width: 4rem;
+
+      >a {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      }
 
       &:nth-of-type(2n) {
         margin-left: 1rem;
@@ -282,7 +287,7 @@ h4 {
         transition-property: transform;
       }
 
-      > .song__info .song__progress-wrapper {
+      >.song__info .song__progress-wrapper {
         opacity: 1;
       }
     }

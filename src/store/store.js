@@ -2,7 +2,7 @@ import {
   createStore as createReduxStore,
   combineReducers,
   applyMiddleware,
-  compose,
+  compose
 } from 'redux'
 
 import { devToolsEnhancer } from 'redux-devtools-extension/developmentOnly'
@@ -12,13 +12,32 @@ import logger from 'redux-logger'
 
 import * as reducers from './reducers'
 
+const defaultState = {
+  songs: {},
+  artist: {
+    name: '',
+    description: '',
+    socials: {
+      twitter: '',
+      facebook: '',
+      instagram: ''
+    },
+    albums: [],
+    video: ''
+  }
+}
+
 export const createStore = () => {
   const composedEnhancer = compose(
-    applyMiddleware(thunkMiddleware),
+    applyMiddleware(thunkMiddleware, logger),
     devToolsEnhancer({
-      name: 'Sberify',
+      name: 'Sberify'
     })
   )
 
-  return createReduxStore(combineReducers(reducers), composedEnhancer)
+  return createReduxStore(
+    combineReducers(reducers),
+    defaultState,
+    composedEnhancer
+  )
 }

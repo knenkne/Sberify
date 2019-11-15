@@ -1,0 +1,29 @@
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #000000;
+
+  transition: 2s;
+}
+
+.preloader__wrap {
+  width: 1rem;
+  height: 1rem;
+}
+
+.alert-enter {
+  opacity: 1;
+}
+
+.alert-exit {
+  opacity: 0;
+}

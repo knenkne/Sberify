@@ -6,10 +6,10 @@ const defaultState = {
   socials: {
     twitter: '',
     facebook: '',
-    instagram: '',
+    instagram: ''
   },
   albums: [],
-  video: '',
+  video: ''
 }
 
 export default (state = defaultState, action) => {
@@ -28,6 +28,8 @@ export default (state = defaultState, action) => {
       delete stateCopy.twitter_name
       delete stateCopy.facebook_name
       delete stateCopy.instagram_name
+
+      console.log(state)
 
       return stateCopy
     }

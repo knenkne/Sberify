@@ -1,3 +1,6 @@
+// Preloader
+export const HIDE_PRELOADER = 'HIDE_PRELOADER'
+
 // Artist
 export const INIT_ARTIST = 'INIT_ARTIST'
 

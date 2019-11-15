@@ -10,15 +10,15 @@ const defaultSongState = {
   interval: null,
   timelane: {
     x: 0,
-    width: 0,
-  },
+    width: 0
+  }
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.INIT_SONGS: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       action.songs.forEach(song => {
@@ -26,7 +26,7 @@ export default (state = defaultState, action) => {
           image: song.image,
           songPlayerUrl: song.songPlayerUrl,
           player: new Audio(song.songPlayerUrl),
-          ...defaultSongState,
+          ...defaultSongState
         }
 
         stateCopy[song.name].player.volume = 0.05
@@ -37,12 +37,12 @@ export default (state = defaultState, action) => {
 
     case types.INIT_TIMELANE: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       stateCopy[action.name].timelane = {
         x: action.x,
-        width: action.width,
+        width: action.width
       }
 
       return stateCopy
@@ -50,7 +50,7 @@ export default (state = defaultState, action) => {
 
     case types.PLAY: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       // Other songs pause
@@ -78,7 +78,7 @@ export default (state = defaultState, action) => {
 
     case types.PAUSE: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       stateCopy[action.name].interval =
@@ -91,7 +91,7 @@ export default (state = defaultState, action) => {
 
     case types.TIME_UPDATE: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       stateCopy[action.name].time = +(
@@ -103,7 +103,7 @@ export default (state = defaultState, action) => {
 
     case types.STOP: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       stateCopy[action.name].interval =
@@ -118,7 +118,7 @@ export default (state = defaultState, action) => {
 
     case types.REWIND: {
       const stateCopy = {
-        ...state,
+        ...state
       }
 
       stateCopy[action.name].interval =
