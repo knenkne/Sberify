@@ -1,4 +1,5 @@
 import { initArtist } from './artist'
+import { initAlbum } from './album'
 import {
   initSongs,
   initTimelane,
@@ -6,16 +7,17 @@ import {
   rewindSong,
   playSong,
   stopSong,
-  updateSong,
+  updateSong
 } from './songs'
 
 export {
   initArtist,
+  initAlbum,
   initSongs,
   initTimelane,
   rewindSong,
   playSong,
   pauseSong,
   stopSong,
-  updateSong,
+  updateSong
 }

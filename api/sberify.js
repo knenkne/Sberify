@@ -78,13 +78,45 @@ class Sberify {
     }
   }
 
-  getArtist(name) {
+  async getAlbum(name) {
     const normalizedName = this.normalizeName(name)
 
-    return this.models.artists.findOne(
+    try {
+      const artist = await this.models.artists.findOne(
+        {
+          albums: {
+            $elemMatch: {
+              name: new RegExp(`^${normalizedName}$`, 'i')
+            }
+          }
+        },
+        (err, artist) => artist
+      )
+
+      const album = artist.albums.find(album => album.name === normalizedName)
+
+      return {
+        artist: {
+          name: artist.name,
+          albums: artist.albums,
+          headerImage: artist.image_header
+        },
+        ...album
+      }
+    } catch (err) {
+      return null
+    }
+  }
+
+  async getArtist(name) {
+    const normalizedName = this.normalizeName(name)
+
+    const artist = await this.models.artists.findOne(
       { name: new RegExp(`^${normalizedName}$`, 'i') },
-      (err, artist) => artist || err
+      (err, artist) => artist
     )
+
+    return artist
   }
 
   getFavoriteArtists() {

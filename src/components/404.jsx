@@ -7,7 +7,7 @@ import '../App.scss'
 
 const NotFound = props => {
   return (
-    <React.Fragment>
+    <section className="not-found">
       <p>{props.message}</p>
       <ul>
         <li>
@@ -27,7 +27,7 @@ const NotFound = props => {
         </li>
       </ul>
       <p>not found</p>
-    </React.Fragment>
+    </section>
   )
 }
 

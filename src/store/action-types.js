@@ -1,8 +1,12 @@
 // Preloader
+export const SHOW_PRELOADER = 'SHOW_PRELOADER'
 export const HIDE_PRELOADER = 'HIDE_PRELOADER'
 
 // Artist
 export const INIT_ARTIST = 'INIT_ARTIST'
+
+// Album
+export const INIT_ALBUM = 'INIT_ALBUM'
 
 // Songs
 export const INIT_SONGS = 'INIT_SONGS'

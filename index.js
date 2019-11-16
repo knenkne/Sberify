@@ -9,6 +9,7 @@ const mongoose = require('mongoose')
 const config = require(path.join(__dirname, 'api/config/db'))
 
 const artistRouter = require(path.join(__dirname, 'api/routes/artist'))
+const albumRouter = require(path.join(__dirname, 'api/routes/album'))
 
 const PORT = process.env.PORT || 5000
 
@@ -20,6 +21,7 @@ mongoose.connect(config.url, {
 express()
   .use(express.static(path.join(__dirname, 'build')))
   .use('/api/artist', artistRouter)
+  .use('/api/album', albumRouter)
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/*', (req, res) =>

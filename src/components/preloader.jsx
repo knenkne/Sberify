@@ -9,7 +9,7 @@ import loading from '../lottie/loading'
 const Preloader = props => {
   return (
     <CSSTransition
-      in={!props.isLoaded}
+      in={props.isLoading}
       timeout={2000}
       classNames="alert"
       unmountOnExit
@@ -17,7 +17,7 @@ const Preloader = props => {
       <div className="preloader">
         <div className="preloader__wrap">
           <CSSTransition
-            in={!props.isLoaded}
+            in={props.isLoading}
             timeout={2000}
             classNames="alert"
             unmountOnExit
@@ -38,7 +38,7 @@ const Preloader = props => {
 
 const mapStateToProps = state => {
   return {
-    isLoaded: state.app.isLoaded
+    isLoading: state.app.isLoading
   }
 }
 

@@ -1,5 +1,6 @@
 import app from './app'
 import artist from './artist'
 import songs from './songs'
+import album from './album'
 
-export { app, artist, songs }
+export { app, artist, songs, album }

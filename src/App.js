@@ -2,24 +2,29 @@ import React from 'react'
 
 import { Provider } from 'react-redux'
 import { createStore } from './store'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Preloader from './components/preloader'
-import Artist from './components/artist'
+import Artist from './routes/artist'
+import Album from './routes/album'
+import NotFound from './components/404'
 
 import './App.scss'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Provider store={createStore()}>
-        <Preloader />
-        {/* Home */}
+    <Provider store={createStore()}>
+      {/* <Switch> */}
+      <Preloader />
+      {/* Home */}
+      <Switch>
         <Route exact path="/artist/:name" component={Artist} />
-        {/* Album */}
+        <Route exact path="/album/:name" component={Album} />
         {/* Song */}
-      </Provider>
-    </BrowserRouter>
+        <Route component={NotFound} />
+      </Switch>
+      {/* </Switch> */}
+    </Provider>
   )
 }
 
