@@ -30,7 +30,7 @@
                 color: #ffffff;
                 text-align: center;
 
-                left: 0.775rem;
+                left: 0.95rem;
                 top: 0;
                 background-color: rgba(0, 0, 0, 0.35);
 
@@ -101,12 +101,13 @@
             width: 1.15rem;
             height: 1.15rem;
             margin-right: 0.2rem;
+            margin-left: auto;
         }
 
         .song__info {
             position: relative;
 
-            width: 100%;
+            width: 6.7rem;
 
             h3,
             h4 {

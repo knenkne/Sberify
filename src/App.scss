@@ -1,7 +1,7 @@
-@import 'scss/preloader';
-@import 'scss/not-found';
-@import 'scss/album';
-@import 'scss/songs';
+@import "scss/preloader";
+@import "scss/not-found";
+@import "scss/album";
+@import "scss/songs";
 
 
 
@@ -138,17 +138,36 @@ h4 {
   }
 }
 
-.artist__description {
+.artist__description-wrapper {
   position: relative;
   z-index: 1;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
   width: 12rem;
+  max-height: 12rem;
   margin: 1rem 0 0;
   padding: 1rem;
 
   background-color: #f5f5f6;
   border-radius: 0.25rem;
+}
+
+.artist__description {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-height: 10rem;
+  overflow-y: scroll;
+
+  border-radius: 0.25rem;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   p {
     margin: 0;

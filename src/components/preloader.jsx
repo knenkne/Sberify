@@ -10,7 +10,7 @@ const Preloader = props => {
   return (
     <CSSTransition
       in={props.isLoading}
-      timeout={2000}
+      timeout={500}
       classNames="alert"
       unmountOnExit
     >
@@ -18,7 +18,7 @@ const Preloader = props => {
         <div className="preloader__wrap">
           <CSSTransition
             in={props.isLoading}
-            timeout={2000}
+            timeout={500}
             classNames="alert"
             unmountOnExit
           >

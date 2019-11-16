@@ -327,6 +327,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Linkin-Park')
+sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Enter-Shikari')
 
 module.exports = sberify

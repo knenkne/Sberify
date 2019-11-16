@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Provider } from 'react-redux'
-import { createStore } from './store'
 import { Route, Switch } from 'react-router-dom'
 
 import Preloader from './components/preloader'
@@ -13,7 +11,7 @@ import './App.scss'
 
 function App() {
   return (
-    <Provider store={createStore()}>
+    <React.Fragment>
       {/* <Switch> */}
       <Preloader />
       {/* Home */}
@@ -24,7 +22,7 @@ function App() {
         <Route component={NotFound} />
       </Switch>
       {/* </Switch> */}
-    </Provider>
+    </React.Fragment>
   )
 }
 

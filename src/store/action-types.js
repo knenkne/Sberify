@@ -10,6 +10,7 @@ export const INIT_ALBUM = 'INIT_ALBUM'
 
 // Songs
 export const INIT_SONGS = 'INIT_SONGS'
+export const INIT_SONG = 'INIT_SONG'
 
 // Song
 export const PLAY = 'PLAY'

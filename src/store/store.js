@@ -5,6 +5,7 @@ import {
   compose
 } from 'redux'
 
+import ReduxThunk from 'redux-thunk'
 import { devToolsEnhancer } from 'redux-devtools-extension/developmentOnly'
 
 import thunkMiddleware from 'redux-thunk'
@@ -12,32 +13,13 @@ import logger from 'redux-logger'
 
 import * as reducers from './reducers'
 
-const defaultState = {
-  songs: {},
-  artist: {
-    name: '',
-    description: '',
-    socials: {
-      twitter: '',
-      facebook: '',
-      instagram: ''
-    },
-    albums: [],
-    video: ''
-  }
-}
-
 export const createStore = () => {
   const composedEnhancer = compose(
-    applyMiddleware(thunkMiddleware, logger),
+    applyMiddleware(thunkMiddleware, logger, ReduxThunk),
     devToolsEnhancer({
       name: 'Sberify'
     })
   )
 
-  return createReduxStore(
-    combineReducers(reducers),
-    defaultState,
-    composedEnhancer
-  )
+  return createReduxStore(combineReducers(reducers), composedEnhancer)
 }

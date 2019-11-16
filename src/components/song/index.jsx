@@ -14,6 +14,13 @@ class Song extends React.Component {
     this.state = {
       isDragged: false
     }
+
+    this.props.initSong({
+      name: this.props.name,
+      artist: this.props.artist,
+      image: this.props.image,
+      songPlayerUrl: this.props.url
+    })
   }
 
   componentDidUpdate() {
@@ -129,6 +136,12 @@ class Song extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  if (!state.songs[ownProps.name]) {
+    return {
+      name: ownProps.name
+    }
+  }
+
   return {
     name: ownProps.name,
     isPlaying: state.songs[ownProps.name].isPlaying,
@@ -146,7 +159,8 @@ const mapDispatchToProps = {
   pauseSong: actions.pauseSong,
   stopSong: actions.stopSong,
   rewindSong: actions.rewindSong,
-  updateSong: actions.updateSong
+  updateSong: actions.updateSong,
+  initSong: actions.initSong
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Song)

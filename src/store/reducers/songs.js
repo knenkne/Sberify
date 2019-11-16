@@ -16,21 +16,19 @@ const defaultSongState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.INIT_SONGS: {
+    case types.INIT_SONG: {
       const stateCopy = {
         ...state
       }
 
-      action.songs.forEach(song => {
-        stateCopy[song.name] = {
-          image: song.image,
-          songPlayerUrl: song.songPlayerUrl,
-          player: new Audio(song.songPlayerUrl),
-          ...defaultSongState
-        }
+      stateCopy[action.name] = {
+        image: action.image,
+        songPlayerUrl: action.songPlayerUrl,
+        player: new Audio(action.songPlayerUrl),
+        ...defaultSongState
+      }
 
-        stateCopy[song.name].player.volume = 0.05
-      })
+      stateCopy[action.name].player.volume = 0.05
 
       return stateCopy
     }

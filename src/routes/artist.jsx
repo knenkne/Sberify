@@ -2,13 +2,11 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
-import { normalizeLinkToName } from '../utils'
 
 import Social from '../components/social'
 import Songs from '../components/songs'
 import Album from '../components/album'
 import Video from '../components/video'
-import NotFound from '../components/404'
 
 import twitter from '../lottie/twitter'
 import facebook from '../lottie/facebook'
@@ -72,10 +70,12 @@ class Artist extends React.Component {
                   )
                 })}
               </ul>
-              <div className="artist__description">
-                {this.props.description.split('\n\n').map((item, index) => {
-                  return <p key={index}>{item}</p>
-                })}
+              <div className="artist__description-wrapper">
+                <div className="artist__description">
+                  {this.props.description.split('\n').map((item, index) => {
+                    return <p key={index}>{item}</p>
+                  })}
+                </div>
               </div>
               {this.props.video && <Video link={this.props.video} />}
             </div>

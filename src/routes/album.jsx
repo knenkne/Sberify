@@ -16,26 +16,10 @@ import instagram from '../lottie/instagram'
 
 import '../App.scss'
 
-const socialsMap = {
-  twitter: {
-    isLooped: true,
-    data: twitter
-  },
-  facebook: {
-    isLooped: true,
-    data: facebook
-  },
-  instagram: {
-    isLooped: false,
-    data: instagram
-  }
-}
-
 class Album extends React.Component {
   constructor(props) {
     super(props)
 
-    console.log(this.props.artist)
     this.props.initAlbum(this.props.match.params.name)
   }
 

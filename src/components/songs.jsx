@@ -9,9 +9,8 @@ class Songs extends React.Component {
   constructor(props) {
     super(props)
 
+    console.log(this.props)
     this.state = {}
-
-    this.props.initSongs(this.props.songs)
   }
 
   render() {
@@ -35,14 +34,4 @@ class Songs extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    songs: ownProps.songs
-  }
-}
-
-const mapDispatchToProps = {
-  initSongs: actions.initSongs
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Songs)
+export default Songs
