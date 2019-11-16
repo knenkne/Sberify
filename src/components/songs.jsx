@@ -16,15 +16,16 @@ class Songs extends React.Component {
 
   render() {
     return (
-      <article className="artist__songs">
-        <h4>Popular Songs</h4>
+      <article className="songs">
+        <h4>{this.props.title || 'Popular Songs'}</h4>
         <ul>
           {this.props.songs.map((song, index) => (
             <Song
+              index={this.props.isNumbered && index + 1}
               key={song.name}
               name={song.name}
               artist={this.props.artist}
-              image={song.image}
+              image={song.image || this.props.image}
               url={song.songPlayerUrl}
             />
           ))}
@@ -36,12 +37,12 @@ class Songs extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    songs: ownProps.songs,
+    songs: ownProps.songs
   }
 }
 
 const mapDispatchToProps = {
-  initSongs: actions.initSongs,
+  initSongs: actions.initSongs
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Songs)

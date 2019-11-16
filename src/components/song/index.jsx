@@ -99,6 +99,7 @@ class Song extends React.Component {
           this.props.isPlaying || this.props.isRewinding ? ' song--playing' : ''
         }`}
       >
+        {this.props.index && <span>{this.props.index}</span>}
         {this.props.url && (
           <Play onRef={ref => (this.child = ref)} name={this.props.name} />
         )}

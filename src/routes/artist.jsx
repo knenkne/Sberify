@@ -38,23 +38,9 @@ class Artist extends React.Component {
     this.props.initArtist(this.props.match.params.name)
   }
 
-  onMouseMove = evt => {
-    if (this.props.isDragged) {
-      evt.preventDefault()
-      this.props.changeDrag({
-        isDragged: true,
-        x: evt.screenX
-      })
-    }
-  }
-
   render() {
     return (
-      <div
-        className="container"
-        onMouseUp={this.onMouseUp}
-        onMouseMove={this.onMouseMove}
-      >
+      <div className="container">
         <section className="artist">
           <div
             className="artist__header"
@@ -66,7 +52,7 @@ class Artist extends React.Component {
             <div className="artist__block">
               <img
                 src={this.props.image}
-                alt="Artist"
+                alt={this.props.name}
                 className="artist__image"
               />
               <h2 className="artist__name">{this.props.name}</h2>
@@ -124,7 +110,7 @@ class Artist extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   ...state.artist
 })
 

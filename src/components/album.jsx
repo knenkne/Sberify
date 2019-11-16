@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { normalizeNameToLink } from '../utils'
 import { NavLink } from 'react-router-dom'
 
 import '../App.scss'
@@ -9,7 +8,7 @@ const Album = props => {
   return (
     <li className="album">
       <NavLink
-        to={`/album/${normalizeNameToLink(props.name)}`}
+        to={`/album/${encodeURIComponent(props.name)}`}
         style={{ textDecoration: 'none' }}
       >
         <img src={props.image} alt={props.name} />

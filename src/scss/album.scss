@@ -1,0 +1,98 @@
+.album {
+    width: 100%;
+}
+
+.album__header {
+    position: relative;
+
+    display: block;
+    width: 100%;
+    height: 10rem;
+
+    background-image: url("https://images.genius.com/11d94a5c2954e02819f8338ef30bdf6c.1000x667x1.jpg");
+    background-repeat: no-repeat;
+    background-position: center 30%;
+    background-size: cover;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.7) 93%, #000000 99%);
+    }
+}
+
+.album__info {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 0 7% 5%;
+}
+
+.album__block {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+.album__image {
+    position: absolute;
+    top: -7rem;
+    z-index: 2;
+
+    box-sizing: border-box;
+    width: 8rem;
+    height: 8rem;
+
+    border: 0.1rem solid #19bb4f;
+    border-radius: 50%;
+}
+
+.album__name {
+    position: relative;
+    z-index: 1;
+
+
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #ffffff;
+    text-transform: uppercase;
+
+    border-bottom: 0.05rem solid #19bb4f;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+
+        box-shadow: 0 20px 500px 125px rgba(25, 187, 79, 0.4);
+    }
+}
+
+.album__artist {
+    position: relative;
+    z-index: 1;
+
+    font-size: 0.4rem;
+    line-height: 1rem;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.album__date {
+    margin: 1.75rem 0 0;
+
+    color: #19bb4f;
+    font-size: 0.25rem;
+}

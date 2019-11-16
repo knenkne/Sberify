@@ -79,7 +79,10 @@ class Sberify {
   }
 
   async getAlbum(name) {
-    const normalizedName = this.normalizeName(name)
+    console.log(name)
+    const normalizedName = decodeURIComponent(name)
+
+    console.log(normalizedName)
 
     try {
       const artist = await this.models.artists.findOne(

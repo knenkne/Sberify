@@ -5,7 +5,12 @@ const defaultState = {
   name: '',
   date: '',
   image: '',
-  songs: []
+  songs: [],
+  artist: {
+    name: '',
+    headerImage: '',
+    albums: []
+  }
 }
 
 export default (state = defaultState, action) => {
