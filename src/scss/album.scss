@@ -72,9 +72,9 @@
     position: relative;
     z-index: 1;
 
-
     font-size: 0.75rem;
     line-height: 1rem;
+    text-align: center;
     color: #ffffff;
     text-transform: uppercase;
 
@@ -104,7 +104,7 @@
 .album__date {
     margin: 1.75rem 0 0;
 
-    color: #19bb4f;
     font-size: 0.35rem;
     line-height: 0.35rem;
+    color: #19bb4f;
 }

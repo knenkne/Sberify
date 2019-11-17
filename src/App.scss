@@ -2,8 +2,10 @@
 @import "scss/not-found";
 @import "scss/album";
 @import "scss/songs";
+@import "scss/song";
 @import "scss/albums";
-
+@import "scss/video";
+@import "scss/nav";
 
 
 html {
@@ -210,13 +212,4 @@ h4 {
       text-transform: uppercase;
     }
   }
-}
-
-iframe {
-  position: relative;
-  z-index: 1;
-
-  width: 12rem;
-  height: 6.75rem;
-  margin: 0.75rem 0;
 }

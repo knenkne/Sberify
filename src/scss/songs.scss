@@ -1,4 +1,5 @@
-.album {
+section.album,
+section.song {
     .songs {
         position: relative;
         z-index: 1;
@@ -15,13 +16,29 @@
         }
 
         .song {
+            .song__info {
+                h4 {
+                    display: none;
+                }
+            }
+
+            a {
+                position: relative;
+                z-index: 10;
+                display: block;
+                width: 1.15rem;
+                height: 1.15rem;
+                margin-right: 0.2rem;
+                margin-left: auto;
+            }
+
             &:hover {
-                >span {
+                .song__index {
                     opacity: 1;
                 }
             }
 
-            >span {
+            .song__index {
                 position: absolute;
                 width: 1.15rem;
                 height: 1.15rem;
@@ -30,7 +47,7 @@
                 color: #ffffff;
                 text-align: center;
 
-                left: 0.95rem;
+                left: 0;
                 top: 0;
                 background-color: rgba(0, 0, 0, 0.35);
 
@@ -44,10 +61,6 @@
                     transform: none;
                     opacity: 0;
                 }
-            }
-
-            .song__info {
-                // width: 8rem;
             }
         }
     }

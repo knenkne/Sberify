@@ -36,20 +36,6 @@ const Models = {
   favoriteArtists: mongoose.model('favorite_artists', Schemas.favoriteArtist)
 }
 
-function parseSongHTML(htmlText) {
-  const $ = cheerio.load(htmlText)
-  const name = $('.header_with_cover_art-primary_info-title')
-    .text()
-    .trim()
-  const lyrics = $('.lyrics')
-    .text()
-    .trim()
-  return {
-    name,
-    lyrics
-  }
-}
-
 class Sberify {
   constructor(schemas, models) {
     this.schemas = schemas
@@ -59,15 +45,89 @@ class Sberify {
     this.addArtistToFavorites = this.addArtistToFavorites.bind(this)
   }
 
+  normalizeLink(url) {
+    return url
+      .split('')
+      .map(letter => (letter === ' ' ? '-' : letter))
+      .join('')
+  }
+
+  parseSongHTML(htmlText) {
+    const $ = cheerio.load(htmlText)
+    const name = $('.header_with_cover_art-primary_info-title')
+      .text()
+      .trim()
+    const lyrics = $('.lyrics')
+      .text()
+      .trim()
+    const album = $('.song_album-info-title')
+      .text()
+      .trim()
+
+    const artistName = $('.header_with_cover_art-primary_info-primary_artist')
+      .text()
+      .trim()
+
+    return {
+      artist: artistName,
+      name,
+      lyrics,
+      album
+    }
+  }
+
   async getSongLyrics(url) {
     try {
       const response = await axios.get(url)
       const text = await response.data
-      const lyrics = parseSongHTML(text)
+      const lyrics = this.parseSongHTML(text)
 
-      return lyrics
+      const artist = await this.models.artists.findOne(
+        {
+          name: lyrics.artist
+        },
+        (err, artist) => artist
+      )
+
+      const album = artist.albums.find(album => album.name === lyrics.album)
+      const songs = album.songs.filter(song => song.name !== lyrics.name)
+      const video = album.songs.find(song => song.name === lyrics.name).video
+
+      return {
+        ...lyrics,
+        headerImage: artist.image_header,
+        image: album.image,
+        date: album.date,
+        video,
+        songs
+      }
     } catch (err) {
-      return err
+      return ''
+    }
+  }
+
+  async getSong(name) {
+    const normalizedName = decodeURIComponent(name)
+
+    try {
+      const artist = await this.models.artists.findOne(
+        {
+          albums: {
+            $elemMatch: {
+              songs: {
+                $elemMatch: {
+                  name: new RegExp(`^${normalizedName}$`, 'i')
+                }
+              }
+            }
+          }
+        },
+        (err, artist) => artist
+      )
+
+      return artist
+    } catch (err) {
+      return null
     }
   }
 
@@ -316,6 +376,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Enter-Shikari')
+// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Enter-Shikari')
 
 module.exports = sberify

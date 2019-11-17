@@ -2,6 +2,8 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { actions } from '../../store'
+import { NavLink } from 'react-router-dom'
+import { normalizeNameToLink } from '../../utils'
 
 import Play from './play'
 import Timeline from './timeline'
@@ -106,11 +108,20 @@ class Song extends React.Component {
           this.props.isPlaying || this.props.isRewinding ? ' song--playing' : ''
         }`}
       >
-        {this.props.index && <span>{this.props.index}</span>}
         {this.props.url && (
           <Play onRef={ref => (this.child = ref)} name={this.props.name} />
         )}
-        <img src={this.props.image} alt={this.props.name} />
+        <NavLink
+          to={`/song/${normalizeNameToLink(
+            this.props.artist || this.props.artist.name
+          )}-${normalizeNameToLink(this.props.name)}`}
+          style={{ textDecoration: 'none' }}
+        >
+          {this.props.index && (
+            <span className="song__index">{this.props.index}</span>
+          )}
+          <img src={this.props.image} alt={this.props.name} />
+        </NavLink>
         <div className="song__info">
           <h3>{this.props.name}</h3>
           {this.props.url && (

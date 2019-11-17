@@ -1,0 +1,21 @@
+.navigation {
+    display: flex;
+    width: 9rem;
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+
+    a {
+        display: block;
+        position: relative;
+        z-index: 2;
+        font-size: 0.5rem;
+        line-height: 0.5rem;
+        color: #ffffff;
+        text-transform: uppercase;
+
+        &:not(:last-of-type) {
+            margin-right: 0.75rem;
+        }
+    }
+
+}

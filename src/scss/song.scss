@@ -1,0 +1,126 @@
+section.song {
+    width: 100%;
+
+    .video {
+        margin: 2.8rem 0 0;
+    }
+
+    iframe {
+        width: 9rem;
+        height: 5.0625rem;
+        box-shadow: 0 0 4rem 0.15rem rgba(25, 187, 79, 0.625);
+    }
+
+    >.song__info {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding: 0 7% 5%;
+    }
+
+    .song__block {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+    }
+
+    .song__image {
+        position: absolute;
+        top: -7rem;
+        z-index: 2;
+
+        box-sizing: border-box;
+        width: 8rem;
+        height: 8rem;
+
+        border: 0.1rem solid #19bb4f;
+        border-radius: 0.75rem;
+    }
+
+    .song__name {
+        position: relative;
+        z-index: 1;
+
+        font-size: 0.75rem;
+        line-height: 1rem;
+        text-align: center;
+        color: #ffffff;
+        text-transform: uppercase;
+
+        border-bottom: 0.05rem solid #19bb4f;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: -1;
+
+            box-shadow: 0 0 10rem 3rem rgba(25, 187, 79, 0.4);
+        }
+    }
+
+    .song__album {
+        position: relative;
+        z-index: 1;
+
+        font-size: 0.4rem;
+        line-height: 0.75rem;
+        color: #ffffff;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .song__date {
+        margin: 1.75rem 0 0;
+
+        font-size: 0.35rem;
+        line-height: 0.35rem;
+        color: #19bb4f;
+    }
+
+    .song__lyrics {
+        position: relative;
+        z-index: 1;
+
+        box-sizing: border-box;
+        width: 10rem;
+        margin: 1rem 0 0;
+        padding: 1rem;
+
+        background-color: #f5f5f6;
+        border-radius: 0.25rem;
+
+
+        font-size: 0.4rem;
+        text-align: center;
+    }
+}
+
+.song__header {
+    position: relative;
+
+    display: block;
+    width: 100%;
+    height: 10rem;
+
+    background-repeat: no-repeat;
+    background-position: center 30%;
+    background-size: cover;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.7) 93%, #000000 99%);
+    }
+}

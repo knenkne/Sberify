@@ -17,10 +17,6 @@ class Album extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps === undefined) {
-      return false
-    }
-
     if (this.props.name !== decodeURIComponent(this.props.match.params.name)) {
       this.props.initAlbum(this.props.match.params.name)
     }
@@ -53,6 +49,7 @@ class Album extends React.Component {
               </NavLink>
               {this.props.songs.length > 0 && (
                 <Songs
+                  artist={this.props.artist.name}
                   title={`${this.props.name} tracklist`}
                   songs={this.props.songs}
                   image={this.props.image}

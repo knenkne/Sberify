@@ -1,0 +1,21 @@
+.video {
+    margin: 0.75rem 0;
+
+    h4 {
+        position: relative;
+        z-index: 2;
+        width: 9rem;
+        font-size: 0.35rem;
+        line-height: 1rem;
+        color: #ffffff;
+        text-transform: uppercase;
+    }
+
+    iframe {
+        position: relative;
+        z-index: 1;
+
+        width: 12rem;
+        height: 6.75rem;
+    }
+}

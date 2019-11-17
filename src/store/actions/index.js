@@ -9,8 +9,10 @@ import {
   stopSong,
   updateSong
 } from './songs'
+import { initSongPage } from './song'
 
 export {
+  initSongPage,
   initArtist,
   initAlbum,
   initSong,
