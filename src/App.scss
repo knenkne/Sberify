@@ -4,10 +4,15 @@
 @import "scss/songs";
 
 
-
 html {
-  font-size: 2.75vw;
+  font-size: 3vw;
   font-family: "Roboto", sans-serif;
+}
+
+@media (max-width: 510px) {
+  html {
+    font-size: 5vw;
+  }
 }
 
 ul,
@@ -108,7 +113,7 @@ h4 {
     left: 50%;
     z-index: -1;
 
-    box-shadow: 0 100px 500px 125px rgba(25, 187, 79, 0.4);
+    box-shadow: 0 1.25rem 10rem 3rem rgba(25, 187, 79, 0.4);
   }
 }
 
@@ -243,7 +248,7 @@ h4 {
         width: 4rem;
         height: 4rem;
 
-        box-shadow: 0 0 200px 50px rgba(25, 187, 79, 0.525);
+        box-shadow: 0 0 6rem 1.25rem rgba(25, 187, 79, 0.525);
 
         transition-duration: 0.15s;
         transition-property: transform;
