@@ -7,7 +7,7 @@ const Video = props => {
       title="Clip"
       width="560"
       height="315"
-      src={props.link}
+      src={`${props.link}?autoplay=1&mute=1`}
       frameBorder="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen

@@ -1,5 +1,16 @@
 .album {
     width: 100%;
+
+    .albums {
+        // margin-top: 4.65rem;
+        margin-top: 1.75rem;
+
+        .album {
+            img {
+                box-shadow: 0 0 4rem 0.15rem rgba(25, 187, 79, 0.625);
+            }
+        }
+    }
 }
 
 .album__header {
@@ -85,7 +96,7 @@
     z-index: 1;
 
     font-size: 0.4rem;
-    line-height: 1rem;
+    line-height: 0.75rem;
     color: #ffffff;
     text-transform: uppercase;
 }
@@ -95,4 +106,5 @@
 
     color: #19bb4f;
     font-size: 0.35rem;
+    line-height: 0.35rem;
 }

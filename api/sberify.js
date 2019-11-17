@@ -59,13 +59,6 @@ class Sberify {
     this.addArtistToFavorites = this.addArtistToFavorites.bind(this)
   }
 
-  normalizeName(name) {
-    return name
-      .split('')
-      .map(letter => (letter === '-' ? ' ' : letter))
-      .join('')
-  }
-
   async getSongLyrics(url) {
     try {
       const response = await axios.get(url)
@@ -79,10 +72,7 @@ class Sberify {
   }
 
   async getAlbum(name) {
-    console.log(name)
     const normalizedName = decodeURIComponent(name)
-
-    console.log(normalizedName)
 
     try {
       const artist = await this.models.artists.findOne(
@@ -101,7 +91,7 @@ class Sberify {
       return {
         artist: {
           name: artist.name,
-          albums: artist.albums,
+          albums: artist.albums.filter(album => album.name !== normalizedName),
           headerImage: artist.image_header
         },
         ...album
@@ -112,8 +102,7 @@ class Sberify {
   }
 
   async getArtist(name) {
-    const normalizedName = this.normalizeName(name)
-
+    const normalizedName = decodeURIComponent(name)
     const artist = await this.models.artists.findOne(
       { name: new RegExp(`^${normalizedName}$`, 'i') },
       (err, artist) => artist
@@ -127,7 +116,7 @@ class Sberify {
   }
 
   async addArtistToFavorites(name) {
-    const normalizedName = this.normalizeName(name)
+    const normalizedName = decodeURIComponent(name)
 
     if (
       await this.models.favoriteArtists.exists({
@@ -149,7 +138,7 @@ class Sberify {
   }
 
   async removeArtistFromFavorites(name) {
-    const normalizedName = this.normalizeName(name)
+    const normalizedName = decodeURIComponent(name)
 
     return this.models.favoriteArtists
       .deleteOne({ name: normalizedName })

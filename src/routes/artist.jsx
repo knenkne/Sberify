@@ -5,7 +5,7 @@ import { actions } from '../store'
 
 import Social from '../components/social'
 import Songs from '../components/songs'
-import Album from '../components/album'
+import Albums from '../components/albums'
 import Video from '../components/video'
 
 import twitter from '../lottie/twitter'
@@ -89,19 +89,7 @@ class Artist extends React.Component {
                   artist={this.props.name}
                 />
               )}
-              <article className="artist__albums">
-                <h4>Latest Albums</h4>
-                <ul>
-                  {this.props.albums.map(album => (
-                    <Album
-                      key={album.name}
-                      name={album.name}
-                      date={album.date}
-                      image={album.image}
-                    />
-                  ))}
-                </ul>
-              </article>
+              <Albums albums={this.props.albums} />
             </div>
           </div>
         </section>

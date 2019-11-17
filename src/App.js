@@ -17,7 +17,7 @@ function App() {
       {/* Home */}
       <Switch>
         <Route exact path="/artist/:name" component={Artist} />
-        <Route exact path="/album/:name" component={Album} />
+        <Route path="/album/:name" component={Album} />
         {/* Song */}
         <Route component={NotFound} />
       </Switch>

@@ -2,17 +2,10 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
-import { normalizeLinkToName } from '../utils'
+import { NavLink } from 'react-router-dom'
 
-import Social from '../components/social'
 import Songs from '../components/songs'
-// import Album from '../components/album'
-import Video from '../components/video'
-import NotFound from '../components/404'
-
-import twitter from '../lottie/twitter'
-import facebook from '../lottie/facebook'
-import instagram from '../lottie/instagram'
+import Albums from '../components/albums'
 
 import '../App.scss'
 
@@ -21,6 +14,16 @@ class Album extends React.Component {
     super(props)
 
     this.props.initAlbum(this.props.match.params.name)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps === undefined) {
+      return false
+    }
+
+    if (this.props.name !== decodeURIComponent(this.props.match.params.name)) {
+      this.props.initAlbum(this.props.match.params.name)
+    }
   }
 
   render() {
@@ -42,7 +45,12 @@ class Album extends React.Component {
               />
               <span className="album__date">{this.props.date}</span>
               <h2 className="album__name">{this.props.name}</h2>
-              <h3 className="album__artist">{this.props.artist.name}</h3>
+              <NavLink
+                to={`/artist/${encodeURIComponent(this.props.artist.name)}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <h3 className="album__artist">{this.props.artist.name}</h3>
+              </NavLink>
               {this.props.songs.length > 0 && (
                 <Songs
                   title={`${this.props.name} tracklist`}
@@ -52,7 +60,12 @@ class Album extends React.Component {
                 />
               )}
             </div>
-            <div className="album__block"></div>
+            <div className="album__block">
+              <Albums
+                albums={this.props.artist.albums}
+                title={`More albums by ${this.props.artist.name}`}
+              />
+            </div>
           </div>
         </section>
       </div>
