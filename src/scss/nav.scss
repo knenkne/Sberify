@@ -1,8 +1,10 @@
 .navigation {
+    position: relative;
     display: flex;
     width: 9rem;
     margin-top: 0.5rem;
     justify-content: flex-start;
+    z-index: 2;
 
     a {
         display: block;
