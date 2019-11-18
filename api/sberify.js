@@ -48,7 +48,7 @@ class Sberify {
   normalizeLink(url) {
     return url
       .split('')
-      .map(letter => (letter === ' ' ? '-' : letter))
+      .map(letter => (letter === '-' ? ' ' : letter))
       .join('')
   }
 
@@ -90,15 +90,16 @@ class Sberify {
       )
 
       const album = artist.albums.find(album => album.name === lyrics.album)
+      const song = album.songs.find(song => song.name === lyrics.name)
       const songs = album.songs.filter(song => song.name !== lyrics.name)
-      const video = album.songs.find(song => song.name === lyrics.name).video
 
       return {
         ...lyrics,
         headerImage: artist.image_header,
         image: album.image,
         date: album.date,
-        video,
+        video: song.video,
+        url: song.songPlayerUrl,
         songs
       }
     } catch (err) {
@@ -132,7 +133,7 @@ class Sberify {
   }
 
   async getAlbum(name) {
-    const normalizedName = decodeURIComponent(name)
+    const normalizedName = this.normalizeLink(name)
 
     try {
       const artist = await this.models.artists.findOne(
@@ -162,7 +163,7 @@ class Sberify {
   }
 
   async getArtist(name) {
-    const normalizedName = decodeURIComponent(name)
+    const normalizedName = this.normalizeLink(name)
     const artist = await this.models.artists.findOne(
       { name: new RegExp(`^${normalizedName}$`, 'i') },
       (err, artist) => artist

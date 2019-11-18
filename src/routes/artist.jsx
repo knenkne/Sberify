@@ -82,6 +82,7 @@ class Artist extends React.Component {
             <div className="artist__block">
               {this.props.albums.length > 0 && (
                 <Songs
+                  title="Popular songs"
                   songs={this.props.albums.slice(0, 3).map(album => ({
                     ...album.songs[0],
                     image: album.image

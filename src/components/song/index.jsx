@@ -106,7 +106,7 @@ class Song extends React.Component {
         onMouseLeave={this.onMouseUp}
         className={`song${
           this.props.isPlaying || this.props.isRewinding ? ' song--playing' : ''
-        }`}
+        }${this.props.isSingle ? ' song--single' : ''}`}
       >
         {this.props.url && (
           <Play onRef={ref => (this.child = ref)} name={this.props.name} />

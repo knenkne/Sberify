@@ -5,7 +5,10 @@ const defaultState = {
   album: '',
   lyrics: '',
   image: '',
-  artist: ''
+  artist: '',
+  url: '',
+  video: '',
+  songs: []
 }
 
 export default (state = defaultState, action) => {

@@ -5,7 +5,7 @@ import Song from './song'
 const Songs = props => {
   return (
     <article className="songs">
-      <h4>{props.title || 'Popular Songs'}</h4>
+      <h4>{props.title}</h4>
       <ul>
         {props.songs.map((song, index) => (
           <Song

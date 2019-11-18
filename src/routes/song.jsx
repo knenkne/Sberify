@@ -5,6 +5,7 @@ import { actions } from '../store'
 import { NavLink } from 'react-router-dom'
 import { normalizeNameToLink } from '../utils'
 
+import SongElem from '../components/song'
 import Songs from '../components/songs'
 import Video from '../components/video'
 import Nav from '../components/nav'
@@ -47,28 +48,25 @@ class Song extends React.Component {
               />
               <span className="song__date">{this.props.date}</span>
               <h2 className="song__name">{this.props.name}</h2>
-              <NavLink
-                to={`/artist/${encodeURIComponent(this.props.artist)}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <h3 className="song__album">
-                  {this.props.album} by {this.props.artist}
-                </h3>
-              </NavLink>
-              <div className="song__lyrics">
-                {this.props.lyrics.split('\n').map((row, index) => {
-                  return (
-                    <p
-                      key={index}
-                      style={{
-                        fontWeight: row.startsWith('[') ? 800 : 400
-                      }}
-                    >
-                      {row}
-                      <br />
-                    </p>
-                  )
-                })}
+              <h3 className="song__album">
+                {this.props.album} by {this.props.artist}
+              </h3>
+              <div className="song__lyrics-wrapper">
+                <div className="song__lyrics">
+                  {this.props.lyrics.split('\n').map((row, index) => {
+                    return (
+                      <p
+                        key={index}
+                        style={{
+                          fontWeight: row.startsWith('[') ? 800 : 400
+                        }}
+                      >
+                        {row}
+                        <br />
+                      </p>
+                    )
+                  })}
+                </div>
               </div>
             </div>
             <div className="song__block">
@@ -76,8 +74,17 @@ class Song extends React.Component {
                 album={normalizeNameToLink(this.props.album)}
                 artist={normalizeNameToLink(this.props.artist)}
               />
-              {this.props.video && <Video link={this.props.video} />}
-              {this.props.songs && (
+              {this.props.name && (
+                <Songs
+                  artist={this.props.artist}
+                  title={false}
+                  songs={[
+                    { name: this.props.name, songPlayerUrl: this.props.url }
+                  ]}
+                  image={this.props.image}
+                />
+              )}
+              {this.props.songs.length > 0 && (
                 <Songs
                   artist={this.props.artist}
                   title={`More songs from ${this.props.album}`}
@@ -85,6 +92,9 @@ class Song extends React.Component {
                   image={this.props.image}
                   isNumbered={true}
                 />
+              )}
+              {this.props.video && (
+                <Video link={this.props.video} title={`${this.props.name} `} />
               )}
             </div>
           </div>

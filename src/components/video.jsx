@@ -4,7 +4,7 @@ import '../App.scss'
 const Video = props => {
   return (
     <section className="video">
-      <h4>Music video</h4>
+      <h4>{props.title}Music video</h4>
       <iframe
         title="Clip"
         width="560"

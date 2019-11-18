@@ -1,11 +1,25 @@
 section.song {
     width: 100%;
 
-    .video {
-        margin: 1.1rem 0 0;
+    .songs:first-of-type {
+        margin: 0;
+        position: relative;
+    }
+
+    .song--single {
+        width: 10rem;
+
+        .song__info {
+            width: 9.05rem;
+
+            .song__progress-wrapper {
+                opacity: 1;
+            }
+        }
     }
 
     iframe {
+        display: block;
         width: 9rem;
         height: 5.0625rem;
         box-shadow: 0 0 4rem 0.15rem rgba(25, 187, 79, 0.625);
@@ -66,7 +80,7 @@ section.song {
 
     .song__album {
         position: relative;
-        z-index: 1;
+        z-index: 2;
 
         font-size: 0.4rem;
         line-height: 0.75rem;
@@ -83,16 +97,36 @@ section.song {
         color: #19bb4f;
     }
 
+    .song__lyrics-wrapper {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 10rem;
+        padding: 1rem;
+
+        max-height: 20rem;
+
+        margin-top: 1rem;
+
+        background-color: #f5f5f6;
+        border-radius: 0.25rem;
+        box-shadow: 0 0 4rem 0.15rem rgba(25, 187, 79, 0.625);
+
+    }
+
     .song__lyrics {
         position: relative;
         z-index: 1;
 
         box-sizing: border-box;
-        width: 10rem;
-        margin: 1rem 0 0;
-        padding: 1rem;
+        width: 100%;
+        width: 8rem;
+        max-height: 18rem;
+        overflow-y: scroll;
 
-        background-color: #f5f5f6;
         border-radius: 0.25rem;
 
 
