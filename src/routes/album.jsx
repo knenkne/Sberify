@@ -14,6 +14,8 @@ import '../App.scss'
 class Album extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = {}
   }
 
   componentDidMount() {

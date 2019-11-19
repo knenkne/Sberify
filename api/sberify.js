@@ -393,7 +393,9 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Architects')
+sberify.saveArtistFromGeniusToDB(
+  'https://genius.com/artists/bring-me-the-horizon'
+)
 // sberify.getSong('Airfield')
 
 module.exports = sberify

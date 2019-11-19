@@ -22,16 +22,6 @@ section.song {
                 }
             }
 
-            a {
-                position: relative;
-                z-index: 10;
-                display: block;
-                width: 1.15rem;
-                height: 1.15rem;
-                margin-right: 0.2rem;
-                margin-left: auto;
-            }
-
             &:hover {
                 .song__index {
                     opacity: 1;
@@ -84,6 +74,16 @@ section.song {
         align-items: center;
         width: 9rem;
         height: 1.15rem;
+
+        a {
+            position: relative;
+            z-index: 10;
+            display: block;
+            width: 1.15rem;
+            height: 1.15rem;
+            margin-right: 0.2rem;
+            margin-left: auto;
+        }
 
         &.song--playing {
             h3 {
