@@ -52,63 +52,10 @@ class Sberify {
       .join('')
   }
 
-  parseSongHTML(htmlText) {
-    const $ = cheerio.load(htmlText)
-    const name = $('.header_with_cover_art-primary_info-title')
-      .text()
-      .trim()
-    const lyrics = $('.lyrics')
-      .text()
-      .trim()
-    const album = $('.song_album-info-title')
-      .text()
-      .trim()
-
-    const artistName = $('.header_with_cover_art-primary_info-primary_artist')
-      .text()
-      .trim()
-
-    return {
-      artist: artistName,
-      name,
-      lyrics,
-      album
-    }
-  }
-
-  async getSongLyrics(url) {
-    try {
-      const response = await axios.get(url)
-      const text = await response.data
-      const lyrics = this.parseSongHTML(text)
-
-      const artist = await this.models.artists.findOne(
-        {
-          name: lyrics.artist
-        },
-        (err, artist) => artist
-      )
-
-      const album = artist.albums.find(album => album.name === lyrics.album)
-      const song = album.songs.find(song => song.name === lyrics.name)
-      const songs = album.songs.filter(song => song.name !== lyrics.name)
-
-      return {
-        ...lyrics,
-        headerImage: artist.image_header,
-        image: album.image,
-        date: album.date,
-        video: song.video,
-        url: song.songPlayerUrl,
-        songs
-      }
-    } catch (err) {
-      return ''
-    }
-  }
-
   async getSong(name) {
     const normalizedName = decodeURIComponent(name)
+
+    console.log(normalizedName)
 
     try {
       const artist = await this.models.artists.findOne(
@@ -117,7 +64,7 @@ class Sberify {
             $elemMatch: {
               songs: {
                 $elemMatch: {
-                  name: new RegExp(`^${normalizedName}$`, 'i')
+                  name: normalizedName
                 }
               }
             }
@@ -143,7 +90,7 @@ class Sberify {
   }
 
   async getAlbum(name) {
-    const normalizedName = this.normalizeLink(name)
+    const normalizedName = decodeURIComponent(name)
 
     console.log(normalizedName)
 
@@ -152,7 +99,7 @@ class Sberify {
         {
           albums: {
             $elemMatch: {
-              name: new RegExp(`^${normalizedName}$`, 'i')
+              name: normalizedName
             }
           }
         },
@@ -393,9 +340,7 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.saveArtistFromGeniusToDB(
-  'https://genius.com/artists/bring-me-the-horizon'
-)
+sberify.saveArtistFromGeniusToDB('https://genius.com/artists/neck-deep')
 // sberify.getSong('Airfield')
 
 module.exports = sberify
