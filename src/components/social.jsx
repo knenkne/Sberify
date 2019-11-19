@@ -7,7 +7,7 @@ export default class Social extends React.Component {
     super(props)
 
     this.state = {
-      isStopped: true,
+      isStopped: true
     }
   }
 
@@ -32,7 +32,7 @@ export default class Social extends React.Component {
             options={{
               animationData: this.props.data,
               loop: this.props.isLooped,
-              autoplay: false,
+              autoplay: false
             }}
             isStopped={this.state.isStopped}
           />

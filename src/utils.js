@@ -1,7 +1,8 @@
 const symbolsMap = {
   ' ': '-',
   '&': 'and',
-  '…': ' '
+  '…': ' ',
+  '’': ' '
 }
 
 export const normalizeNameToLink = name =>
@@ -9,7 +10,7 @@ export const normalizeNameToLink = name =>
     .split('')
     .map(letter => symbolsMap[letter] || letter)
     .join('')
-    .replace(/[^a-zA-Z-]/g, '')
+    .replace(/[^A-Za-z0-9]+/g, '-')
 
 export const normalizeLinkToName = name =>
   name

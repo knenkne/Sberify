@@ -14,7 +14,9 @@ import '../App.scss'
 class Album extends React.Component {
   constructor(props) {
     super(props)
+  }
 
+  componentDidMount() {
     this.props.initAlbum(this.props.match.params.name)
   }
 

@@ -2,13 +2,15 @@ import * as types from '../action-types'
 
 const defaultState = {
   name: '',
-  album: '',
+  album: {
+    name: '',
+    date: '',
+    songs: []
+  },
   lyrics: '',
-  image: '',
+  artistImage: '',
   artist: '',
-  url: '',
-  video: '',
-  songs: []
+  url: ''
 }
 
 export default (state = defaultState, action) => {

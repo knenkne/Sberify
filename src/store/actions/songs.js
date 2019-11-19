@@ -1,12 +1,9 @@
 import * as types from '../action-types'
 
-export const initSong = payload => dispatch => {
+export const initSongs = payload => dispatch => {
   dispatch({
-    type: types.INIT_SONG,
-    name: payload.name,
-    artist: payload.artist,
-    image: payload.image,
-    songPlayerUrl: payload.songPlayerUrl
+    type: types.INIT_SONGS,
+    data: payload
   })
 }
 

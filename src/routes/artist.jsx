@@ -7,6 +7,7 @@ import Social from '../components/social'
 import Songs from '../components/songs'
 import Albums from '../components/albums'
 import Video from '../components/video'
+import Nav from '../components/nav'
 
 import twitter from '../lottie/twitter'
 import facebook from '../lottie/facebook'

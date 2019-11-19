@@ -1,7 +1,7 @@
 import { initArtist } from './artist'
 import { initAlbum } from './album'
 import {
-  initSong,
+  initSongs,
   initTimelane,
   pauseSong,
   rewindSong,
@@ -15,7 +15,7 @@ export {
   initSongPage,
   initArtist,
   initAlbum,
-  initSong,
+  initSongs,
   initTimelane,
   rewindSong,
   playSong,

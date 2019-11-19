@@ -1,6 +1,7 @@
 import * as types from '../action-types'
 
 const defaultState = {}
+
 const defaultSongState = {
   isPlaying: false,
   isRewinding: false,
@@ -16,21 +17,21 @@ const defaultSongState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.INIT_SONG: {
-      const stateCopy = {
-        ...state
+    case types.INIT_SONGS: {
+      const newState = {}
+
+      for (const song of action.data) {
+        newState[song.name] = {
+          image: song.image,
+          songPlayerUrl: song.songPlayerUrl,
+          player: new Audio(song.songPlayerUrl),
+          ...defaultSongState
+        }
+
+        newState[song.name].player.volume = 0.05
       }
 
-      stateCopy[action.name] = {
-        image: action.image,
-        songPlayerUrl: action.songPlayerUrl,
-        player: new Audio(action.songPlayerUrl),
-        ...defaultSongState
-      }
-
-      stateCopy[action.name].player.volume = 0.05
-
-      return stateCopy
+      return newState
     }
 
     case types.INIT_TIMELANE: {

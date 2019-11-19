@@ -126,7 +126,17 @@ class Sberify {
         (err, artist) => artist
       )
 
-      return artist
+      const album = artist.albums.find(album =>
+        album.songs.find(song => song.name === normalizedName)
+      )
+      const song = album.songs.find(song => song.name === normalizedName)
+
+      return {
+        artist: artist.name,
+        artistImage: artist.image_header,
+        album,
+        ...song
+      }
     } catch (err) {
       return null
     }
@@ -134,6 +144,8 @@ class Sberify {
 
   async getAlbum(name) {
     const normalizedName = this.normalizeLink(name)
+
+    console.log(normalizedName)
 
     try {
       const artist = await this.models.artists.findOne(
@@ -223,6 +235,10 @@ class Sberify {
         .text()
         .trim()
 
+      const lyrics = songPageHTML('.lyrics')
+        .text()
+        .trim()
+
       const geniusQuery = await axiosInstance.get(
         `https://api.genius.com/search?q=${new URLSearchParams(
           name
@@ -246,7 +262,7 @@ class Sberify {
           ).preview_url
         : null
 
-      return { name, songPlayerUrl }
+      return { name, songPlayerUrl, lyrics }
     } catch (err) {
       return err
     }
@@ -377,6 +393,7 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Enter-Shikari')
+sberify.saveArtistFromGeniusToDB('https://genius.com/artists/Architects')
+// sberify.getSong('Airfield')
 
 module.exports = sberify

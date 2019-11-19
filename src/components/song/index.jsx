@@ -16,13 +16,6 @@ class Song extends React.Component {
     this.state = {
       isDragged: false
     }
-
-    this.props.initSong({
-      name: this.props.name,
-      artist: this.props.artist,
-      image: this.props.image,
-      songPlayerUrl: this.props.url
-    })
   }
 
   componentDidUpdate() {
@@ -112,9 +105,7 @@ class Song extends React.Component {
           <Play onRef={ref => (this.child = ref)} name={this.props.name} />
         )}
         <NavLink
-          to={`/song/${normalizeNameToLink(
-            this.props.artist || this.props.artist.name
-          )}-${normalizeNameToLink(this.props.name)}`}
+          to={`/song/${this.props.name}`}
           style={{ textDecoration: 'none' }}
         >
           {this.props.index && (
@@ -124,7 +115,7 @@ class Song extends React.Component {
         </NavLink>
         <div className="song__info">
           <h3>{this.props.name}</h3>
-          {this.props.url && (
+          {/* {this.props.url && (
             <Timeline
               controlHandler={this.onMouseDown}
               isDragged={this.state.isDragged}
@@ -138,7 +129,7 @@ class Song extends React.Component {
                 name={this.props.name}
               />
             </Timeline>
-          )}
+          )} */}
           <h4>{this.props.artist}</h4>
         </div>
       </li>
@@ -170,8 +161,7 @@ const mapDispatchToProps = {
   pauseSong: actions.pauseSong,
   stopSong: actions.stopSong,
   rewindSong: actions.rewindSong,
-  updateSong: actions.updateSong,
-  initSong: actions.initSong
+  updateSong: actions.updateSong
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Song)

@@ -16,7 +16,7 @@ class Timeline extends React.Component {
 
     this.state = {
       minutes: Math.floor((this.props.duration - this.props.time) / 60),
-      seconds: Math.floor((this.props.duration - this.props.time) % 60),
+      seconds: Math.floor((this.props.duration - this.props.time) % 60)
     }
 
     this.timeline = React.createRef()
@@ -26,7 +26,7 @@ class Timeline extends React.Component {
     this.props.init({
       name: this.props.name,
       x: this.timeline.current.getBoundingClientRect().x,
-      width: this.timeline.current.offsetWidth,
+      width: this.timeline.current.offsetWidth
     })
   }
 
@@ -48,17 +48,26 @@ class Timeline extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  if (!state.songs[ownProps.name]) {
+    return {
+      name: ownProps.name
+    }
+  }
+
   return {
     name: ownProps.name,
+    isPlaying: state.songs[ownProps.name].isPlaying,
+    isRewinding: state.songs[ownProps.name].isRewinding,
+    isSwitched: state.songs[ownProps.name].isSwitched,
     time: state.songs[ownProps.name].time,
     duration: state.songs[ownProps.name].duration,
-    x: state.songs[ownProps.name].timelane.x,
-    width: state.songs[ownProps.name].timelane.width,
+    player: state.songs[ownProps.name].player,
+    timelane: state.songs[ownProps.name].timelane
   }
 }
 
 const mapDispatchToProps = {
-  init: actions.initTimelane,
+  init: actions.initTimelane
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timeline)

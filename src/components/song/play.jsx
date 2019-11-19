@@ -74,12 +74,21 @@ class Play extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  if (!state.songs[ownProps.name]) {
+    return {
+      name: ownProps.name
+    }
+  }
+
   return {
     name: ownProps.name,
     isPlaying: state.songs[ownProps.name].isPlaying,
+    isRewinding: state.songs[ownProps.name].isRewinding,
     isSwitched: state.songs[ownProps.name].isSwitched,
     time: state.songs[ownProps.name].time,
-    duration: state.songs[ownProps.name].duration
+    duration: state.songs[ownProps.name].duration,
+    player: state.songs[ownProps.name].player,
+    timelane: state.songs[ownProps.name].timelane
   }
 }
 
