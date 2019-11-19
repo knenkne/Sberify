@@ -3,11 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { actions } from '../../store'
 import { NavLink } from 'react-router-dom'
-import { normalizeNameToLink } from '../../utils'
 
 import Play from './play'
-import Timeline from './timeline'
-import Control from './control'
 
 const getTimeLeft = (duration, time) => {
   const minutes = Math.floor((duration - time) / 60)
@@ -22,12 +19,11 @@ class Song extends React.Component {
 
     this.state = {
       isDragged: false,
-      duration: 29,
+      duration: 30,
       isPlaying: false,
       isRewinding: false,
       time: 0,
-      url:
-        'https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/e0/0d/d8/e00dd862-f773-7472-2d55-c55a63d07b4b/mzaf_8729962715842447390.plus.aac.p.m4a',
+      url: this.props.url,
       interval: null,
       timelane: {
         x: 0,
@@ -131,13 +127,16 @@ class Song extends React.Component {
     evt.preventDefault()
 
     if (this.state.isDragged) {
-      this.play()
+      this.setState(
+        {
+          isDragged: false,
+          isRewinding: false
+        },
+        () => {
+          this.play()
+        }
+      )
     }
-
-    // this.setState({
-    //   isDragged: false,
-    //   isRewinding: false
-    // })
   }
 
   onMouseMove = evt => {
@@ -148,10 +147,14 @@ class Song extends React.Component {
         case (30 * (evt.screenX - this.state.timelane.x)) /
           this.state.timelane.width <
           0: {
-          // this.props.rewindSong({
-          //   name: this.props.name,
-          //   time: 0
-          // })
+          this.setState(
+            {
+              time: 0
+            },
+            () => {
+              this.player.currentTime = this.state.time
+            }
+          )
 
           break
         }
@@ -159,20 +162,29 @@ class Song extends React.Component {
         case (30 * (evt.screenX - this.state.timelane.x)) /
           this.state.timelane.width >
           30: {
-          // this.props.rewindSong({
-          //   name: this.props.name,
-          //   time: 30
-          // })
+          this.setState(
+            {
+              time: 30
+            },
+            () => {
+              this.player.currentTime = this.state.time
+            }
+          )
+
           break
         }
 
         default: {
-          // this.props.rewindSong({
-          //   name: this.props.name,
-          //   time:
-          //     (30 * (evt.screenX - this.props.timelane.x)) /
-          //     this.props.timelane.width
-          // })
+          this.setState(
+            {
+              time:
+                (30 * (evt.screenX - this.state.timelane.x)) /
+                this.state.timelane.width
+            },
+            () => {
+              this.player.currentTime = this.state.time
+            }
+          )
         }
       }
     }
@@ -223,21 +235,6 @@ class Song extends React.Component {
               {getTimeLeft(this.state.duration, this.state.time)}
             </span>
           </div>
-          {/* {this.props.url && (
-            <Timeline
-              controlHandler={this.onMouseDown}
-              isDragged={this.state.isDragged}
-              name={this.props.name}
-            >
-              <Control
-                isDragged={this.state.isDragged}
-                dragHandler={this.onMouseDown}
-                duration={this.props.duration}
-                time={this.props.time}
-                name={this.props.name}
-              />
-            </Timeline>
-          )} */}
           <h4>{this.props.artist}</h4>
         </div>
       </li>

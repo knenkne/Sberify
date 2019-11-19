@@ -16,9 +16,9 @@ class Songs extends React.Component {
     this.props.initSongs(this.props.songs)
   }
 
-  componentDidUpdate() {
-    this.props.initSongs(this.props.songs)
-  }
+  // componentDidUpdate() {
+  //   this.props.initSongs(this.props.songs)
+  // }
 
   render() {
     return (
