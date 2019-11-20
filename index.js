@@ -3,6 +3,7 @@ const createError = require('http-errors')
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 
@@ -22,6 +23,7 @@ mongoose.connect(config.url, {
 })
 
 express()
+  .use(bodyParser.text())
   .use(logger('dev'))
   .use('/api', indexRouter)
   .use('/api/artist', artistRouter)
