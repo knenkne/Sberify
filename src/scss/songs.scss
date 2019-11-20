@@ -1,9 +1,20 @@
+section.album {
+    .songs {
+        margin-top: 1rem;
+    }
+}
+
+section.song {
+    .songs {
+        margin: 0;
+    }
+}
+
 section.album,
 section.song {
     .songs {
         position: relative;
         z-index: 1;
-        margin-top: 1.2rem;
 
         >h4 {
             position: relative;

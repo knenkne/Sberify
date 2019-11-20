@@ -1,4 +1,4 @@
-.album {
+section.album {
     width: 100%;
 
     .albums {
@@ -71,6 +71,8 @@
 .album__name {
     position: relative;
     z-index: 1;
+
+    max-width: 11rem;
 
     font-size: 0.75rem;
     line-height: 1rem;

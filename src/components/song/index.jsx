@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { connect } from 'react-redux'
-import { actions } from '../../store'
 import { NavLink } from 'react-router-dom'
 
 import Play from './play'
@@ -242,31 +240,4 @@ class Song extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  if (!state.songs[ownProps.name]) {
-    return {
-      name: ownProps.name
-    }
-  }
-
-  return {
-    name: ownProps.name,
-    isPlaying: state.songs[ownProps.name].isPlaying,
-    isRewinding: state.songs[ownProps.name].isRewinding,
-    isSwitched: state.songs[ownProps.name].isSwitched,
-    time: state.songs[ownProps.name].time,
-    duration: state.songs[ownProps.name].duration,
-    player: state.songs[ownProps.name].player,
-    timelane: state.songs[ownProps.name].timelane
-  }
-}
-
-const mapDispatchToProps = {
-  playSong: actions.playSong,
-  pauseSong: actions.pauseSong,
-  stopSong: actions.stopSong,
-  rewindSong: actions.rewindSong,
-  updateSong: actions.updateSong
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Song)
+export default Song

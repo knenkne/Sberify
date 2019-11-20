@@ -1,8 +1,5 @@
 import React from 'react'
 
-import { connect } from 'react-redux'
-import { actions } from '../store'
-
 import Song from '../components/song/'
 
 class Songs extends React.Component {
@@ -10,10 +7,6 @@ class Songs extends React.Component {
     super()
 
     this.state = {}
-  }
-
-  componentDidMount() {
-    this.props.initSongs(this.props.songs)
   }
 
   render() {
@@ -38,14 +31,4 @@ class Songs extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    songs: ownProps.songs
-  }
-}
-
-const mapDispatchToProps = {
-  initSongs: actions.initSongs
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Songs)
+export default Songs

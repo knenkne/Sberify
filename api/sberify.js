@@ -45,13 +45,6 @@ class Sberify {
     this.addArtistToFavorites = this.addArtistToFavorites.bind(this)
   }
 
-  normalizeLink(url) {
-    return url
-      .split('')
-      .map(letter => (letter === '-' ? ' ' : letter))
-      .join('')
-  }
-
   async updateLyrics(name, lyrics) {
     const normalizedName = decodeURIComponent(name)
 
@@ -151,7 +144,7 @@ class Sberify {
   }
 
   async getArtist(name) {
-    const normalizedName = this.normalizeLink(name)
+    const normalizedName = decodeURIComponent(name)
     const artist = await this.models.artists.findOne(
       { name: new RegExp(`^${normalizedName}$`, 'i') },
       (err, artist) => artist
