@@ -1,7 +1,7 @@
 import * as types from '../action-types'
 import axios from 'axios'
 
-export const initSongPage = payload => (dispatch, getState) => {
+export const initSong = payload => (dispatch, getState) => {
   dispatch({
     type: types.SHOW_PRELOADER
   })
@@ -22,7 +22,6 @@ export const initSongPage = payload => (dispatch, getState) => {
 }
 
 export const updateLyrics = payload => (dispatch, getState) => {
-  console.log(payload.lyrics)
   axios
     .put(`/api/song/${payload.name}`, {
       lyrics: payload.lyrics

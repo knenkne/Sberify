@@ -1,14 +1,14 @@
 section.song {
     width: 100%;
 
+    .songs:last-of-type {
+        margin: 0 0 0.35rem;
+    }
+
     .songs:first-of-type {
         position: relative;
 
         margin: 0 0 1.2rem;
-    }
-
-    .songs:last-of-type {
-        margin: 0 0 0.35rem;
     }
 
     .video {

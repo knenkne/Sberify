@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { actions } from '../../store'
 
 import Play from './play'
 
@@ -44,13 +46,10 @@ class Song extends React.Component {
     })
   }
 
-  componentDidUpdate() {
-    if (this.props.isSwitched) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentSong !== this.props.name && this.state.isPlaying) {
       this.child.forceUpdate()
-    }
-
-    if (this.props.isSwitched) {
-      this.child.forceUpdate()
+      this.pause()
     }
   }
 
@@ -64,6 +63,9 @@ class Song extends React.Component {
       },
       () => {
         if (this.state.isPlaying) {
+          this.props.playSong({
+            name: this.props.name
+          })
           this.player.play()
         } else {
           this.player.pause()
@@ -240,4 +242,13 @@ class Song extends React.Component {
   }
 }
 
-export default Song
+const mapStateToProps = (state, ownProps) => ({
+  name: ownProps.name,
+  currentSong: state.currentSong.name
+})
+
+const mapDispatchToProps = {
+  playSong: actions.playSong
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Song)

@@ -168,7 +168,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  initSong: actions.initSongPage,
+  initSong: actions.initSong,
   updateLyrics: actions.updateLyrics
 }
 

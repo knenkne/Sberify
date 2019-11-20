@@ -1,5 +1,6 @@
 import { initArtist } from './artist'
 import { initAlbum } from './album'
-import { initSongPage, updateLyrics } from './song'
+import { initSong, updateLyrics } from './song'
+import { playSong } from './current-song'
 
-export { initSongPage, updateLyrics, initArtist, initAlbum }
+export { initSong, updateLyrics, initArtist, initAlbum, playSong }
