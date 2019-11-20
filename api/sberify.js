@@ -56,17 +56,24 @@ class Sberify {
     const normalizedName = decodeURIComponent(name)
 
     try {
-      const artist = await this.models.artists.updateMany(
+      await this.models.artists.updateMany(
         {},
         {
           $set: {
-            'albums.$[album].date': 'YES KEK'
+            'albums.$[album].songs.$[song].lyrics': lyrics
           }
         },
         {
           arrayFilters: [
             {
-              'album.name': { $eq: 'Stop the Clocks' }
+              'album.songs': {
+                $elemMatch: {
+                  name: normalizedName
+                }
+              }
+            },
+            {
+              'song.name': { $eq: normalizedName }
             }
           ]
         }
