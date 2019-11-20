@@ -15,7 +15,11 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.INIT_SONG_PAGE: {
+    case types.INIT_SONG: {
+      return { ...state, ...action.data }
+    }
+
+    case types.UPDATE_LYRICS: {
       return { ...state, ...action.data }
     }
 

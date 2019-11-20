@@ -9,10 +9,11 @@ import {
   stopSong,
   updateSong
 } from './songs'
-import { initSongPage } from './song'
+import { initSongPage, updateLyrics } from './song'
 
 export {
   initSongPage,
+  updateLyrics,
   initArtist,
   initAlbum,
   initSongs,

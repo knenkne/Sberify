@@ -24,6 +24,8 @@ mongoose.connect(config.url, {
 
 express()
   .use(bodyParser.text())
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
   .use(logger('dev'))
   .use('/api', indexRouter)
   .use('/api/artist', artistRouter)

@@ -3,8 +3,6 @@ import Lottie from 'lottie-react-web'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
-import { NavLink } from 'react-router-dom'
-import { normalizeNameToLink } from '../utils'
 
 import edit from '..//lottie/edit'
 import Songs from '../components/songs'
@@ -27,16 +25,17 @@ class Song extends React.Component {
     this.props.initSong(this.props.match.params.name)
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (decodeURIComponent(this.props.match.params.name) !== this.props.name) {
       this.props.initSong(this.props.match.params.name)
     }
+  }
 
-    if (!this.state.lyrics) {
-      this.setState({
-        lyrics: this.props.lyrics
-      })
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      lyrics: nextProps.lyrics,
+      isEdit: false
+    })
   }
 
   onEditClick = evt => {
@@ -48,7 +47,10 @@ class Song extends React.Component {
       },
       () => {
         if (!this.state.isEdit) {
-          console.log('submit')
+          this.props.updateLyrics({
+            name: this.props.name,
+            lyrics: this.state.lyrics
+          })
         }
       }
     )
@@ -115,6 +117,7 @@ class Song extends React.Component {
                 )}
                 {this.state.isEdit && (
                   <textarea
+                    rows={10}
                     value={this.state.lyrics}
                     onChange={this.onLyricsChange}
                   ></textarea>
@@ -166,7 +169,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   initSong: actions.initSongPage,
-  changeLyrics: ''
+  updateLyrics: actions.updateLyrics
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Song)

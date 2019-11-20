@@ -8,17 +8,19 @@ export const INIT_ARTIST = 'INIT_ARTIST'
 // Album
 export const INIT_ALBUM = 'INIT_ALBUM'
 
+// Song
+export const INIT_SONG = 'INIT_SONG'
+export const UPDATE_LYRICS = 'UPDATE_LYRICS'
+
 // Songs
 export const INIT_SONGS = 'INIT_SONGS'
-export const INIT_SONG = 'INIT_SONG'
 
-// Song
+// Song comp
 export const PLAY = 'PLAY'
 export const PAUSE = 'PAUSE'
 export const TIME_UPDATE = 'TIME_UPDATE'
 export const STOP = 'STOP'
 export const REWIND = 'REWIND'
-export const INIT_SONG_PAGE = 'INIT_SONG_PAGE'
 
 // Timelane
 export const INIT_TIMELANE = 'INIT_TIMELANE'
