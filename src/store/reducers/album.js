@@ -1,5 +1,4 @@
 import * as types from '../action-types'
-import { normalizeLinkToName } from '../../utils'
 
 const defaultState = {
   name: '',

@@ -24,21 +24,34 @@ class Song extends React.Component {
   }
 
   componentDidMount() {
-    this.props.initSongPage(this.props.match.params.name)
+    this.props.initSong(this.props.match.params.name)
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.match.params.name !== this.props.name) {
-      this.props.initSongPage(this.props.match.params.name)
+    if (decodeURIComponent(this.props.match.params.name) !== this.props.name) {
+      this.props.initSong(this.props.match.params.name)
+    }
+
+    if (!this.state.lyrics) {
+      this.setState({
+        lyrics: this.props.lyrics
+      })
     }
   }
 
   onEditClick = evt => {
     evt.preventDefault()
 
-    this.setState({
-      isEdit: !this.state.isEdit
-    })
+    this.setState(
+      {
+        isEdit: !this.state.isEdit
+      },
+      () => {
+        if (!this.state.isEdit) {
+          console.log('submit')
+        }
+      }
+    )
   }
 
   onLyricsChange = evt => {
@@ -85,7 +98,7 @@ class Song extends React.Component {
                 </button>
                 {!this.state.isEdit && (
                   <div className="song__lyrics">
-                    {this.props.lyrics.split('\n').map((row, index) => {
+                    {this.state.lyrics.split('\n').map((row, index) => {
                       return (
                         <p
                           key={index}
@@ -102,32 +115,36 @@ class Song extends React.Component {
                 )}
                 {this.state.isEdit && (
                   <textarea
-                    value={this.props.lyrics}
-                    onChange={this.changeLyrics}
+                    value={this.state.lyrics}
+                    onChange={this.onLyricsChange}
                   ></textarea>
                 )}
               </div>
             </div>
             <div className="song__block">
-              <Nav
-                album={normalizeNameToLink(this.props.album.name)}
-                artist={normalizeNameToLink(this.props.artist)}
-              />
-              {/* {this.props.name && (
+              <Nav album={this.props.album.name} artist={this.props.artist} />
+              {this.props.name && (
                 <Songs
                   artist={this.props.artist}
                   title={false}
                   songs={[
-                    { name: this.props.name, songPlayerUrl: this.props.url }
+                    {
+                      name: this.props.name,
+                      songPlayerUrl: this.props.songPlayerUrl
+                    }
                   ]}
-                  image={this.props.image}
+                  image={this.props.album.image}
                 />
-              )} */}
-              {this.props.album.songs.length > 0 && (
+              )}
+              {this.props.album.songs.filter(
+                song => song.name !== this.props.name
+              ).length > 0 && (
                 <Songs
                   artist={this.props.artist}
                   title={`More songs from ${this.props.album.name}`}
-                  songs={this.props.album.songs}
+                  songs={this.props.album.songs.filter(
+                    song => song.name !== this.props.name
+                  )}
                   image={this.props.album.image}
                   isNumbered={true}
                 />
@@ -148,7 +165,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  initSongPage: actions.initSongPage,
+  initSong: actions.initSongPage,
   changeLyrics: ''
 }
 

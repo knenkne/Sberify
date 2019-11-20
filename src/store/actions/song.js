@@ -1,12 +1,12 @@
 import * as types from '../action-types'
 import axios from 'axios'
 
-export const initSongPage = payload => async (dispatch, getState) => {
-  await dispatch({
+export const initSongPage = payload => (dispatch, getState) => {
+  dispatch({
     type: types.SHOW_PRELOADER
   })
 
-  await axios
+  axios
     .get(`/api/song/${payload}`)
     .then(response => {
       dispatch({

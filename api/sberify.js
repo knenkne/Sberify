@@ -52,10 +52,32 @@ class Sberify {
       .join('')
   }
 
-  async getSong(name) {
+  async updateLyrics(name, lyrics) {
     const normalizedName = decodeURIComponent(name)
 
-    console.log(normalizedName)
+    try {
+      const artist = await this.models.artists.updateMany(
+        {},
+        {
+          $set: {
+            'albums.$[album].date': 'YES KEK'
+          }
+        },
+        {
+          arrayFilters: [
+            {
+              'album.name': { $eq: 'Stop the Clocks' }
+            }
+          ]
+        }
+      )
+    } catch (err) {
+      return null
+    }
+  }
+
+  async getSong(name) {
+    const normalizedName = decodeURIComponent(name)
 
     try {
       const artist = await this.models.artists.findOne(
@@ -340,7 +362,7 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.saveArtistFromGeniusToDB('https://genius.com/artists/neck-deep')
-// sberify.getSong('Airfield')
+// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/drake')
+sberify.updateLyrics('Airfield')
 
 module.exports = sberify

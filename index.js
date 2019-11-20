@@ -17,7 +17,8 @@ const PORT = process.env.PORT || 5000
 
 mongoose.connect(config.url, {
   useUnifiedTopology: true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false
 })
 
 express()

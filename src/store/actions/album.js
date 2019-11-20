@@ -1,12 +1,12 @@
 import * as types from '../action-types'
 import axios from 'axios'
 
-export const initAlbum = payload => async (dispatch, getState) => {
-  await dispatch({
+export const initAlbum = payload => (dispatch, getState) => {
+  dispatch({
     type: types.SHOW_PRELOADER
   })
 
-  await axios
+  axios
     .get(`/api/album/${payload}`)
     .then(response => {
       dispatch({
