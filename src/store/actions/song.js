@@ -30,7 +30,7 @@ export const updateLyrics = payload => (dispatch, getState) => {
       dispatch({
         type: types.UPDATE_LYRICS,
         data: {
-          lyrics: payload.lyrics
+          lyrics: payload.lyrics.trim()
         }
       })
     })

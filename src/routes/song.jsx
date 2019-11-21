@@ -3,6 +3,7 @@ import Lottie from 'lottie-react-web'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
+import { Redirect } from 'react-router-dom'
 
 import edit from '..//lottie/edit'
 import Songs from '../components/songs'
@@ -63,6 +64,10 @@ class Song extends React.Component {
   }
 
   render() {
+    if (!this.props.isFound) {
+      return <Redirect to="/404/" />
+    }
+
     return (
       <div className="container">
         <section className="song">

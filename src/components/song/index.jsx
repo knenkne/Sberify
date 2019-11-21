@@ -46,6 +46,10 @@ class Song extends React.Component {
     })
   }
 
+  componentWillUnmount() {
+    this.stop()
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentSong !== this.props.name && this.state.isPlaying) {
       this.child.forceUpdate()

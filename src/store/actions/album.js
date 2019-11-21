@@ -11,7 +11,6 @@ export const initAlbum = payload => (dispatch, getState) => {
     .then(response => {
       dispatch({
         type: types.INIT_ALBUM,
-        name: payload,
         data: response.data
       })
     })

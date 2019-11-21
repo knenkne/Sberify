@@ -2,12 +2,12 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
+import { Redirect } from 'react-router-dom'
 
 import Social from '../components/social'
 import Songs from '../components/songs'
 import Albums from '../components/albums'
 import Video from '../components/video'
-import Nav from '../components/nav'
 
 import twitter from '../lottie/twitter'
 import facebook from '../lottie/facebook'
@@ -34,10 +34,18 @@ class Artist extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {}
+  }
+
+  componentDidMount() {
     this.props.initArtist(this.props.match.params.name)
   }
 
   render() {
+    if (!this.props.isFound) {
+      return <Redirect to="/404/" />
+    }
+
     return (
       <div className="container">
         <section className="artist">

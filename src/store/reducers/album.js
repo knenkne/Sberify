@@ -9,15 +9,18 @@ const defaultState = {
     name: '',
     headerImage: '',
     albums: []
-  }
+  },
+  isFound: true
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.INIT_ALBUM: {
-      const stateCopy = { ...state, ...action.data }
-
-      return stateCopy
+      return {
+        ...defaultState,
+        ...action.data,
+        isFound: action.data.name !== undefined
+      }
     }
 
     default: {

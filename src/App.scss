@@ -197,7 +197,7 @@ h4 {
 .artist__block:last-of-type {
   article {
     &:not(:last-of-type) {
-      margin-bottom: 0.75rem;
+      margin: 0.1rem 0 0.8rem;
     }
 
     >h4 {

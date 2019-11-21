@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { actions } from '../store'
 import { NavLink } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import Songs from '../components/songs'
 import Albums from '../components/albums'
@@ -28,6 +29,10 @@ class Album extends React.Component {
   }
 
   render() {
+    if (!this.props.isFound) {
+      return <Redirect to="/404/" />
+    }
+
     return (
       <div className="container">
         <section className="album">

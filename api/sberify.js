@@ -16,12 +16,10 @@ const Schemas = {
   artist: mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: String,
-    twitter_name: String,
-    instagram_name: String,
-    facebook_name: String,
+    socials: Object,
     description: String,
     image: String,
-    image_header: String,
+    headerImage: String,
     video_url: String,
     albums: Array
   }),
@@ -102,7 +100,7 @@ class Sberify {
 
       return {
         artist: artist.name,
-        artistImage: artist.image_header,
+        artistImage: artist.headerImage,
         album,
         ...song
       }
@@ -113,8 +111,6 @@ class Sberify {
 
   async getAlbum(name) {
     const normalizedName = decodeURIComponent(name)
-
-    console.log(normalizedName)
 
     try {
       const artist = await this.models.artists.findOne(
@@ -134,7 +130,7 @@ class Sberify {
         artist: {
           name: artist.name,
           albums: artist.albums.filter(album => album.name !== normalizedName),
-          headerImage: artist.image_header
+          headerImage: artist.headerImage
         },
         ...album
       }
@@ -344,12 +340,14 @@ class Sberify {
     const artist = await new this.models.artists({
       _id: new mongoose.Types.ObjectId(),
       name: data.name,
-      twitter_name: data.twitter,
-      instagram_name: data.instagram,
-      facebook_name: data.facebook,
+      socials: {
+        twitter: data.twitter,
+        instagram: data.instagram,
+        facebook_name: data.facebook
+      },
       description: data.description,
       image: data.image,
-      image_header: data.headerImage,
+      headerImage: data.headerImage,
       albums: data.albums
     })
 

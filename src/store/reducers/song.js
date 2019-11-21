@@ -10,13 +10,18 @@ const defaultState = {
   lyrics: '',
   artistImage: '',
   artist: '',
-  url: ''
+  url: '',
+  isFound: true
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.INIT_SONG: {
-      return { ...state, ...action.data }
+      return {
+        ...state,
+        ...action.data,
+        isFound: action.data.name !== undefined
+      }
     }
 
     case types.UPDATE_LYRICS: {

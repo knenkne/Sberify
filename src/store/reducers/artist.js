@@ -10,27 +10,18 @@ const defaultState = {
   },
   albums: [],
   video: '',
-  headerImage: ''
+  headerImage: '',
+  isFound: true
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.INIT_ARTIST: {
-      const stateCopy = { ...state, ...action.data }
-
-      stateCopy.headerImage = stateCopy.image_header
-
-      delete stateCopy.image_header
-
-      stateCopy.socials.twitter = action.data.twitter_name
-      stateCopy.socials.facebook = action.data.facebook_name
-      stateCopy.socials.instagram = action.data.instagram_name
-
-      delete stateCopy.twitter_name
-      delete stateCopy.facebook_name
-      delete stateCopy.instagram_name
-
-      return stateCopy
+      return {
+        ...defaultState,
+        ...action.data,
+        isFound: action.data.name !== undefined
+      }
     }
 
     default: {
