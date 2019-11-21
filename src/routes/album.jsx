@@ -3,7 +3,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { actions } from '../store'
 import { NavLink } from 'react-router-dom'
-import { normalizeNameToLink } from '../utils'
 
 import Songs from '../components/songs'
 import Albums from '../components/albums'
@@ -65,8 +64,8 @@ class Album extends React.Component {
             </div>
             <div className="album__block">
               <Nav
-                album={normalizeNameToLink(this.props.name)}
-                artist={normalizeNameToLink(this.props.artist.name)}
+                album={encodeURIComponent(this.props.name)}
+                artist={encodeURIComponent(this.props.artist.name)}
               />
               <Albums
                 albums={this.props.artist.albums}

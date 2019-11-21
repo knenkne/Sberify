@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { createStore } from './store'
 
 import Preloader from './components/preloader'
 import Artist from './routes/artist'
@@ -12,18 +14,20 @@ import './App.scss'
 
 function App() {
   return (
-    <React.Fragment>
-      {/* <Switch> */}
-      <Preloader />
-      {/* Home */}
-      <Switch>
-        <Route path="/artist/:name" component={Artist} />
-        <Route path="/album/:name" component={Album} />
-        <Route path="/song/:name" component={Song} />
-        <Route component={NotFound} />
-      </Switch>
-      {/* </Switch> */}
-    </React.Fragment>
+    <Provider store={createStore()}>
+      <Router>
+        {/* <Switch> */}
+        <Preloader />
+        {/* Home */}
+        <Switch>
+          <Route path="/artist/:name" component={Artist} />
+          <Route path="/album/:name" component={Album} />
+          <Route path="/song/:name" component={Song} />
+          <Route component={NotFound} />
+        </Switch>
+        {/* </Switch> */}
+      </Router>
+    </Provider>
   )
 }
 
