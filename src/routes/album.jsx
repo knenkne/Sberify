@@ -9,8 +9,6 @@ import Songs from '../components/songs'
 import Albums from '../components/albums'
 import Nav from '../components/nav'
 
-import '../App.scss'
-
 class Album extends React.Component {
   constructor(props) {
     super(props)

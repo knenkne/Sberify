@@ -1,15 +1,30 @@
 .home {
+    position: relative;
+
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
 
+    &::before {
+        content: "";
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+
+        background-image: url("https://images.squarespace-cdn.com/content/v1/52619475e4b080ced5da8f2e/1502307705416-WP5TNL1T5JRISC4D0U6P/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/IK5A3268.jpg?format=1500w");
+        filter: blur(0.05rem);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
     .home__search {
         position: relative;
 
         border-radius: 0.25rem;
-        box-shadow: 0 0rem 2rem 0.5rem rgba(25, 187, 79, 0.4);
+        box-shadow: 0 0rem 2rem 0.5rem rgba(0, 0, 0, 0.5);
 
         transition-duration: 0.3s;
         transition-property: box-shadow;
@@ -73,7 +88,7 @@
 
                 font-size: 0.25rem;
                 line-height: 0.5rem;
-                vertical-align: top;
+                vertical-align: bottom;
                 color: #19bb4f;
                 text-transform: none;
             }

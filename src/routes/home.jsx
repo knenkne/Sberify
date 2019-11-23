@@ -1,11 +1,12 @@
 import React from 'react'
 import Lottie from 'lottie-react-web'
 
+import { connect } from 'react-redux'
+import { actions } from '../store'
+
 import search from '../lottie/search'
 
-import '../App.scss'
-
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor() {
     super()
 
@@ -40,16 +41,22 @@ export default class Home extends React.Component {
         segments: this.state.segments.reverse()
       },
       () => {
-        console.log('blur')
-        this.lottie.current.anim.playSegments(this.state.segments, false)
+        this.lottie.current.anim.playSegments(this.state.segments, true)
       }
     )
   }
 
   onChange = evt => {
-    this.setState({
-      value: evt.target.value
-    })
+    this.setState(
+      {
+        value: evt.target.value
+      },
+      () => {
+        if (!this.state.isAddMode) {
+          console.log('searching')
+        }
+      }
+    )
   }
 
   onClickSwitchMode = () => {
@@ -58,14 +65,23 @@ export default class Home extends React.Component {
     })
   }
 
+  onSubmit = evt => {
+    evt.preventDefault()
+
+    if (this.state.isAddMode) {
+      this.props.addArtist(this.state.value)
+    }
+  }
+
   render() {
     return (
       <div className="container">
         <section className="home">
-          <div
+          <form
             className={`home__search${
               this.state.isFocused ? ' home__search--focused' : ''
             }${this.state.isAddMode ? ' home__search--add' : ''}`}
+            onSubmit={this.onSubmit}
           >
             <input
               type="text"
@@ -93,9 +109,19 @@ export default class Home extends React.Component {
                 }}
               />
             </button>
-          </div>
+          </form>
         </section>
       </div>
     )
   }
 }
+
+// const mapStateToProps = state => ({
+//   ...state.album
+// })
+
+const mapDispatchToProps = {
+  addArtist: actions.addArtist
+}
+
+export default connect(null, mapDispatchToProps)(Home)

@@ -12,7 +12,6 @@ router.get('/:name', async function(req, res, next) {
 })
 
 router.put('/:name', async function(req, res, next) {
-  console.log(req.body)
   res.send(await sberify.updateLyrics(req.params.name, req.body.lyrics))
 })
 

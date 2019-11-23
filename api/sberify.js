@@ -360,6 +360,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-sberify.saveArtistFromGeniusToDB('https://genius.com/artists/the-killers')
+// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/the-killers')
 
 module.exports = sberify
