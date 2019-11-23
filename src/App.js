@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore } from './store'
 
 import Preloader from './components/preloader'
+import Home from './routes/home'
 import Artist from './routes/artist'
 import Album from './routes/album'
 import Song from './routes/song'
@@ -16,16 +17,14 @@ function App() {
   return (
     <Provider store={createStore()}>
       <Router>
-        {/* <Switch> */}
         <Preloader />
-        {/* Home */}
         <Switch>
+          <Route exact path="/" component={Home} />
           <Route path="/artist/:name" component={Artist} />
           <Route path="/album/:name" component={Album} />
           <Route path="/song/:name" component={Song} />
           <Route component={NotFound} />
         </Switch>
-        {/* </Switch> */}
       </Router>
     </Provider>
   )

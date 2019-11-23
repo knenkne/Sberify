@@ -1,0 +1,125 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+
+    .home__search {
+        position: relative;
+
+        border-radius: 0.25rem;
+        box-shadow: 0 0rem 2rem 0.5rem rgba(25, 187, 79, 0.4);
+
+        transition-duration: 0.3s;
+        transition-property: box-shadow;
+
+        &--focused {
+            box-shadow: 0 0rem 2rem 0.75rem rgba(25, 187, 79, 0.4);
+        }
+
+        &--add {
+            .home__message--add {
+                top: -0.6rem;
+
+                transition-duration: 0.3s;
+                transition-property: top;
+            }
+        }
+    }
+
+    .home__search:not(.home__search--add) {
+        input {
+            &:focus {
+                ~.home__message--find {
+                    bottom: -0.5rem;
+
+                    transition-duration: 0.3s;
+                    transition-property: bottom;
+                }
+            }
+        }
+    }
+
+    .home__message {
+        position: absolute;
+        z-index: 1;
+
+        margin-top: 0.1rem;
+        padding-left: 0.25rem;
+
+        font-size: 0.35rem;
+        line-height: 0.5rem;
+        color: #ffffff;
+        text-transform: uppercase;
+
+        transition-duration: 0.3s;
+
+        &--find {
+            bottom: 0;
+
+            cursor: pointer;
+
+            transition-property: bottom;
+        }
+
+        &--add {
+            top: 0;
+
+            transition-property: top;
+
+            span {
+                display: inline-block;
+
+                font-size: 0.25rem;
+                line-height: 0.5rem;
+                vertical-align: top;
+                color: #19bb4f;
+                text-transform: none;
+            }
+        }
+    }
+
+    .home__search-button {
+        position: absolute;
+        top: 0.2rem;
+        right: 0.25rem;
+        z-index: 2;
+
+        width: 0.6rem;
+        height: 0.6rem;
+        padding: 0;
+
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    input {
+        position: relative;
+        z-index: 2;
+
+        display: block;
+        box-sizing: border-box;
+        width: 7.5rem;
+        height: 1rem;
+        padding: 0 1rem 0 0.25rem;
+
+        font-size: 0.45rem;
+
+        // line-height: 1rem;
+        font-family: inherit;
+        color: #ffffff;
+
+        background-color: #000000;
+        border: 0.05rem solid #19bb4f;
+        border-radius: 0.25rem;
+
+        transition-duration: 0.3s;
+        transition-property: box-shadow;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

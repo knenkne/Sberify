@@ -1,5 +1,6 @@
 import React from 'react'
 import Lottie from 'lottie-react-web'
+
 import '../App.scss'
 
 export default class Social extends React.Component {
