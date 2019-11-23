@@ -130,7 +130,11 @@ class Song extends React.Component {
               </div>
             </div>
             <div className="song__block">
-              <Nav album={this.props.album.name} artist={this.props.artist} />
+              <Nav
+                album={this.props.album.name}
+                artist={this.props.artist}
+                song={this.props.name}
+              />
               {this.props.name && (
                 <Songs
                   artist={this.props.artist}

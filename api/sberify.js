@@ -342,8 +342,8 @@ class Sberify {
       name: data.name,
       socials: {
         twitter: data.twitter,
-        instagram: data.instagram,
-        facebook_name: data.facebook
+        facebook: data.facebook,
+        instagram: data.instagram
       },
       description: data.description,
       image: data.image,
@@ -360,8 +360,6 @@ class Sberify {
 
 const sberify = new Sberify(Schemas, Models)
 
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/enter-shikari')
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/architects')
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/neck-deep')
+sberify.saveArtistFromGeniusToDB('https://genius.com/artists/the-killers')
 
 module.exports = sberify

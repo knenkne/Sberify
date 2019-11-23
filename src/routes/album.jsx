@@ -71,6 +71,7 @@ class Album extends React.Component {
               <Nav
                 album={encodeURIComponent(this.props.name)}
                 artist={encodeURIComponent(this.props.artist.name)}
+                count={3}
               />
               <Albums
                 albums={this.props.artist.albums}

@@ -20,6 +20,12 @@
         &:not(:last-of-type) {
             margin-right: 0.75rem;
         }
+
+        padding-bottom: 0.1rem;
+    }
+
+    .navgiation__item--current {
+        border-bottom: 0.03rem solid #19bb4f;
     }
 
 }
