@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { actions } from '../store'
 
 import search from '../lottie/search'
+import logo from '../images/logo.svg'
 
 class Home extends React.Component {
   constructor() {
@@ -77,6 +78,15 @@ class Home extends React.Component {
     return (
       <div className="container">
         <section className="home">
+          <div className="home__header">
+            <div className="home__logo-wrap">
+              <img src={logo} alt="Sberify Music App" className="home__logo" />
+            </div>
+            {/* <h1 className="home__title">Sberify</h1>
+            <h2 className="home__subtitle">
+              Music <span>App</span>
+            </h2> */}
+          </div>
           <form
             className={`home__search${
               this.state.isFocused ? ' home__search--focused' : ''
@@ -99,7 +109,7 @@ class Home extends React.Component {
             >
               Can't find? Add your own
             </p>
-            <button className="home__search-button">
+            <button type="button" className="home__search-button">
               <Lottie
                 ref={this.lottie}
                 options={{

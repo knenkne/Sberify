@@ -1,3 +1,21 @@
+@keyframes colorSpin {
+    25% {
+        background-position: 0 100%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    75% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
 .home {
     position: relative;
 
@@ -7,6 +25,11 @@
     width: 100%;
     height: 100vh;
 
+    background-image: url("https://images.squarespace-cdn.com/content/v1/52619475e4b080ced5da8f2e/1502307705416-WP5TNL1T5JRISC4D0U6P/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/IK5A3268.jpg?format=2500w");
+    background-repeat: no-repeat;
+    background-position: 0 -4rem;
+    background-size: cover;
+
     &::before {
         content: "";
         position: absolute;
@@ -14,23 +37,117 @@
         width: 100%;
         height: 100%;
 
-        background-image: url("https://images.squarespace-cdn.com/content/v1/52619475e4b080ced5da8f2e/1502307705416-WP5TNL1T5JRISC4D0U6P/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/IK5A3268.jpg?format=1500w");
-        filter: blur(0.05rem);
-        background-repeat: no-repeat;
-        background-size: cover;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.5) 70%, #000000 100%);
+    }
+
+    .home__header {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        z-index: 1;
+
+        display: flex;
+        flex-direction: column;
+
+        // align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        height: 1.5rem;
+    }
+
+    .home__logo-wrap {
+        position: relative;
+        z-index: 1;
+
+        cursor: pointer;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+
+            width: 1.5rem;
+            height: 1.5rem;
+
+            border-radius: 50%;
+        }
+
+        &::after {
+            background: radial-gradient(circle, #19bb4f, transparent);
+            background-size: 400%;
+
+            animation: colorSpin 10s linear infinite;
+        }
+    }
+
+    .home__logo {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.25rem;
+
+        border-radius: 50%;
+        transform: rotate(25deg);
+
+        transition-duration: 0.3s;
+
+        // mix-blend-mode: overlay;
+        // box-shadow: 0 0 1rem 0.3rem rgba(25, 187, 79, 0.55);
+        transition-property: transform;
+
+        &:hover {
+            transform: scale(1.1);
+
+            transition-duration: 0.3s;
+            transition-property: transform;
+        }
+    }
+
+    .home__title {
+        top: 0.25rem;
+        left: 1rem;
+
+        font-size: 0.5rem;
+        line-height: 0.5rem;
+        color: #000000;
+        text-transform: uppercase;
+        letter-spacing: 0.005rem;
+
+        // letter-spacing: 0.2rem;
+        text-shadow: 0.05rem 0.05rem 0.01rem rgba(0, 0, 0, 0.35);
+
+        // mix-blend-mode: overlay;
+
+        mix-blend-mode: overlay;
+    }
+
+    .home__subtitle {
+        align-self: flex-start;
+        margin-top: 0.05rem;
+
+        font-weight: 700;
+        font-size: 0.3rem;
+        line-height: 0.3rem;
+        color: rgba(25, 187, 79, 1);
+        text-shadow: 0.02rem 0.02rem 0.01rem rgba(0, 0, 0, 0.45);
+        // text-transform: uppercase;
     }
 
     .home__search {
         position: relative;
 
         border-radius: 0.25rem;
-        box-shadow: 0 0rem 2rem 0.5rem rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10rem 0.5rem rgba(25, 187, 79, 0.35);
 
         transition-duration: 0.3s;
         transition-property: box-shadow;
 
         &--focused {
-            box-shadow: 0 0rem 2rem 0.75rem rgba(25, 187, 79, 0.4);
+            box-shadow: 0 0 10rem 1rem rgba(25, 187, 79, 0.35);
         }
 
         &--add {
@@ -97,7 +214,7 @@
 
     .home__search-button {
         position: absolute;
-        top: 0.2rem;
+        top: 0.225rem;
         right: 0.25rem;
         z-index: 2;
 
@@ -116,13 +233,12 @@
 
         display: block;
         box-sizing: border-box;
-        width: 7.5rem;
-        height: 1rem;
+        width: 9rem;
+        height: 1.05rem;
         padding: 0 1rem 0 0.25rem;
 
         font-size: 0.45rem;
-
-        // line-height: 1rem;
+        line-height: 1.1rem;
         font-family: inherit;
         color: #ffffff;
 
