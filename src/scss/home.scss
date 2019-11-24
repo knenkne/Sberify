@@ -12,6 +12,8 @@
     }
 
     100% {
+        background-position: 0 0;
+
         filter: hue-rotate(360deg);
     }
 }
@@ -71,23 +73,23 @@
             left: 0;
             z-index: -1;
 
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
 
             border-radius: 50%;
         }
 
         &::after {
-            background: radial-gradient(circle, #19bb4f, transparent);
-            background-size: 400%;
+            background: #19bb4f;
+            // background-size: 400%;
 
-            animation: colorSpin 10s linear infinite;
+            // animation: colorSpin 30s linear infinite;
         }
     }
 
     .home__logo {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
         margin-right: 0.25rem;
 
         border-radius: 50%;
@@ -96,7 +98,7 @@
         transition-duration: 0.3s;
 
         // mix-blend-mode: overlay;
-        // box-shadow: 0 0 1rem 0.3rem rgba(25, 187, 79, 0.55);
+        box-shadow: 0 0 0.1rem 0.05rem rgba(25, 187, 79, 0.95);
         transition-property: transform;
 
         &:hover {
