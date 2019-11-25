@@ -139,6 +139,16 @@ class Sberify {
     }
   }
 
+  async getArtists(name) {
+    const normalizedName = decodeURIComponent(name)
+    const artists = await this.models.artists.find(
+      { name: new RegExp(`^${normalizedName}`, 'i') },
+      (err, artists) => artists
+    )
+
+    return artists
+  }
+
   async getArtist(name) {
     const normalizedName = decodeURIComponent(name)
     const artist = await this.models.artists.findOne(
@@ -334,7 +344,13 @@ class Sberify {
     const data = await this.getArtistFromGenius(url)
 
     if (await this.models.artists.exists({ name: data.name })) {
+      console.log('exist')
       return `Artist is already exists`
+    }
+
+    if (data.name === 'Error') {
+      console.log('not f')
+      return `Artist is not found`
     }
 
     const artist = await new this.models.artists({
@@ -359,7 +375,5 @@ class Sberify {
 }
 
 const sberify = new Sberify(Schemas, Models)
-
-// sberify.saveArtistFromGeniusToDB('https://genius.com/artists/the-killers')
 
 module.exports = sberify

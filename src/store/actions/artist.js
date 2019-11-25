@@ -26,19 +26,9 @@ export const addArtist = payload => (dispatch, getState) => {
     type: types.SHOW_PRELOADER
   })
 
-  axios
-    .put(`/api/artist/${payload}`)
-    .then(response => {
-      // dispatch({
-      //   type: types.INIT_ARTIST,
-      //   data: response.data
-      // })
-      console.log(response)
-      // Dispatch redirect
+  axios.put(`/api/artist/${payload}`).then(() => {
+    dispatch({
+      type: types.HIDE_PRELOADER
     })
-    .then(() => {
-      dispatch({
-        type: types.HIDE_PRELOADER
-      })
-    })
+  })
 }

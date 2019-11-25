@@ -11,6 +11,10 @@ router.get('/:name', async (req, res, next) => {
   res.send(await sberify.getArtist(req.params.name))
 })
 
+router.get('/find/:match', async (req, res, next) => {
+  res.send(await sberify.getArtists(req.params.match))
+})
+
 router.put('/:name', async function(req, res, next) {
   res.send(
     await sberify.saveArtistFromGeniusToDB(

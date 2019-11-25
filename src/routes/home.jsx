@@ -119,6 +119,14 @@ class Home extends React.Component {
                 }}
               />
             </button>
+            <ul className="dropdown-menu">
+              <li className="dropdown-menu__item">
+                <h2>Architects</h2>
+              </li>
+              <li className="dropdown-menu__item">
+                <h2>Architects</h2>
+              </li>
+            </ul>
           </form>
         </section>
       </div>
