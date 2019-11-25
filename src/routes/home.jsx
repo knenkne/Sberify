@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { actions } from '../store'
 import { CSSTransition } from 'react-transition-group'
+import * as _ from 'lodash'
 
 import search from '../lottie/search'
 import logo from '../images/logo.svg'
@@ -21,6 +22,7 @@ class Home extends React.Component {
     }
 
     this.lottie = React.createRef()
+    this.debouncedOnChange = _.throttle(this.debouncedOnChange.bind(this), 400)
   }
 
   onFocus = () => {
@@ -35,19 +37,21 @@ class Home extends React.Component {
     )
   }
 
-  onBlur = evt => {
-    evt.preventDefault()
+  onBlur = () => {
     this.setState(
       {
-        isFocused: false,
         value: '',
+        isFocused: false,
         segments: this.state.segments.reverse()
       },
       () => {
-        // this.props.clearArtists()
         this.lottie.current.anim.playSegments(this.state.segments, true)
       }
     )
+  }
+
+  debouncedOnChange(value) {
+    this.props.getArtists(value)
   }
 
   onChange = evt => {
@@ -56,9 +60,7 @@ class Home extends React.Component {
         value: evt.target.value
       },
       () => {
-        if (!this.state.isAddMode) {
-          this.props.getArtists(this.state.value)
-        }
+        this.debouncedOnChange(this.state.value)
       }
     )
   }
@@ -124,6 +126,7 @@ class Home extends React.Component {
                 {this.props.results.map(result => {
                   return (
                     <li
+                      key={result.name}
                       className="dropdown-menu__item"
                       style={{
                         backgroundImage: `url(${result.headerImage}`

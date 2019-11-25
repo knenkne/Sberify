@@ -29,6 +29,7 @@
     "express": "^4.16.4",
     "genius-api": "^0.4.1",
     "jsdom-quokka-plugin": "^1.0.14",
+    "lodash": "^4.17.15",
     "lottie-react-web": "^2.1.4",
     "mongodb": "^3.3.3",
     "mongoose": "^5.7.7",
