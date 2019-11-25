@@ -1,25 +1,26 @@
 import * as types from '../action-types'
 
 const defaultState = {
+  searchResults: [],
   isLoading: false
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.SHOW_PRELOADER: {
-      const stateCopy = { ...state }
-
-      stateCopy.isLoading = true
-
-      return stateCopy
+      return { ...state, isLoading: true }
     }
 
     case types.HIDE_PRELOADER: {
-      const stateCopy = { ...state }
+      return { ...state, isLoading: false }
+    }
 
-      stateCopy.isLoading = false
+    case types.ADD_SEARCH_RESULTS: {
+      return { ...state, searchResults: action.results }
+    }
 
-      return stateCopy
+    case types.CLEAR_SEARCH_RESULTS: {
+      return { ...state, searchResults: [] }
     }
 
     default: {

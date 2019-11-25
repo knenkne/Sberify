@@ -1,8 +1,10 @@
 import React from 'react'
 import Lottie from 'lottie-react-web'
 
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { actions } from '../store'
+import { CSSTransition } from 'react-transition-group'
 
 import search from '../lottie/search'
 import logo from '../images/logo.svg'
@@ -42,6 +44,7 @@ class Home extends React.Component {
         segments: this.state.segments.reverse()
       },
       () => {
+        // this.props.clearArtists()
         this.lottie.current.anim.playSegments(this.state.segments, true)
       }
     )
@@ -54,7 +57,7 @@ class Home extends React.Component {
       },
       () => {
         if (!this.state.isAddMode) {
-          console.log('searching')
+          this.props.getArtists(this.state.value)
         }
       }
     )
@@ -82,10 +85,6 @@ class Home extends React.Component {
             <div className="home__logo-wrap">
               <img src={logo} alt="Sberify Music App" className="home__logo" />
             </div>
-            {/* <h1 className="home__title">Sberify</h1>
-            <h2 className="home__subtitle">
-              Music <span>App</span>
-            </h2> */}
           </div>
           <form
             className={`home__search${
@@ -119,14 +118,29 @@ class Home extends React.Component {
                 }}
               />
             </button>
-            <ul className="dropdown-menu">
-              <li className="dropdown-menu__item">
-                <h2>Architects</h2>
-              </li>
-              <li className="dropdown-menu__item">
-                <h2>Architects</h2>
-              </li>
-            </ul>
+
+            {this.props.results.length > 0 && (
+              <ul className="dropdown-menu">
+                {this.props.results.map(result => {
+                  return (
+                    <li
+                      className="dropdown-menu__item"
+                      style={{
+                        backgroundImage: `url(${result.headerImage}`
+                      }}
+                    >
+                      <NavLink
+                        onClick={this.props.clearArtists}
+                        to={`/artist/${encodeURIComponent(result.name)}`}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <h2>{result.name}</h2>
+                      </NavLink>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
           </form>
         </section>
       </div>
@@ -134,12 +148,14 @@ class Home extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   ...state.album
-// })
+const mapStateToProps = state => ({
+  results: state.app.searchResults
+})
 
 const mapDispatchToProps = {
-  addArtist: actions.addArtist
+  addArtist: actions.addArtist,
+  getArtists: actions.getArtists,
+  clearArtists: actions.clearArtists
 }
 
-export default connect(null, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

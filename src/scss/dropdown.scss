@@ -14,6 +14,8 @@
     border: 0.05rem solid #19bb4f;
     border-radius: 0.25rem;
 
+    transition: 2s;
+
     .dropdown-menu__item {
         position: relative;
 
@@ -23,10 +25,7 @@
         box-sizing: border-box;
         height: 1.5rem;
         padding: 0 0.25rem;
-        // box-shadow: 0 0 10rem 1rem rgba(25, 187, 79, 0.35);
 
-        background-image: url("https://images.genius.com/11d94a5c2954e02819f8338ef30bdf6c.1000x667x1.jpg");
-        background-position: 0 -1rem;
         background-size: cover;
 
         &::before {
@@ -38,7 +37,7 @@
             width: 100%;
             height: 100%;
 
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.4) 93%, rgba(0, 0, 0, 0.8) 99%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.4) 80%, rgba(0, 0, 0, 0.7) 99%);
         }
 
         &:first-of-type {

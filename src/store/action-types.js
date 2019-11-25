@@ -1,3 +1,7 @@
+// Search
+export const ADD_SEARCH_RESULTS = 'ADD_SEARCH_RESULTS'
+export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS'
+
 // Preloader
 export const SHOW_PRELOADER = 'SHOW_PRELOADER'
 export const HIDE_PRELOADER = 'HIDE_PRELOADER'

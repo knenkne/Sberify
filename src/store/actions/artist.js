@@ -21,7 +21,7 @@ export const initArtist = payload => dispatch => {
     })
 }
 
-export const addArtist = payload => (dispatch, getState) => {
+export const addArtist = payload => dispatch => {
   dispatch({
     type: types.SHOW_PRELOADER
   })
@@ -30,5 +30,20 @@ export const addArtist = payload => (dispatch, getState) => {
     dispatch({
       type: types.HIDE_PRELOADER
     })
+  })
+}
+
+export const getArtists = payload => dispatch => {
+  axios.get(`/api/artist/find/${payload}`).then(response => {
+    dispatch({
+      type: types.ADD_SEARCH_RESULTS,
+      results: response.data
+    })
+  })
+}
+
+export const clearArtists = () => dispatch => {
+  dispatch({
+    type: types.CLEAR_SEARCH_RESULTS
   })
 }
