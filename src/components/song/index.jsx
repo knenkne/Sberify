@@ -32,7 +32,7 @@ class Song extends React.Component {
     }
 
     this.player = new Audio(this.state.url)
-    this.player.volume = 0.05
+    this.player.volume = 0.2
 
     this.timeline = React.createRef()
   }

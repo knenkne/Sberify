@@ -11,7 +11,7 @@ const defaultState = {
   albums: [],
   video: '',
   headerImage: '',
-  isFound: true
+  isFound: undefined
 }
 
 export default (state = defaultState, action) => {

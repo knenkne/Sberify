@@ -4,7 +4,7 @@ import Lottie from 'lottie-react-web'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { actions } from '../store'
-import { CSSTransition } from 'react-transition-group'
+import { Redirect } from 'react-router-dom'
 import * as _ from 'lodash'
 
 import search from '../lottie/search'
@@ -22,7 +22,9 @@ class Home extends React.Component {
     }
 
     this.lottie = React.createRef()
-    this.debouncedOnChange = _.throttle(this.debouncedOnChange.bind(this), 400)
+    this.debouncedOnChange = _.debounce(this.debouncedOnChange, 300, {
+      leading: true
+    })
   }
 
   onFocus = () => {
@@ -40,7 +42,6 @@ class Home extends React.Component {
   onBlur = () => {
     this.setState(
       {
-        value: '',
         isFocused: false,
         segments: this.state.segments.reverse()
       },
@@ -50,7 +51,7 @@ class Home extends React.Component {
     )
   }
 
-  debouncedOnChange(value) {
+  debouncedOnChange = value => {
     this.props.getArtists(value)
   }
 
@@ -60,7 +61,9 @@ class Home extends React.Component {
         value: evt.target.value
       },
       () => {
-        this.debouncedOnChange(this.state.value)
+        if (!this.state.isAddMode) {
+          this.debouncedOnChange(this.state.value)
+        }
       }
     )
   }
@@ -75,11 +78,16 @@ class Home extends React.Component {
     evt.preventDefault()
 
     if (this.state.isAddMode) {
-      this.props.addArtist(this.state.value)
+      this.props.addArtist(this.state.value).then(response => {
+        console.log(response)
+      })
     }
   }
 
   render() {
+    if (this.props.redirectUri) {
+      return <Redirect to={`/artist/${this.props.redirectUri}`} />
+    }
     return (
       <div className="container">
         <section className="home">
@@ -120,30 +128,32 @@ class Home extends React.Component {
                 }}
               />
             </button>
-
-            {this.props.results.length > 0 && (
+            <div className="dropdown-menu-wrapper">
               <ul className="dropdown-menu">
-                {this.props.results.map(result => {
-                  return (
-                    <li
-                      key={result.name}
-                      className="dropdown-menu__item"
-                      style={{
-                        backgroundImage: `url(${result.headerImage}`
-                      }}
-                    >
-                      <NavLink
-                        onClick={this.props.clearArtists}
-                        to={`/artist/${encodeURIComponent(result.name)}`}
-                        style={{ textDecoration: 'none' }}
+                {this.props.results.length > 0 &&
+                  this.props.results.map(result => {
+                    return (
+                      <li
+                        key={result.name}
+                        className="dropdown-menu__item"
+                        style={{
+                          backgroundImage: `url(${result.headerImage}`
+                        }}
                       >
-                        <h2>{result.name}</h2>
-                      </NavLink>
-                    </li>
-                  )
-                })}
+                        <NavLink
+                          onMouseDown={evt => {
+                            evt.preventDefault()
+                          }}
+                          to={`/artist/${encodeURIComponent(result.name)}`}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <h2>{result.name}</h2>
+                        </NavLink>
+                      </li>
+                    )
+                  })}
               </ul>
-            )}
+            </div>
           </form>
         </section>
       </div>
@@ -152,7 +162,8 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.app.searchResults
+  results: state.app.searchResults,
+  redirectUri: state.app.redirectUri
 })
 
 const mapDispatchToProps = {

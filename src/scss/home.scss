@@ -147,6 +147,7 @@
 
         transition-duration: 0.3s;
         transition-property: box-shadow;
+        // overflow: hidden;
 
         &--focused {
             box-shadow: 0 0 10rem 1rem rgba(25, 187, 79, 0.35);

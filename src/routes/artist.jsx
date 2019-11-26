@@ -38,11 +38,12 @@ class Artist extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearArtists()
     this.props.initArtist(this.props.match.params.name)
   }
 
   render() {
-    if (!this.props.isFound) {
+    if (this.props.isFound === false) {
       return <Redirect to="/404/" />
     }
 
@@ -113,6 +114,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
+  clearArtists: actions.clearArtists,
   initArtist: actions.initArtist
 }
 

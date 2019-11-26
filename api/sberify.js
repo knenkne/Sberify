@@ -344,13 +344,11 @@ class Sberify {
     const data = await this.getArtistFromGenius(url)
 
     if (await this.models.artists.exists({ name: data.name })) {
-      console.log('exist')
       return `Artist is already exists`
     }
 
     if (data.name === 'Error') {
-      console.log('not f')
-      return `Artist is not found`
+      throw new Error('Not found on Genius')
     }
 
     const artist = await new this.models.artists({
@@ -358,8 +356,8 @@ class Sberify {
       name: data.name,
       socials: {
         twitter: data.twitter,
-        facebook: data.facebook,
-        instagram: data.instagram
+        instagram: data.instagram,
+        facebook: data.facebook
       },
       description: data.description,
       image: data.image,
@@ -369,7 +367,7 @@ class Sberify {
 
     return await artist
       .save()
-      .then(result => console.log(result))
+      .then(result => result)
       .catch(err => err)
   }
 }

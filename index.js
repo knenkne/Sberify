@@ -17,6 +17,7 @@ const songRouter = require(path.join(__dirname, 'api/routes/song'))
 const PORT = process.env.PORT || 5000
 
 mongoose.connect(config.url, {
+  autoIndex: false,
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false

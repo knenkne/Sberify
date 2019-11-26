@@ -16,11 +16,15 @@ router.get('/find/:match', async (req, res, next) => {
 })
 
 router.put('/:name', async function(req, res, next) {
-  res.send(
+  try {
     await sberify.saveArtistFromGeniusToDB(
       `https://genius.com/artists/${req.params.name}`
     )
-  )
+
+    res.send(req.params.name)
+  } catch (err) {
+    res.status(400).send(err.message)
+  }
 })
 
 module.exports = router

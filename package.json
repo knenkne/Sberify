@@ -32,7 +32,7 @@
     "lodash": "^4.17.15",
     "lottie-react-web": "^2.1.4",
     "mongodb": "^3.3.3",
-    "mongoose": "^5.7.7",
+    "mongoose": "^5.7.12",
     "morgan": "^1.9.1",
     "node-sass": "^4.13.0",
     "prettier-eslint": "^9.0.0",
