@@ -20,9 +20,11 @@ router.put('/:name', async function(req, res, next) {
     await sberify.saveArtistFromGeniusToDB(
       `https://genius.com/artists/${req.params.name}`
     )
+    res.send(`${req.params.name} was added`)
 
-    res.send(req.params.name)
+    // res.send(`${req.params.name} was added`)
   } catch (err) {
+    console.log(err)
     res.status(400).send(err.message)
   }
 })

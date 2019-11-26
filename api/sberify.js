@@ -195,25 +195,25 @@ class Sberify {
   }
 
   async getSongFromGenius(url) {
+    const songPage = await axios.get(url)
+    const songPageText = await songPage.data
+    const songPageHTML = cheerio.load(songPageText)
+
+    const name = songPageHTML('.header_with_cover_art-primary_info-title')
+      .text()
+      .trim()
+
+    const artist = songPageHTML(
+      '.header_with_cover_art-primary_info-primary_artist'
+    )
+      .text()
+      .trim()
+
+    const lyrics = songPageHTML('.lyrics')
+      .text()
+      .trim()
+
     try {
-      const songPage = await axios.get(url)
-      const songPageText = await songPage.data
-      const songPageHTML = cheerio.load(songPageText)
-
-      const name = songPageHTML('.header_with_cover_art-primary_info-title')
-        .text()
-        .trim()
-
-      const artist = songPageHTML(
-        '.header_with_cover_art-primary_info-primary_artist'
-      )
-        .text()
-        .trim()
-
-      const lyrics = songPageHTML('.lyrics')
-        .text()
-        .trim()
-
       const geniusQuery = await axiosInstance.get(
         `https://api.genius.com/search?q=${new URLSearchParams(
           name
@@ -229,17 +229,13 @@ class Sberify {
       )
       const musicPlayerText = await musicPlayer.data
       const musicPlayerHTML = cheerio.load(musicPlayerText)
-      const songPlayerUrl = musicPlayerHTML('apple-music-player').attr(
-        'preview_track'
-      )
-        ? JSON.parse(
-            musicPlayerHTML('apple-music-player').attr('preview_track')
-          ).preview_url
-        : null
+      const songPlayerUrl = JSON.parse(
+        musicPlayerHTML('apple-music-player').attr('preview_track')
+      ).preview_url
 
       return { name, songPlayerUrl, lyrics }
     } catch (err) {
-      return err
+      return { name, songPlayerUrl: null, lyrics }
     }
   }
 
@@ -344,11 +340,11 @@ class Sberify {
     const data = await this.getArtistFromGenius(url)
 
     if (await this.models.artists.exists({ name: data.name })) {
-      return `Artist is already exists`
+      throw new Error(`Error: ${data.name} already exists`)
     }
 
     if (data.name === 'Error') {
-      throw new Error('Not found on Genius')
+      throw new Error('Error: Not found on Genius')
     }
 
     const artist = await new this.models.artists({
@@ -368,7 +364,9 @@ class Sberify {
     return await artist
       .save()
       .then(result => result)
-      .catch(err => err)
+      .catch(() => {
+        throw new Error('Error: GeniusAPI timeout')
+      })
   }
 }
 

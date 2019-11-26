@@ -22,7 +22,7 @@ class Home extends React.Component {
     }
 
     this.lottie = React.createRef()
-    this.debouncedOnChange = _.debounce(this.debouncedOnChange, 300, {
+    this.debouncedOnChange = _.debounce(this.debouncedOnChange, 500, {
       leading: true
     })
   }
@@ -78,9 +78,7 @@ class Home extends React.Component {
     evt.preventDefault()
 
     if (this.state.isAddMode) {
-      this.props.addArtist(this.state.value).then(response => {
-        console.log(response)
-      })
+      this.props.addArtist(this.state.value)
     }
   }
 
@@ -88,6 +86,7 @@ class Home extends React.Component {
     if (this.props.redirectUri) {
       return <Redirect to={`/artist/${this.props.redirectUri}`} />
     }
+
     return (
       <div className="container">
         <section className="home">
