@@ -146,7 +146,7 @@ class Sberify {
       (err, artists) => artists
     )
 
-    return artists
+    return artists.slice(0, 3)
   }
 
   async getArtist(name) {

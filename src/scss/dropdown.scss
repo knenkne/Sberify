@@ -9,6 +9,10 @@
 
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 0;

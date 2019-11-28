@@ -24,7 +24,6 @@ router.put('/:name', async function(req, res, next) {
 
     // res.send(`${req.params.name} was added`)
   } catch (err) {
-    console.log(err)
     res.status(400).send(err.message)
   }
 })
