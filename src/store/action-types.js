@@ -4,6 +4,7 @@ export const REDIRECT = 'REDIRECT'
 // Search
 export const ADD_SEARCH_RESULTS = 'ADD_SEARCH_RESULTS'
 export const CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS'
+export const INIT_ERROR = 'INIT_ERROR'
 
 // Preloader
 export const SHOW_PRELOADER = 'SHOW_PRELOADER'

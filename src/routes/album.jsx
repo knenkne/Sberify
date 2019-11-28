@@ -2,7 +2,6 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 import { actions } from '../store'
-import { NavLink } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 
 import Songs from '../components/songs'
@@ -49,12 +48,7 @@ class Album extends React.Component {
               />
               <span className="album__date">{this.props.date}</span>
               <h2 className="album__name">{this.props.name}</h2>
-              <NavLink
-                to={`/artist/${encodeURIComponent(this.props.artist.name)}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <h3 className="album__artist">{this.props.artist.name}</h3>
-              </NavLink>
+              <h3 className="album__artist">{this.props.artist.name}</h3>
               {this.props.songs.length > 0 && (
                 <Songs
                   artist={this.props.artist.name}

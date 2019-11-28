@@ -1,23 +1,3 @@
-@keyframes colorSpin {
-    25% {
-        background-position: 0 100%;
-    }
-
-    50% {
-        background-position: 100% 100%;
-    }
-
-    75% {
-        background-position: 100% 0;
-    }
-
-    100% {
-        background-position: 0 0;
-
-        filter: hue-rotate(360deg);
-    }
-}
-
 .home {
     position: relative;
 
@@ -166,6 +146,7 @@
     .home__search:not(.home__search--add) {
         input {
             &:focus {
+
                 ~.home__message--find {
                     bottom: -0.5rem;
 
@@ -196,6 +177,11 @@
             cursor: pointer;
 
             transition-property: bottom;
+        }
+
+        &--error {
+            color: #fc122c;
+            bottom: -0.5rem;
         }
 
         &--add {

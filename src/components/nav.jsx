@@ -19,6 +19,7 @@ const Nav = props => {
         .map(([slug, name]) => {
           return (
             <NavLink
+              key={name}
               className="navigation__item"
               activeClassName="navgiation__item--current"
               style={{ textDecoration: 'none' }}

@@ -35,7 +35,14 @@ export const addArtist = payload => dispatch => {
       })
     })
     .catch(err => {
-      console.log(err.response.data)
+      dispatch({
+        type: types.HIDE_PRELOADER
+      })
+
+      dispatch({
+        type: types.INIT_ERROR,
+        payload: err.response.data
+      })
     })
 }
 

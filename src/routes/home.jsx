@@ -27,6 +27,17 @@ class Home extends React.Component {
     })
   }
 
+  onClickClearFiled = () => {
+    this.setState(
+      {
+        value: ''
+      },
+      () => {
+        this.props.clearArtists()
+      }
+    )
+  }
+
   onFocus = () => {
     this.setState(
       {
@@ -117,7 +128,14 @@ class Home extends React.Component {
             >
               Can't find? Add your own
             </p>
-            <button type="button" className="home__search-button">
+            <p className="home__message home__message--error">
+              {this.props.error}
+            </p>
+            <button
+              type="button"
+              className="home__search-button"
+              onMouseDown={this.onClickClearFiled}
+            >
               <Lottie
                 ref={this.lottie}
                 options={{
@@ -161,6 +179,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  error: state.app.error,
   results: state.app.searchResults,
   redirectUri: state.app.redirectUri
 })

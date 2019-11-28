@@ -3,7 +3,8 @@ import * as types from '../action-types'
 const defaultState = {
   searchResults: [],
   isLoading: false,
-  redirectUri: ''
+  redirectUri: '',
+  error: null
 }
 
 export default (state = defaultState, action) => {
@@ -26,6 +27,10 @@ export default (state = defaultState, action) => {
 
     case types.REDIRECT: {
       return { ...state, redirectUri: action.payload }
+    }
+
+    case types.INIT_ERROR: {
+      return { ...state, error: action.payload }
     }
 
     default: {
