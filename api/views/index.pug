@@ -3,12 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  p Using Genius API and MongoDB
+  p Using MERN Stack
   ul
     li GET /artist/{name}
     li GET /album/{name}
-    li GET /lyrics/{Artist-song-name-lyrics}
-    li GET /favorite-artists
-    li POST /favorite-artists/add/{Artist-name}
-    li POST /favorite-artists/remove/{Artist-name}
+    li GET /song/{name}
+    li PUT /song/{lyrics}
+    li PUT /artist/{name}
 

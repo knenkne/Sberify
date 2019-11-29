@@ -30,7 +30,7 @@ const socialsMap = {
   }
 }
 
-class Artist extends React.Component {
+export class Artist extends React.Component {
   constructor(props) {
     super(props)
 

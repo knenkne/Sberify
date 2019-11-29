@@ -35,6 +35,8 @@ export const addArtist = payload => dispatch => {
       })
     })
     .catch(err => {
+      console.log(err.message)
+
       dispatch({
         type: types.HIDE_PRELOADER
       })
@@ -47,12 +49,17 @@ export const addArtist = payload => dispatch => {
 }
 
 export const getArtists = payload => dispatch => {
-  axios.get(`/api/artist/find/${payload}`).then(response => {
-    dispatch({
-      type: types.ADD_SEARCH_RESULTS,
-      results: response.data
+  axios
+    .get(`/api/artist/find/${payload}`)
+    .then(response => {
+      dispatch({
+        type: types.ADD_SEARCH_RESULTS,
+        results: response.data
+      })
     })
-  })
+    .catch(err => {
+      console.log(err.message)
+    })
 }
 
 export const clearArtists = () => dispatch => {
