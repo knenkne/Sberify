@@ -215,31 +215,4 @@
         border: none;
         cursor: pointer;
     }
-
-    input {
-        position: relative;
-        z-index: 2;
-
-        display: block;
-        box-sizing: border-box;
-        width: 9rem;
-        height: 1.05rem;
-        padding: 0 1rem 0 0.25rem;
-
-        font-size: 0.45rem;
-        line-height: 1.1rem;
-        font-family: inherit;
-        color: #ffffff;
-
-        background-color: #000000;
-        border: 0.05rem solid #19bb4f;
-        border-radius: 0.25rem;
-
-        transition-duration: 0.3s;
-        transition-property: box-shadow;
-
-        &:focus {
-            outline: none;
-        }
-    }
 }

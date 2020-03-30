@@ -1,5 +1,6 @@
 import React from 'react'
 import Lottie from 'lottie-react-web'
+import styled from '@emotion/styled'
 
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -9,6 +10,33 @@ import * as _ from 'lodash'
 
 import search from '../lottie/search'
 import logo from '../images/logo.svg'
+
+const Input = styled.input`
+  position: relative;
+  z-index: 2;
+
+  display: block;
+  box-sizing: border-box;
+  width: 9rem;
+  height: 1.05rem;
+  padding: 0 1rem 0 0.25rem;
+
+  font-size: 0.45rem;
+  line-height: 1.1rem;
+  font-family: inherit;
+  color: #ffffff;
+
+  background-color: #000000;
+  border: 0.05rem solid #19bb4f;
+  border-radius: 0.25rem;
+
+  transition-duration: 0.3s;
+  transition-property: box-shadow;
+
+  &:focus {
+    outline: none;
+  }
+`
 
 class Home extends React.Component {
   constructor() {
@@ -112,13 +140,14 @@ class Home extends React.Component {
             }${this.state.isAddMode ? ' home__search--add' : ''}`}
             onSubmit={this.onSubmit}
           >
-            <input
+            {/* <input
               type="text"
               onFocus={this.onFocus}
               onBlur={this.onBlur}
               onChange={this.onChange}
               value={this.state.value}
-            />
+            /> */}
+            <Input />
             <p className="home__message home__message--add">
               Type the name of the artist <span>(GeniusAPI)</span>
             </p>
