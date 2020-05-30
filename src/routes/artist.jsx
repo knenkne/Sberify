@@ -52,6 +52,7 @@ export class Artist extends React.Component {
       <React.Fragment>
         <Helmet>
           <title>{this.props.name}</title>
+          <meta property="og:site_name" content="Sberify Music App"></meta>
           <meta property="og:url" content={window.location.href} />
           <meta property="og:type" content="profile" />
           <meta property="og:title" content={this.props.name} />
