@@ -22,7 +22,7 @@ mongoose.connect(config.url, {
 })
 
 express()
-  // .use(prerender)
+  .use(prerender)
   .use(bodyParser.text())
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
