@@ -47,7 +47,9 @@ class Album extends React.Component {
                 className="album__image"
               />
               <span className="album__date">{this.props.date}</span>
-              <h2 className="album__name">{this.props.name}</h2>
+              <div className="album__name-block">
+                <h2 className="album__name">{this.props.name}</h2>
+              </div>
               <h3 className="album__artist">{this.props.artist.name}</h3>
               {this.props.songs.length > 0 && (
                 <Songs

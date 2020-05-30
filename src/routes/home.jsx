@@ -140,14 +140,12 @@ class Home extends React.Component {
             }${this.state.isAddMode ? ' home__search--add' : ''}`}
             onSubmit={this.onSubmit}
           >
-            {/* <input
-              type="text"
+            <Input
               onFocus={this.onFocus}
               onBlur={this.onBlur}
               onChange={this.onChange}
               value={this.state.value}
-            /> */}
-            <Input />
+            />
             <p className="home__message home__message--add">
               Type the name of the artist <span>(GeniusAPI)</span>
             </p>
