@@ -317,7 +317,7 @@ h4 {
       margin-bottom: 2rem;
 
       ul {
-        justify-content: space-between;
+        justify-content: center;
         width: 100%;
         margin-top: 0.5rem;
 
@@ -326,7 +326,7 @@ h4 {
         }
 
         .album:nth-of-type(2n) {
-          margin-left: 0;
+          margin-left: 0.75rem;
         }
       }
 
