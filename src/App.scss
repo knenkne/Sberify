@@ -15,7 +15,7 @@ html {
   font-family: "Roboto", sans-serif;
 }
 
-@media (max-width: 510px) {
+@media (max-width: 768px) {
   html {
     font-size: 8vw;
   }
@@ -217,7 +217,7 @@ h4 {
   }
 }
 
-@media (max-width: 510px) {
+@media (max-width: 768px) {
   .artist {
     .artist__block {
       width: 100%;

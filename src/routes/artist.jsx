@@ -44,7 +44,7 @@ export class Artist extends React.Component {
   }
 
   render() {
-    if (this.props.isFound === false) {
+    if (!this.props.isFound) {
       return <Redirect to="/404/" />
     }
 
