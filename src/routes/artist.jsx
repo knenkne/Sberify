@@ -36,6 +36,8 @@ export class Artist extends React.Component {
     super(props)
 
     this.state = {}
+
+    console.log(window.navigator.userAgent)
   }
 
   componentDidMount() {
