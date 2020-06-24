@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 
 import Social from '../components/social'
 import Songs from '../components/songs'
-import Albums from '../components/albums'
+import Albums from '../components/album/albums'
 import Video from '../components/video'
 
 import twitter from '../lottie/twitter'
@@ -54,7 +54,7 @@ export class Artist extends React.Component {
       <React.Fragment>
         <Helmet>
           <title>{this.props.name}</title>
-          <meta property="og:site_name" content="Sberify Music App"></meta>
+          <meta property="og:site_name" content="Sberify Music App" />
           <meta property="og:url" content={window.location.href} />
           <meta property="og:type" content="profile" />
           <meta property="og:title" content={this.props.name} />

@@ -2,18 +2,18 @@ import React from 'react'
 
 import { NavLink } from 'react-router-dom'
 
-import '../App.scss'
+import '../../App.scss'
 
-const Album = props => {
+const Album = ({ image, name, date }) => {
   return (
     <li className="album">
       <NavLink
-        to={`/album/${encodeURIComponent(props.name)}`}
+        to={`/album/${encodeURIComponent(name)}`}
         style={{ textDecoration: 'none' }}
       >
-        <img src={props.image} alt={props.name} />
-        <h3>{props.name}</h3>
-        <span>{props.date}</span>
+        <img src={image} alt={name} />
+        <h3>{name}</h3>
+        <span>{date}</span>
       </NavLink>
     </li>
   )

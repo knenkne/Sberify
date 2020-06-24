@@ -5,7 +5,7 @@ import { actions } from '../store'
 import { Redirect } from 'react-router-dom'
 
 import Songs from '../components/songs'
-import Albums from '../components/albums'
+import Albums from '../components/album/albums'
 import Nav from '../components/nav'
 
 class Album extends React.Component {

@@ -1,0 +1,20 @@
+.block {
+    width: 9rem;
+
+    >h4 {
+        position: relative;
+        z-index: 2;
+        font-size: 0.35rem;
+        line-height: 1rem;
+        color: #ffffff;
+        text-transform: uppercase;
+    }
+
+    >ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        list-style: none;
+    }
+}
