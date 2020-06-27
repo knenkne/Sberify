@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
-// const prerender = require('prerender-node')
+const prerender = require('prerender-node')
 
 const config = require(path.join(__dirname, 'api/config/db'))
 
@@ -22,11 +22,11 @@ mongoose.connect(config.url, {
 })
 
 express()
-  // .use(prerender)
+  .use(prerender)
   .use(bodyParser.text())
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
-  .use(logger('dev'))
+  .use(logger('combined'))
   .use('/api', indexRouter)
   .use('/api/artist', artistRouter)
   .use('/api/album', albumRouter)

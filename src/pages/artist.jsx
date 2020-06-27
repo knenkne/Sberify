@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import { actions } from '../store'
 import { Redirect } from 'react-router-dom'
 
+import Block from '../components/block'
 import Social from '../components/social'
 import Songs from '../components/songs'
-import Albums from '../components/album/albums'
+import Albums from '../components/album/list'
 import Video from '../components/video'
 
 import twitter from '../lottie/twitter'
@@ -102,18 +103,32 @@ export class Artist extends React.Component {
                     })}
                   </div>
                 </div>
-                {this.props.video && <Video link={this.props.video} />}
+                {this.props.video && (
+                  <Block title="Music Video">
+                    <iframe
+                      className="video"
+                      title="Clip"
+                      width="560"
+                      height="315"
+                      src={`${this.props.video}?autoplay=1&mute=1`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </Block>
+                )}
               </div>
               <div className="artist__block">
                 {this.props.albums.length > 0 && (
-                  <Songs
-                    title="Popular songs"
-                    songs={this.props.albums.slice(0, 3).map(album => ({
-                      ...album.songs[0],
-                      image: album.image
-                    }))}
-                    artist={this.props.name}
-                  />
+                  <Block title="Popular songs">
+                    <Songs
+                      songs={this.props.albums.slice(0, 3).map(album => ({
+                        ...album.songs[0],
+                        image: album.image
+                      }))}
+                      artist={this.props.name}
+                    />
+                  </Block>
                 )}
                 <Albums albums={this.props.albums} />
               </div>

@@ -1,0 +1,12 @@
+.artist {
+    &__info {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding: 0 5% 5%;
+    }
+
+    &__block {
+        padding: 0 1.5rem;
+    }
+}

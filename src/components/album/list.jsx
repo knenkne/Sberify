@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Block from '../block'
-import Album from '../album'
+import Album from './index'
 
 const Albums = ({ albums }) => (
   <Block title="Latest Albums">

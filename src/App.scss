@@ -8,11 +8,17 @@
 @import "scss/video";
 @import "scss/nav";
 @import "scss/dropdown";
+@import "scss/block";
+@import "scss/artist";
 
 
 html {
   font-size: 3vw;
   font-family: "Roboto", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
@@ -70,12 +76,12 @@ h4 {
   }
 }
 
-.artist__info {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  padding: 0 7% 5%;
-}
+// .artist__info {
+  // display: flex;
+  // flex-wrap: wrap;
+  // margin: 0 auto;
+  // padding: 0 7% 5%;
+// }
 
 .artist__block {
   position: relative;
@@ -203,17 +209,17 @@ h4 {
       margin: 0.1rem 0 0.8rem;
     }
 
-    > h4 {
-      position: relative;
-      z-index: 2;
+    // > h4 {
+    //   position: relative;
+    //   z-index: 2;
 
-      width: 9rem;
+    //   width: 9rem;
 
-      font-size: 0.35rem;
-      line-height: 1rem;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
+    //   font-size: 0.35rem;
+    //   line-height: 1rem;
+    //   color: #ffffff;
+    //   text-transform: uppercase;
+    // }
   }
 }
 
