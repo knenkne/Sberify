@@ -18,7 +18,6 @@ function App() {
   return (
     <React.Fragment>
       <Helmet>
-        <title>{this.props.name}</title>
         <meta property="og:site_name" content="Sberify Music App" />
         <meta property="og:type" content="music.radio_station" />
         <meta property="og:title" content="Sberify" />
