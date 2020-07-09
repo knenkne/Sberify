@@ -17,7 +17,7 @@ import './App.scss'
 function App() {
   return (
     <React.Fragment>
-      <Helmet>
+      {/* <Helmet>
         <meta property="og:site_name" content="Sberify Music App" />
         <meta property="og:type" content="music.radio_station" />
         <meta property="og:title" content="Sberify" />
@@ -26,7 +26,7 @@ function App() {
           property="og:image"
           content="https://apptractor.ru/wp-content/uploads/2017/02/sber.png"
         />
-      </Helmet>
+      </Helmet> */}
       <Provider store={createStore()}>
         <Router>
           <Preloader />
