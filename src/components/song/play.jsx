@@ -1,60 +1,44 @@
-import React from 'react'
-import Lottie from 'lottie-react-web'
+import React, { useRef, useEffect, useState, useCallback } from 'react'
+import lottie from 'lottie-web'
 
-import play from '../../lottie/play'
+import animationData from '../../lottie/play'
 
-class Play extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      segments: [0, 8.75]
-    }
-
-    this.lottie = React.createRef()
-  }
-
-  componentDidMount() {
-    this.props.onRef(this)
-    this.lottie.current.anim.goToAndStop(7.99, true)
-  }
-
-  componentDidUpdate() {
-    this.setState({
-      segments: this.state.segments.reverse()
-    })
-  }
-
-  shouldComponentUpdate() {
-    return false
-  }
-
-  onIconClick = () => {
-    this.setState(
-      {
-        segments: this.state.segments.reverse()
-      },
-      () => {
-        this.props.onClick()
-        this.lottie.current.anim.playSegments(this.state.segments, true)
-      }
-    )
-  }
-
-  render() {
-    return (
-      <button className="song__play" onClick={this.onIconClick}>
-        <Lottie
-          ref={this.lottie}
-          options={{
-            animationData: play,
-            loop: false,
-            autoplay: false
-          }}
-        />
-      </button>
-    )
-  }
+const animationOptions = {
+  container: null,
+  loop: false,
+  autoplay: false,
+  renderer: 'canvas',
+  animationData,
+  rendererSettings: {}
 }
 
-export default Play
+export default ({ onClick }) => {
+  const buttonRef = useRef(null)
+  const [animation, setAnimation] = useState(null)
+
+  const handleClick = useCallback(() => {
+    onClick()
+    animation.play()
+    animation.setDirection(-animation.playDirection)
+  }, [animation])
+
+  // 3 TIMES UPDATE
+  useEffect(() => {
+    setAnimation(
+      lottie.loadAnimation({
+        ...animationOptions,
+        container: buttonRef.current
+      })
+    )
+  }, [buttonRef])
+
+  useEffect(() => {
+    if (animation) {
+      console.log(animation)
+      animation.setSubframe(false)
+      animation.goToAndStop(7, true)
+    }
+  }, [animation])
+
+  return <button className="song__play" onClick={handleClick} ref={buttonRef} />
+}
