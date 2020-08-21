@@ -7,9 +7,7 @@ const animationOptions = {
   container: null,
   loop: false,
   autoplay: false,
-  renderer: 'canvas',
-  animationData,
-  rendererSettings: {}
+  animationData
 }
 
 export default ({ onClick }) => {
@@ -20,9 +18,8 @@ export default ({ onClick }) => {
     onClick()
     animation.play()
     animation.setDirection(-animation.playDirection)
-  }, [animation])
+  }, [onClick, animation])
 
-  // 3 TIMES UPDATE
   useEffect(() => {
     setAnimation(
       lottie.loadAnimation({
@@ -34,7 +31,6 @@ export default ({ onClick }) => {
 
   useEffect(() => {
     if (animation) {
-      console.log(animation)
       animation.setSubframe(false)
       animation.goToAndStop(7, true)
     }
