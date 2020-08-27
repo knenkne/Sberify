@@ -15,7 +15,7 @@ import * as reducers from './reducers'
 
 export const createStore = () => {
   const composedEnhancer = compose(
-    applyMiddleware(thunkMiddleware, logger, ReduxThunk),
+    applyMiddleware(thunkMiddleware, ReduxThunk),
     devToolsEnhancer({
       name: 'Sberify'
     })
