@@ -20,7 +20,7 @@
     "@babel/register": "^7.10.3",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
